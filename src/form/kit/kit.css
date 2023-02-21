@@ -1,4 +1,5 @@
-/* T O G G L E */
+@layer form{
+    /* T O G G L E */
 .kit-toggled-container{
     display: inline-flex;
     align-items: center;
@@ -250,4 +251,5 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+}
 }

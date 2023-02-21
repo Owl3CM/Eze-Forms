@@ -14,7 +14,6 @@ const SearchInput = ({
 }) =>
   React.useMemo(() => {
     const xId = Utils.uuid()
-    console.log({ xId }, 'Search')
     console.debug({ xId }, 'Search')
     let value =
       (storageKey && localStorage.getItem(storageKey)) || _defaultValue

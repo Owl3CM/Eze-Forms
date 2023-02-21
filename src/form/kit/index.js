@@ -9,7 +9,7 @@ export { default as Options } from './Options'
 export { default as Group } from './Group'
 export { default as ScannerIcon } from './ScannerIcon'
 export { default as PopupSelector } from './PopupSelector'
-// export { default as LinkLabel } from './LinkLabel'
+export { default as LinkLabel } from './LinkLabel'
 
 export { default as OptionsIcon } from './OptionsIcon'
 

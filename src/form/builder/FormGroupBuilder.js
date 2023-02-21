@@ -5,7 +5,6 @@ const FormGroupBuilder = ({ prop }) =>
   React.useMemo(() => {
     let _final = []
     prop.children?.map((group) => {
-      console.log({ group })
       let _bodies = []
       group.children.map((child) => {
         child.onChange = (updated) => {
@@ -21,7 +20,6 @@ const FormGroupBuilder = ({ prop }) =>
         bodies: _bodies
       })
     })
-    console.log({ _final })
     return _final.map((group, i) => (
       <div key={i} className={group.className}>
         {group.bodies}
