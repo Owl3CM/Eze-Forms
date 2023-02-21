@@ -14,7 +14,7 @@ const FormBuilder = ({
 
     return (
       <div className={className}>
-        {/* <FormGroupBuilder prop={{ children: fields, onChange }} /> */}
+        <FormGroupBuilder prop={{ children: fields, onChange }} />
         {/* <FormCleaner service={service} /> */}
       </div>
     )
