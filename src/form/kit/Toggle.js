@@ -1,5 +1,5 @@
 import React from 'react'
-import { Utils } from 'js-node-tools'
+import { Utils } from '../../utils'
 
 const Toggle = ({
   className = '',

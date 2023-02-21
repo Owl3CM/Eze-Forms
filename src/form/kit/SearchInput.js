@@ -1,5 +1,5 @@
 import React from 'react'
-import { TimedCallback, Utils } from 'js-node-tools'
+import { TimedCallback, Utils } from '../../utils'
 
 const SearchInput = ({
   id,

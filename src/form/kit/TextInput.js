@@ -1,5 +1,5 @@
 import React from 'react'
-import { Utils, TimedCallback } from 'js-node-tools'
+import { Utils, TimedCallback } from '../../utils'
 
 const TextInput = ({
   id,

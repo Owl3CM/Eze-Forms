@@ -1,23 +1,18 @@
 import './form.css'
 import React from 'react'
 import { FieldsSample, FormBuilder, FormSecripts } from '../Lib'
-// import { Logger } from 'js-node-tools'
 
 const FormExample = () => {
   const service = {
     queryParmas: FormSecripts.extractValues(FieldsSample)
   }
-  // Logger({
-  //   json: service.queryParmas,
-  //   jsonLog: service.queryParmas
-  // })
 
   return (
     <div
       id='json-example'
       className='col gap-lg p-lg h-screen overflow-auto scroller'
     >
-      <h1>JsonExample</h1>
+      <h1>Form</h1>
       <FormBuilder fields={FieldsSample} />
     </div>
   )

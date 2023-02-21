@@ -1,5 +1,4 @@
 import React from 'react'
-import { Spliter } from 'js-node-tools'
 import {
   FormCleaner,
   ToggleButton,
@@ -24,12 +23,7 @@ const KitExample = () => {
       <div className='bg-prim rounded-lg p-lg'>
         {/* <FormCleaner service={service} /> */}
       </div>
-      <Spliter
-        vertical
-        storageKey={'kit-test'}
-        initialRatios={[0.2, 0.8]}
-        className='p-sm rounded-xl bg-green'
-      />
+
       <div className='row items-start bg-king rounded-lg gap-md p-md'>
         <div className='row-center gap-md'>
           <p

@@ -1,5 +1,5 @@
 import React from 'react'
-import { CustomEvents } from 'js-node-tools'
+import { CustomEvents } from '../../utils'
 // import Scanner from "./Scanner";
 const ScannerIcon = ({ prop }) => {
   return (
