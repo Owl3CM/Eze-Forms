@@ -1,6 +1,6 @@
 {
   "name": "form-js-builder",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -16,8 +16,6 @@
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.20.12",
-    "@babel/preset-env": "^7.20.2",
-    "@babel/preset-react": "^7.18.6",
     "@rollup/plugin-node-resolve": "^15.0.1",
     "@storybook/addon-actions": "^6.5.16",
     "@storybook/addon-essentials": "^6.5.16",
