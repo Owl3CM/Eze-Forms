@@ -1,16 +1,16 @@
 import './form.css'
 import React from 'react'
 import { FieldsSample, FormBuilder, FormSecripts } from '../Lib'
-import { Logger } from 'js-node-tools'
+// import { Logger } from 'js-node-tools'
 
 const FormExample = () => {
   const service = {
     queryParmas: FormSecripts.extractValues(FieldsSample)
   }
-  Logger({
-    json: service.queryParmas,
-    jsonLog: service.queryParmas
-  })
+  // Logger({
+  //   json: service.queryParmas,
+  //   jsonLog: service.queryParmas
+  // })
 
   return (
     <div

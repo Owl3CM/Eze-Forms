@@ -1,7 +1,6 @@
 import React from 'react'
 import FormGroupBuilder from './FormGroupBuilder'
 import FormSecripts from './FormSecripts'
-import { Logger, Toast } from 'js-node-tools'
 
 const FormBuilder = ({
   service,
@@ -24,10 +23,6 @@ const FormBuilder = ({
 export default FormBuilder
 
 const _defaultOnChange = (child) => {
-  Toast.info({
-    title: 'onChange',
-    content: `${child.id} : ${child.value}`
-  })
   // Logger({
   //   json: child,
   //   jsonLog: child,

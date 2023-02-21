@@ -1,4 +1,4 @@
-import { Utils } from 'js-node-tools'
+import { Utils } from '../../utils'
 
 export default class FormSecripts {
   constructor() {
