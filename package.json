@@ -1,6 +1,6 @@
 {
-  "name": "form-js-builder",
-  "version": "0.0.8",
+  "name": "morabaa-forms",
+  "version": "0.0.1",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
