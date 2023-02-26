@@ -107,7 +107,7 @@
     padding: var(--sm) var(--md) ;
     cursor: pointer;
     box-shadow: var(--shadow-md);
-    background-color: var(--cyan);
+    background-color: var(--prim);
     border-radius: var(--md);
     align-items: center;
     gap: var(--md);
@@ -148,9 +148,6 @@
     box-shadow: var(--shadow-md);
     background-color: var(--prince);
 }
-
-
-
 .selector-option:hover{
     opacity: 1;
     box-shadow: inset 0 -2px 8px #ccc5;
