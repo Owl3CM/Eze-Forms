@@ -1,85 +1,77 @@
 import React from 'react'
-import { Utils, TimedCallback } from '../../utils'
 
 const TextInput = ({
   id,
   onChange,
-  title,
+  placeholder,
   value: _defaultValue,
   storageKey,
-  containerClass = '',
-  init,
-  icon: Icon = _searchIcon
+  containerClass = 'bg-prim ',
+  icon: Icon = _searchIcon,
+  className = 'search-input',
+  dely = 700,
+  onFocus,
+  style,
+  onInit,
+  storage = storageKey ? sessionStorage : null
 }) =>
   React.useMemo(() => {
-    const xId = Utils.uuid()
-    console.debug({ xId }, 'Search')
-    let value =
-      (storageKey && localStorage.getItem(storageKey)) || _defaultValue
-    const clear = () => {
-      const x = document.getElementById(xId)
-      x.previousElementSibling.value = ''
-      x.nextSibling && (x.nextSibling.style.display = 'block')
-      x.classList.add('hide')
-      if (storageKey) localStorage.setItem(storageKey, '')
-      onChange({ clear, value: '', title, id })
+    let container,
+      value = storage?.getItem(storageKey) || _defaultValue
+
+    const setValue = (value, effect = false) => {
+      const target = container.querySelector('.search-input')
+      target.value = value
+      storage?.setItem(storageKey, value)
+      target.nextSibling.className = value ? 'delete-mark' : ''
+      effect &&
+        onChange({ clear, value: value, title: placeholder, id, setValue })
     }
-    init && init({ clear, value: value, title, id })
+
+    const clear = (effect) => setValue('', effect)
+    onInit?.({ setValue, clear, value, title: placeholder, id })
+
+    const onInputChange = ({ target }) => {
+      const { value } = target
+      storage?.setItem(storageKey, value)
+      target.nextSibling.className = value ? 'delete-mark' : ''
+      onChange({ setValue, clear, value, title: placeholder, id })
+    }
+
     return (
-      <div key={id} className={containerClass + ' relative row-center'}>
+      <div
+        ref={(_ref) => _ref && (container = _ref)}
+        key={id}
+        className={containerClass + ' search-input-container'}
+        style={style}
+      >
         <input
-          id={id}
-          name={id}
-          type='text'
-          // tabIndex="-1"
-          label={title}
-          placeholder={title}
-          defaultValue={value}
-          onChange={({ target }) => {
-            const callback = () => {
-              value = target.value
-              onChange({ clear, value: value, title, id })
-              storageKey && localStorage.setItem(storageKey, value)
-              if (value) {
-                target.nextSibling.classList.remove('hide')
-                target.parentElement.lastChild.style.display = 'none'
-              } else {
-                target.nextSibling.classList.add('hide')
-                target.parentElement.lastChild.style.display = 'block'
-              }
-            }
-            TimedCallback.create({ id, callback, timeout: 700 })
+          onFocus={({ target }) => {
+            onFocus?.({ clear, value: target.value, title: placeholder, id })
           }}
-          className='flex-grow'
+          type='text'
+          tabIndex='-1'
+          placeholder={placeholder}
+          defaultValue={value}
+          className={className}
+          onChange={onInputChange}
         />
-        <svg
-          className={`clear-icon ${value ? '' : 'hide'}`}
-          id={xId}
-          onClick={clear}
-          height={10}
-          style={{ fill: 'var(--red)' }}
-          xmlns='http://www.w3.org/2000/svg'
-          viewBox='0 0 460.775 460.775'
-        >
-          <path d='M285.08,230.397L456.218,59.27c6.076-6.077,6.076-15.911,0-21.986L423.511,4.565c-2.913-2.911-6.866-4.55-10.992-4.55c-4.127,0-8.08,1.639-10.993,4.55l-171.138,171.14L59.25,4.565c-2.913-2.911-6.866-4.55-10.993-4.55c-4.126,0-8.08,1.639-10.992,4.55L4.558,37.284c-6.077,6.075-6.077,15.909,0,21.986l171.138,171.128L4.575,401.505c-6.074,6.077-6.074,15.911,0,21.986l32.709,32.719c2.911,2.911,6.865,4.55,10.992,4.55c4.127,0,8.08-1.639,10.994-4.55l171.117-171.12l171.118,171.12c2.913,2.911,6.866,4.55,10.993,4.55c4.128,0,8.081-1.639,10.992-4.55l32.709-32.719c6.074-6.075,6.074-15.909,0-21.986L285.08,230.397z' />
-        </svg>
-        <Icon value={value} />
+        <span
+          onClick={() => clear(true)}
+          className={`${value ? 'delete-mark' : ''}`}
+        />
+        <div className='search-icon'>
+          <Icon value={value} />
+        </div>
       </div>
     )
   }, [])
 
 export default TextInput
 
-const _searchIcon = ({ value }) => (
+const _searchIcon = () => (
   <svg
-    style={{
-      opacity: 0,
-      position: 'absolute',
-      left: 10,
-      display: value ? 'none' : 'block'
-    }}
-    height={20}
-    className='fill-whale cursor-pointer'
+    style={{ height: 18 }}
     xmlns='http://www.w3.org/2000/svg'
     viewBox='0 0 340 340'
   >
