@@ -25,8 +25,8 @@
         --form-crow:#1f1d2b;
     }
     
-    .json-bg-prim{background-color: var(--form-prim);}
-    .json-text-green{color: var(--form-green);}
+    .form-bg-prim{background-color: var(--form-prim);}
+    .form-text-green{color: var(--form-green);}
     
     .form-container{
         --active:#1fd1ec;
