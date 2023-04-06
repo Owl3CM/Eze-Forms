@@ -1,5 +1,5 @@
 import React from 'react'
-import { TimedCallback } from 'morabaa-tools'
+import TimedCallback from '../../utils/TimedCallback'
 
 const SearchInput = ({
   id,
