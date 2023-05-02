@@ -1,0 +1,23 @@
+.loading-container {
+    inset: 0;
+    position: fixed;
+    display: flex;
+    pointer-events: none;
+}
+
+.loading-container::after{
+    content: "";
+    margin: auto;
+    width: 40px;
+    height: 40px;
+    border: solid 5px var(--king);
+    border-right-color: var(--cyan);
+    border-radius: var(--6x);
+    animation: rotate-frames 0.6s linear infinite;
+    display: block;
+}
+
+@keyframes rotate-frames {
+    0% {transform: rotate(0deg);}
+    100%{transform: rotate(360deg);}
+}
