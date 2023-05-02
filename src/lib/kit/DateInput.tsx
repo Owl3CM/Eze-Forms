@@ -1,24 +1,30 @@
-const DateInput = (prop) => {
-  console.debug('Date RD')
-  const onSelect = ({ target }) => {
-    let value = target.value
-    if (prop.showInClearBar) {
-      prop.clear = () => {
-        target.value = ''
-      }
-    }
-    prop.onChange(value)
-  }
+import React from "react";
+import { IKitProps } from "../Types";
+
+const DateInput = ({ id, value: defaultValue, title, className, showInClearBar, onChange }: IKitProps) => {
+  console.debug("Date RD");
+
+  const onSelect = ({ target }: { target: HTMLElement | any }) => {
+    let value = target.value;
+    const setValue = (value: any) => {
+      target.value = value;
+    };
+    onChange?.({
+      id,
+      value,
+      title,
+      setValue,
+      clear: (effect = false) => {
+        setValue("");
+      },
+    });
+  };
+
   return (
-    <div key={prop.queryKey} className='owl-label-container min-w-max'>
-      <input
-        type='date'
-        className='owl-date'
-        defaultValue={prop.value}
-        onChange={onSelect}
-      />
-      <p className='owl-label'>{prop.title} </p>
+    <div key={id} className="owl-label-container min-w-max">
+      <input type="date" className="owl-date" defaultValue={defaultValue} onChange={onSelect} />
+      <p className="owl-label">{title} </p>
     </div>
-  )
-}
-export default DateInput
+  );
+};
+export default DateInput;

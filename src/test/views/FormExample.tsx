@@ -7,7 +7,7 @@ const FormExample = () => {
   };
 
   return (
-    <div id="json-example" className="col gap-lg p-lg h-screen overflow-auto scroller">
+    <div id="json-example" className="col gap-l p-l h-screen overflow-auto scroller">
       <h1>Form</h1>
       <FormBuilder
         fields={FieldsSample}

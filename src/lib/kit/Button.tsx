@@ -1,13 +1,23 @@
-import React from 'react'
+import React from "react";
+import { IKitProps } from "../Types";
 
-const Button = ({ prop }) => {
+const Button = ({ id, className, storageKey, value: defaultValue, title, showInClearBar, onChange }: IKitProps) => {
   return (
-    <div key={prop.key} className={`owl-button-conatiner  ${prop.className}`}>
-      <button onClick={prop.onClick} className='owl-button'>
-        {prop.title}
+    <div key={id} className={`owl-button-conatiner  ${className}`}>
+      <button
+        onClick={() => {
+          onChange?.({
+            clear: () => {},
+            id,
+            title,
+            value: defaultValue,
+          });
+        }}
+        className="owl-button">
+        {title}
       </button>
     </div>
-  )
-}
+  );
+};
 
-export default Button
+export default Button;

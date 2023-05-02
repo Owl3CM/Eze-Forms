@@ -1,38 +1,37 @@
-import React from 'react'
+import React from "react";
+import { IKitProps } from "../Types";
 
-const Boolean = ({
-  className,
-  queryKey,
-  storageKey,
-  value,
-  title,
-  showInClearBar,
-  onChange
-}) => {
-  let _value = React.useMemo(() => value, [])
+const Boolean = ({ className, id, storageKey, value: defaultValue, title, showInClearBar, onChange }: IKitProps<boolean>) => {
+  let value = React.useMemo(() => defaultValue, []);
 
   return (
-    <div className={`owl-toggle-button ${className}`} key={queryKey}>
+    <div className={`owl-toggle-button ${className}`} key={id}>
       <p
         onClick={({ currentTarget }) => {
-          _value = !_value
-          currentTarget.classList.toggle('owl-toggled')
-          if (storageKey) localStorage.setItem(storageKey, _value)
+          value = !value;
+          currentTarget.classList.toggle("owl-toggled");
+          if (storageKey) localStorage.setItem(storageKey, value.toString());
 
-          let clear = showInClearBar
-            ? () => {
-                _value = !_value
-                currentTarget.classList.toggle('owl-toggled')
-              }
-            : null
-          onChange(_value, clear)
+          let clear = (effect = false) => {
+            value = !value;
+            currentTarget.classList.toggle("owl-toggled");
+          };
+          onChange?.({
+            id,
+            value,
+            title,
+            clear,
+            setValue: (value: any) => {
+              value = value;
+              currentTarget.classList.toggle("owl-toggled");
+            },
+          });
         }}
-        className={`owl-toggled-bg ${_value ? 'owl-toggled' : ''}`}
-      >
+        className={`owl-toggled-bg ${value ? "owl-toggled" : ""}`}>
         <span />
       </p>
-      <p className='font-bold owl-text-sm'>{title}</p>
+      <p className="font-bold owl-text-s">{title}</p>
     </div>
-  )
-}
-export default React.memo(Boolean)
+  );
+};
+export default React.memo(Boolean);

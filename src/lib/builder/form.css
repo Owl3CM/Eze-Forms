@@ -35,8 +35,8 @@
         --rainbo: #f87171;
         --grass:#bada55;
     
-        --shadow-md: 0px 0px 10px rgb(45, 48, 62,0.15);
-        --shadow-xl:0px 0px 6px rgba(95, 20, 20, 0.16);
+        --shadow-m: 0px 0px 10px rgb(45, 48, 62,0.15);
+        --shadow-x:0px 0px 6px rgba(95, 20, 20, 0.16);
     
         --shadow-focus: 0px 0px 6px rgba(32, 211, 238,0.5);
         --shadow-active:0px 0px 5px rgba(32, 211, 238,0.5);
@@ -46,10 +46,10 @@
     .form-cleaner{
         flex-wrap:  wrap;
         display:  flex;
-        gap: var(--md);
+        gap: var(--m);
         box-shadow: inset 0px 0px 8px var(--dragon);
-        padding: var(--md);
-        border-radius:var(--md);
+        padding: var(--m);
+        border-radius:var(--m);
         animation: fade-in 400ms ease-in;
         justify-self: baseline;
         max-width: max-content;
@@ -57,20 +57,20 @@
     
     /* Container */
     .form-container {
-        padding: var(--sm);
-        gap: var(--md);
+        padding: var(--s);
+        gap: var(--m);
         margin-block:5px;
         background-color: var(--background);
         max-width: 100%;
-        /* border-radius:var(--md); */
-        /* box-shadow:var(--shadow-md); */
+        /* border-radius:var(--m); */
+        /* box-shadow:var(--shadow-m); */
         /* border-bottom: var(--crow-2) solid 1px; */
     }
     
     /* Section */
     .form-section {
-        gap: var(--lg);    
-        border-radius:var(--md);
+        gap: var(--l);    
+        border-radius:var(--m);
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;

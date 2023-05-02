@@ -1,14 +1,15 @@
 import "./kit.css";
 export { default as SearchInput } from "./SearchInput";
+export { default as Options } from "./Options";
+export { default as PopupSelector } from "./PopupSelector";
+export { default as Selector } from "./Selector";
 // export { default as ToggleButton } from "./Toggle";
-// export { default as Selector } from "./Selector";
 // export { default as TextInput } from "./TextInput";
 // export { default as DateInput } from "./DateInput";
 // export { default as FilterButton } from "./FilterButton";
 // export { default as Options } from "./Options";
 // export { default as Group } from "./Group";
 // export { default as ScannerIcon } from "./ScannerIcon";
-// export { default as PopupSelector } from "./PopupSelector";
 // export { default as LinkLabel } from "./LinkLabel";
 // export { default as OptionsIcon } from "./OptionsIcon";
 
@@ -28,7 +29,7 @@ export const keys = {
 
 export const FieldsSample = [
   {
-    className: "row-center rounded-md gap-md bg-throne py-xs px-md self-start items-cen",
+    className: "row-center round-s gap-m bg-throne py-s px-m self-start items-center",
     children: [
       {
         id: "name",
@@ -57,16 +58,31 @@ export const FieldsSample = [
         ],
       },
       {
-        id: "currencyId",
+        id: "currencyId-getData",
         type: "options",
         title: "العملة",
         value: 1,
-        storageKey: "q-currencyId",
-        options: [
-          { id: 1, title: "دينار" },
-          { id: 2, title: "دولار" },
-        ],
+        storageKey: "q-currencyId-getData",
+        getData: async () => {
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+          return [
+            { id: 1, title: "دينار" },
+            { id: 2, title: "دولار" },
+            { id: 3, title: "يورو" },
+          ];
+        },
       },
+      // {
+      //   id: "currencyId",
+      //   type: "options",
+      //   title: "العملة",
+      //   value: 1,
+      //   storageKey: "q-currencyId",
+      //   options: [
+      //     { id: 1, title: "دينار" },
+      //     { id: 2, title: "دولار" },
+      //   ],
+      // },
       {
         id: "sort",
         type: "selector",

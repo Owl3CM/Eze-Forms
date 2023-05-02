@@ -65,7 +65,7 @@ const _extract = (group: IGroup, defaultQP: IdefaultQP[], includeNone?: boolean)
     }
     if (query.type === "selector") {
       query.className = query.options.find((o: IOption) => o.id == query.value)?.className || query.className;
-    } else if (query.type === "options") {
+    } else if (query.options) {
       let i = query.options.findIndex((o: IOption) => o.id == query.value);
       // if (i !== -1) query.options[i].className = "selected";
     } else if (query.children) {

@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import { Demo, FormExample } from "./views";
 
 const _TestRoutes = [
-  { path: "/", Component: FormExample, title: "Form" },
-  { path: "demo", Component: Demo, title: "Demo" },
+  { path: "/", Component: Demo, title: "Demo" },
+  { path: "/form", Component: FormExample, title: "Form" },
 ];
 const TestRoutes = () => {
   return (
