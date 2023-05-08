@@ -1,3 +1,4 @@
+import Button from "./Button";
 import "./kit.css";
 export { default as SearchInput } from "./SearchInput";
 export { default as Options } from "./Options";
@@ -52,10 +53,19 @@ export const FieldsSample = [
         title: "Age",
         value: 1,
         storageKey: "q-age",
-        options: [
-          { id: "big", title: "اكبر" },
-          { id: "small", title: "اصغر" },
-        ],
+        // options: [
+        //   { id: "big", title: "اكبر" },
+        //   { id: "small", title: "اصغر" },
+        // ],
+        getData: async () => {
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+          return [
+            { id: 1, title: "دينار" },
+            { id: 2, title: "دولار" },
+            { id: 3, title: "يورو" },
+          ];
+        },
+        button: Button,
       },
       {
         id: "currencyId-getData",

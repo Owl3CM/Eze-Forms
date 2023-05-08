@@ -21,7 +21,6 @@
   --frog: #bada55;
   --nice:#83d6e1;
   --nice-2:#a3e4cb;
-
   background-color: var(--main);
 }
 
@@ -41,7 +40,7 @@
 .bg-black     {background-color: var(--black);}      .text-black     {color: var(--black);}      .fill-black     {fill: var(--black);}      
 .bg-frog      {background-color: var(--frog);}       .text-frog      {color: var(--frog);}       .fill-frog      {fill: var(--frog);}       
 .bg-penguin   {background-color: var(--penguin);}    .text-penguin   {color: var(--penguin);}    .fill-penguin   {fill: var(--penguin);}    
-.bg-owl      {background-color: var(--owl);}       .text-owl      {color: var(--owl);}       .fill-owl      {fill: var(--owl);stroke: var(--owl)}       
+.bg-owl       {background-color: var(--owl);}        .text-owl       {color: var(--owl);}        .fill-owl       {fill: var(--owl);stroke: var(--owl)}       
 .bg-fox       {background-color: var(--fox);}        .text-fox       {color: var(--fox);}        .fill-fox       {fill: var(--fox);}        
 .bg-wolf      {background-color: var(--wolf);}       .text-wolf      {color: var(--wolf);}       .fill-wolf      {fill: var(--wolf);}       
 .bg-lion      {background-color: var(--lion);}       .text-lion      {color: var(--lion);}       .fill-lion      {fill: var(--lion);}       
@@ -65,11 +64,11 @@
 .bg-none      {background-color: unset!important;}    .text-none      {color: unset!important;}    .fill-none      {fill: unset!important;}
 
 .bg-prim    {background-color: var(--prim);}     .text-prim    {color: var(--prim);}     .fill-prim    {fill: var(--prim);}     
-.bg-throne  {background-color: var(--throne);}   .text-throne  {color: var(--throne);}   .fill-throne  {fill: var(--throne);}   
-.bg-lord    {background-color: var(--lord);}     .text-lord    {color: var(--lord);}     .fill-lord    {fill: var(--lord);}     
-.bg-prince  {background-color: var(--prince);}   .text-prince  {color: var(--prince);}   .fill-prince  {fill: var(--prince);}   
 .bg-king    {background-color: var(--king);}     .text-king    {color: var(--king);}     .fill-king    {fill: var(--king);}     
-.bg-owl    {background-color: var(--owl);}     .text-owl    {color: var(--owl);}     .fill-owl    {fill: var(--owl);}     
+.bg-prince  {background-color: var(--prince);}   .text-prince  {color: var(--prince);}   .fill-prince  {fill: var(--prince);}   
+.bg-lord    {background-color: var(--lord);}     .text-lord    {color: var(--lord);}     .fill-lord    {fill: var(--lord);}     
+.bg-throne  {background-color: var(--throne);}   .text-throne  {color: var(--throne);}   .fill-throne  {fill: var(--throne);}   
+.bg-owl     {background-color: var(--owl);}      .text-owl     {color: var(--owl);}      .fill-owl     {fill: var(--owl);}     
 .bg-shark   {background-color: var(--shark);}    .text-shark   {color: var(--shark);}    .fill-shark   {fill: var(--shark);}    
 .bg-dolphin {background-color: var(--dolphin);}  .text-dolphin {color: var(--dolphin);}  .fill-dolphin {fill: var(--dolphin);}  
 .bg-goat    {background-color: var(--goat);}     .text-goat    {color: var(--goat);}     .fill-goat    {fill: var(--goat);}     

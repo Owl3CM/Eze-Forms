@@ -2,7 +2,6 @@ import React from "react";
 import { IOptionBuilder, IOptionsProps } from "../Types";
 
 const OptionsBuilder = ({
-  id,
   onChange,
   options,
   title,
@@ -33,7 +32,7 @@ const OptionsBuilder = ({
       clear: () => _onOptionChanged(prop.options[0] || { id: 0 }),
       title: selected.title,
       value: selected?.id,
-      id,
+      id: props.id,
     };
     if (getData) {
       setTimeout(async () => {
@@ -51,7 +50,7 @@ const OptionsBuilder = ({
     onChange?.({
       value: option.id,
       title: option.title,
-      id,
+      id: props.id,
       clear: () => _onOptionChanged(),
     });
     if (storageKey) localStorage.setItem(storageKey, option.id);
@@ -62,6 +61,7 @@ const OptionsBuilder = ({
 };
 
 export default React.memo(OptionsBuilder);
+
 function getDefaultValue(storageKey: string, value: any): () => any {
   return () => {
     let _stored = localStorage.getItem(storageKey);

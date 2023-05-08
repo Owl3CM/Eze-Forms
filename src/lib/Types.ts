@@ -46,11 +46,11 @@ export interface IOptionBuilder {
 export interface IOptionsProps<T = any> extends IKitProps {
   value?: T;
   options?: any[];
-  getData?: () => any[];
+  getData?: () => any;
   activClass?: string;
 }
 
 export interface IPopupSelectorProps extends IOptionsProps {
-  icon: any;
-  button: any;
+  icon?: any;
+  button?: any;
 }
