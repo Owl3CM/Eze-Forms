@@ -50,28 +50,6 @@
     font-size: var(--font-m);
 }
 
-.selector-child{
-    transition: all 0.2s ease-in-out;
-    z-index: 999;
-    top: 30px;
-    right: 0px;
-    display: flex;
-    position: absolute;
-    flex-direction: column;
-    color: var(--owl);
-    box-shadow: var(--shadow-m);
-    overflow-y: auto;
-    overflow-x: hidden;
-    text-align: center;
-    border-radius:var(--m);
-    gap: var(--m);
-    padding: var(--l);
-    background-color: var(--prim) ;
-    animation:  fade-in-options 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
-    max-height: 30vh;
-    width: calc(50vw - 2 * var(--m)); 
-    max-width: 300px; 
-}
 .selector-option{
     font-family: var(--font-bold);
     font-weight: bold;
@@ -91,19 +69,6 @@
     opacity: 0.6;
     background-color: var(--shark) ;
     color: var(--prim);
-}
-
-@keyframes fade-in-options {
-    0%{
-        opacity: 0;
-        max-height: 0;
-    }
-    50%{
-        opacity: 1;
-    }
-    100%{
-        max-height: 30vh;
-    }
 }
 /* SELECTOR */
 
@@ -184,18 +149,24 @@
 
 
 /* O P T I O N S */
+.toggle-options-parent {
+    display:grid;
+    height: auto;
+}
 .toggle-options-container {
-    background-color: var(--bg);
-    gap: var(--m);
-    padding: var(--xs);
-    border-radius:var(--m);
     box-shadow: var(--shadow-m);
+    border-radius:var(--m);
+    padding: var(--s);
     overflow-x: auto;
-    transition: all 200ms ease-out;
+    gap: var(--m);
     display:grid;
     overflow-y: hidden;
-    grid-template-rows: repeat(auto-fill,minmax( auto, 0.35fr)); 
     grid-auto-flow: column;
+    transition: all 200ms ease-out;
+    background-color: var(--form-prim);
+    grid-template-rows: repeat(auto-fill,minmax( 20px, auto)); 
+    grid-template-columns: repeat(auto-fill,auto);
+    position: relative;
 }
 
 .toggle-options-container::-webkit-scrollbar { height: 4px;width: 4px;}
@@ -210,30 +181,27 @@
 }
 
 .toggle-option{
-    border-radius:var(--m);
-    padding:var(--xs) var(--l);
+    border-radius:var(--s);
+    padding:var(--s) var(--l);
     font-size: var(--font-s);
-    border: none;
-    cursor: pointer;
-    font-weight: bold;
     box-shadow: var(--shadow-m);
     font-family: var(--font-bold);
-    font-weight: bold;
+    background-color: var(--form-king);
+    color: var(--form-owl);
     min-width: max-content;
-    background-color: var(--lord);
-    color: var(--owl);
+    cursor: pointer;
 }
 .toggle-option:hover{
     transform: translateY(1px);
     opacity: 1;
 }
-.toggled-option{
-    background-color: var(--shark) !important;
+/* .toggled-option{
     color: var(--prim);
     opacity: 0.7;
     position: sticky;
     right: 0;
-}
+    background-color: var(--shark) !important;
+} */
 /* OPTIONS */
 .cut-words{
     text-overflow: ellipsis;

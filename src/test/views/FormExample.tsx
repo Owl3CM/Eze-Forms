@@ -1,5 +1,5 @@
 import React from "react";
-import { FieldsSample, FormBuilder, FormSecripts, PopupSelector, FormTextInput, Selector } from "../../lib";
+import { FieldsSample, FormBuilder, FormSecripts, FormTextInput, Selector } from "../../lib";
 import Button from "../components/Button";
 import { CustomEvents, Logger } from "morabaa-utils";
 
@@ -22,37 +22,49 @@ const FormExample = () => {
 
 export default FormExample;
 
+const mockOptions = () => {
+  return Array.from({ length: 100 }).map((_, i) => {
+    return { id: i, title: `option ${i}`, value: i };
+  });
+};
+
 const AmFrom = () => {
   return (
-    <>
-      <Selector
-        id="currencyId"
-        value={-1}
-        storageKey="q-currencyId"
-        containerClassName="bg-prim"
-        title="Currency"
-        options={[{ id: -1, title: "الغاء", className: "bg-prim", value: -1 }]}
-        getData={async () => {
-          await new Promise((resolve) => setTimeout(resolve, 1000));
-          return [
-            { id: -1, title: "الغاء", className: "bg-prim", value: -1 },
-            { id: 1, title: "دينار", className: "bg-red", value: 1 },
-            { id: 2, title: "دولار", className: "bg-green", value: 2 },
-            { id: 3, title: "يورو", className: "bg-cyan", value: 3 },
-          ];
-        }}
-        placement="list"
-        // builder={({ onOptionChanged, selected, prop, className }) => {
-        //   return (
-        //     <div className={className}>
-        //       <p>{selected.title}</p>
-        //     </div>
-        //   );
-        // }}
-        onChange={(prop) => {
-          console.log("option changed", prop.value, prop.title);
-        }}
-      />
+    <div className="col gap-l">
+      <div>
+        <Selector
+          id="currencyId"
+          value={-1}
+          storageKey="q-currencyId"
+          containerClassName="w-full"
+          // activeClassName="bg-green"
+          title="Currency"
+          // options={[{ id: -1, title: "الغاء", className: "bg-green", value: -1, displayTitle: "العملة" }]}
+          getData={async () => {
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+            return mockOptions();
+            return [
+              { id: -1, title: "بدون", className: "bg-prim", value: -1, displayTitle: "العملة" },
+              { id: 1, title: "دينار", className: "bg-red", value: 1 },
+              { id: 2, title: "دولار", className: "bg-green", value: 2 },
+              { id: 3, title: "يورو", className: "bg-cyan", value: 3 },
+            ];
+          }}
+          placement="list"
+          builder={({ selected, prop, activeClassName: className }) => {
+            console.log({ prop });
+
+            return (
+              <div className={className + " px-l py-s round-s"}>
+                <p>{selected.title}</p>
+              </div>
+            );
+          }}
+          onChange={(prop) => {
+            console.log("option changed", prop.value, prop.title);
+          }}
+        />
+      </div>
       <div className="row-center">
         <FormTextInput
           dely={700}
@@ -69,7 +81,7 @@ const AmFrom = () => {
           change input to TEST
         </p>
       </div>
-    </>
+    </div>
   );
 };
 

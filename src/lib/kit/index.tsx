@@ -3,6 +3,7 @@ import "./kit.css";
 export { default as FormTextInput } from "./FormTextInput";
 // export { default as Options } from "./Options";
 export { default as Selector } from "./Selector";
+export { default as ToggleOptions } from "./ToggleOptions";
 // export { default as ToggleButton } from "./Toggle";
 // export { default as TextInput } from "./TextInput";
 // export { default as DateInput } from "./DateInput";

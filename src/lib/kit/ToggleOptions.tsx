@@ -1,16 +1,9 @@
 import React from "react";
-import { IOptionBuilder, IOptionsProps } from "../Types";
-import OptionsBuilder from "./OptionsBuilder";
+import { IOptionBuilder } from "../Types";
 
-const Options = (props: IOptionsProps<string>) => {
-  return <OptionsBuilder className="toggled-option" {...props} builder={Children} />;
-};
-
-export default React.memo(Options);
-
-const Children: React.FC<IOptionBuilder> = ({ prop, selected, onOptionChanged, className, style }: IOptionBuilder) => {
+const ToggleOptions: React.FC<IOptionBuilder> = ({ prop, selected, onOptionChanged, containerClassName, activeClassName, style }: IOptionBuilder) => {
   return prop.options.length ? (
-    <div className={className} style={style}>
+    <div style={style} className={`toggle-options-parent ${containerClassName || ""}`}>
       <div
         className="toggle-options-container"
         onWheel={onWheel}
@@ -23,7 +16,7 @@ const Children: React.FC<IOptionBuilder> = ({ prop, selected, onOptionChanged, c
           draged = false;
         }}>
         {prop.options.map((option, i) => {
-          const _optionClass = option.className || className;
+          const _optionClass = option.className || activeClassName;
           const _notSelected = option.id !== selected.id;
           return (
             <p
@@ -46,6 +39,8 @@ const Children: React.FC<IOptionBuilder> = ({ prop, selected, onOptionChanged, c
     </div>
   ) : null;
 };
+
+export default React.memo(ToggleOptions);
 
 let wheeled = false;
 const onWheel = (e: any) => {

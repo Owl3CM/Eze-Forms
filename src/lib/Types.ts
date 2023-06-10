@@ -43,24 +43,27 @@ export interface IOption {
   title?: string;
   value?: any;
   className?: string;
+  displayTitle?: string;
 }
 
 export interface IOptionBuilder {
   prop: { options: IOption[]; selected: number };
   selected: IOption;
   onOptionChanged: (option: IOption, i: number) => void;
-  className?: string;
+  activeClassName?: string;
   style?: any;
+  containerClassName?: string;
 }
 
 export interface IOptionsProps<T = any> extends IKitProps {
   value?: T;
   options?: IOption[];
   getData?: () => Promise<IOption[]>;
-  activClass?: string;
+  activeClassName?: string;
   placement?: PopupPlacement;
   builder?: React.FC<IOptionBuilder>;
   listBuilder?: React.FC<IOptionBuilder>;
+  optionsVisible?: boolean;
 }
 
 export interface IPopupSelectorProps extends IOptionsProps {

@@ -2,6 +2,7 @@ import React from "react";
 import { IOption, IOptionBuilder, IOptionsProps } from "../Types";
 import { Popup, PopupMe } from "morabaa-provider";
 import { Utils } from "../utils";
+import ToggleOptions from "./ToggleOptions";
 
 const Selector = ({
   onChange,
@@ -15,15 +16,20 @@ const Selector = ({
   id = "selecotr",
   storage = storageKey ? sessionStorage : undefined,
   placement = "list",
-  className,
+  activeClassName = "from-bg-frog",
   containerClassName,
-  listBuilder: ListBuilder = DefaultListBuilder,
+  optionsVisible = true,
+  listBuilder: ListBuilder = optionsVisible ? ToggleOptions : DefaultListBuilder,
+  style,
 }: IOptionsProps<any>) => {
   const _value = React.useMemo(() => Utils.getStoredValue(storageKey, value), []);
 
   const [prop, setProp] = React.useState(options ? { options, selected: options.findIndex((option) => option.id == _value) } : { options: [], selected: 0 });
 
-  const selected = React.useMemo(() => prop.options[prop.selected] || { title, className: containerClassName }, [prop]);
+  const selected = React.useMemo(() => {
+    const _selected = prop.options[prop.selected] ?? prop.options[0] ?? { id: 0 };
+    return { className: activeClassName, ..._selected, title: _selected.displayTitle ?? _selected.title } || { title, className: activeClassName };
+  }, [prop]);
 
   React.useMemo(() => {
     const initData = {
@@ -36,8 +42,6 @@ const Selector = ({
       setTimeout(async () => {
         let _options = await getData();
         let selected = !options && !_value ? 0 : _options.findIndex((option) => option.id == _value);
-        console.log({ _options, selected, _value });
-
         if (selected === 0 && _options.length > 0) onChange?.({ value: _options[0].id, title: _options[0].title, id, clear: () => onOptionChanged() });
         setProp({ options: _options, selected });
         onInit?.(initData);
@@ -54,7 +58,7 @@ const Selector = ({
     Popup.remove(id);
   };
 
-  return (
+  return !optionsVisible ? (
     <div
       onClick={({ currentTarget }) => {
         if (prop.options?.length < 2) return;
@@ -67,19 +71,29 @@ const Selector = ({
           componentProps: { prop, selected, onOptionChanged, className: selected.className },
           target: placement !== "center" ? currentTarget : undefined,
         });
-      }}>
-      <Builder onOptionChanged={onOptionChanged} prop={prop} selected={selected} className={selected.className} />
+      }}
+      style={style}>
+      <Builder onOptionChanged={onOptionChanged} prop={prop} selected={selected} activeClassName={selected.className} />
     </div>
+  ) : (
+    <ListBuilder
+      style={style}
+      prop={prop}
+      selected={selected}
+      onOptionChanged={onOptionChanged}
+      activeClassName={selected.className}
+      containerClassName={containerClassName}
+    />
   );
 };
 
 export default React.memo(Selector);
 
-const DefaultListBuilder = ({ prop, selected, onOptionChanged, className }: IOptionBuilder) => {
+const DefaultListBuilder = ({ prop, selected, onOptionChanged, activeClassName }: IOptionBuilder) => {
   return (
     <div className="gap-l col" style={{ minWidth: 150 }}>
       {prop.options.map((option, i) => {
-        const _optionClass = option.className || className;
+        const _optionClass = option.className || activeClassName;
         const _notSelected = option.id !== selected.id;
         return (
           <p
@@ -110,3 +124,32 @@ const DefaultBuilder = ({ selected, onOptionChanged }: IOptionBuilder) => {
     </div>
   );
 };
+
+// const DefaultOptionsBuilder = ({ prop, selected, onOptionChanged, className }: IOptionBuilder) => {
+//   return (
+//     <div className="toggled-option">
+//       <div className="toggle-options-container">
+//         {prop.options.map((option, i) => {
+//           const _optionClass = option.className || className;
+//           const _notSelected = option.id !== selected.id;
+//           return (
+//             <p
+//               onMouseEnter={({ currentTarget }) => {
+//                 if (_notSelected && _optionClass) currentTarget.classList.add(_optionClass);
+//               }}
+//               onMouseLeave={({ currentTarget }) => {
+//                 if (_notSelected && _optionClass) currentTarget.classList.remove(_optionClass);
+//               }}
+//               key={option.id}
+//               onClick={() => {
+//                 onOptionChanged(option, i);
+//               }}
+//               className={`selector-option ${_notSelected ? "" : _optionClass}`}>
+//               {option.title}
+//             </p>
+//           );
+//         })}
+//       </div>
+//     </div>
+//   );
+// };
