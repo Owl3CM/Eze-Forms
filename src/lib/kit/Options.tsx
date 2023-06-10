@@ -8,7 +8,7 @@ const Options = (props: IOptionsProps<string>) => {
 
 export default React.memo(Options);
 
-const Children: React.FC<IOptionBuilder> = ({ prop, selected, _onOptionChanged, className, style, activClass }: IOptionBuilder) => {
+const Children: React.FC<IOptionBuilder> = ({ prop, selected, onOptionChanged, className, style }: IOptionBuilder) => {
   return prop.options.length ? (
     <div className={className} style={style}>
       <div
@@ -23,7 +23,7 @@ const Children: React.FC<IOptionBuilder> = ({ prop, selected, _onOptionChanged, 
           draged = false;
         }}>
         {prop.options.map((option, i) => {
-          const _optionClass = option.className || activClass;
+          const _optionClass = option.className || className;
           const _notSelected = option.id !== selected.id;
           return (
             <p
@@ -35,7 +35,7 @@ const Children: React.FC<IOptionBuilder> = ({ prop, selected, _onOptionChanged, 
               }}
               key={option.id}
               onClick={() => {
-                _notSelected && _onOptionChanged(option, i);
+                _notSelected && onOptionChanged(option, i);
               }}
               className={`toggle-option ${_notSelected ? "" : _optionClass}`}>
               {option.title}

@@ -1,7 +1,7 @@
 import React from "react";
 import { IKitProps } from "../Types";
 
-const DateInput = ({ id, value: defaultValue, title, className, showInClearBar, onChange }: IKitProps) => {
+const DateInput = ({ id, value: defaultValue, title, className, onChange }: IKitProps) => {
   console.debug("Date RD");
 
   const onSelect = ({ target }: { target: HTMLElement | any }) => {

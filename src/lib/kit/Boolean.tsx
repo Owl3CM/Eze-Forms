@@ -1,7 +1,7 @@
 import React from "react";
 import { IKitProps } from "../Types";
 
-const Boolean = ({ className, id, storageKey, value: defaultValue, title, showInClearBar, onChange }: IKitProps<boolean>) => {
+const Boolean = ({ className, id, storageKey, value: defaultValue, title, onChange }: IKitProps<boolean>) => {
   let value = React.useMemo(() => defaultValue, []);
 
   return (

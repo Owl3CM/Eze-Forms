@@ -36,7 +36,7 @@ const OptionsBuilder = ({
     };
     if (getData) {
       setTimeout(async () => {
-        let _options = await getData();
+        let _options = (await getData()) as any[];
         let selected = !options && !_value ? 0 : _options.findIndex((option) => option.id == _value);
         if (selected === 0 && _options.length > 0) onChange?.(_options[0].id);
         setProp({ options: _options, selected });
@@ -53,7 +53,7 @@ const OptionsBuilder = ({
       id: props.id,
       clear: () => _onOptionChanged(),
     });
-    if (storageKey) localStorage.setItem(storageKey, option.id);
+    if (storageKey) localStorage.setItem(storageKey, option.id as any);
     setProp((_prev) => ({ ..._prev, selected: i }));
   };
 

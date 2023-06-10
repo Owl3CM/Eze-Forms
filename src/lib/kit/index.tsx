@@ -1,8 +1,7 @@
 import Button from "./Button";
 import "./kit.css";
 export { default as FormTextInput } from "./FormTextInput";
-export { default as Options } from "./Options";
-export { default as PopupSelector } from "./PopupSelector";
+// export { default as Options } from "./Options";
 export { default as Selector } from "./Selector";
 // export { default as ToggleButton } from "./Toggle";
 // export { default as TextInput } from "./TextInput";
