@@ -16,13 +16,6 @@ const FormExample = () => {
     <div id="json-example" className="col gap-l p-l h-screen overflow-auto scroller items-start">
       <h1>Form</h1>
       <AmFrom />
-
-      <p
-        onClick={() => {
-          CustomEvents.setToInput("search-input", "TEST");
-        }}>
-        change input to TEST
-      </p>
     </div>
   );
 };
@@ -31,17 +24,52 @@ export default FormExample;
 
 const AmFrom = () => {
   return (
-    <FormTextInput
-      dely={700}
-      id="search-input"
-      placeholder="Search"
-      onChange={(prop) => {
-        Logger({
-          log: prop,
-          clear: false,
-        });
-      }}
-    />
+    <>
+      <Selector
+        id="currencyId"
+        value={-1}
+        storageKey="q-currencyId"
+        containerClassName="bg-prim"
+        title="Currency"
+        options={[{ id: -1, title: "الغاء", className: "bg-prim", value: -1 }]}
+        getData={async () => {
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+          return [
+            { id: -1, title: "الغاء", className: "bg-prim", value: -1 },
+            { id: 1, title: "دينار", className: "bg-red", value: 1 },
+            { id: 2, title: "دولار", className: "bg-green", value: 2 },
+            { id: 3, title: "يورو", className: "bg-cyan", value: 3 },
+          ];
+        }}
+        placement="list"
+        // builder={({ onOptionChanged, selected, prop, className }) => {
+        //   return (
+        //     <div className={className}>
+        //       <p>{selected.title}</p>
+        //     </div>
+        //   );
+        // }}
+        onChange={(prop) => {
+          console.log("option changed", prop.value, prop.title);
+        }}
+      />
+      <div className="row-center">
+        <FormTextInput
+          dely={700}
+          id="search-input"
+          placeholder="Search"
+          onChange={(prop) => {
+            Logger({ log: prop, clear: false });
+          }}
+        />
+        <p
+          onClick={() => {
+            CustomEvents.setToInput("search-input", "TEST");
+          }}>
+          change input to TEST
+        </p>
+      </div>
+    </>
   );
 };
 

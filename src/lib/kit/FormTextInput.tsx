@@ -8,7 +8,7 @@ const FormTextInput = ({
   placeholder,
   value: _defaultValue,
   storageKey,
-  containerClass = "",
+  containerClassName: containerClass = "",
   endIcon: EndIcon = _searchIcon,
   startIcon: StartIcon,
   className = "",

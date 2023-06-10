@@ -6684,10 +6684,10 @@ mkdirp@~0.5.1:
   dependencies:
     minimist "^1.2.6"
 
-morabaa-provider@^0.0.25:
-  version "0.0.25"
-  resolved "https://registry.yarnpkg.com/morabaa-provider/-/morabaa-provider-0.0.25.tgz#0e6095ba44a26efa713f50f30a99eb91a22c778f"
-  integrity sha512-oVps6duAB22hoPTpBj0PhdVYMCx6OpU4HUCnPhfYDlKybc357vyqGBsH12fN2kCjmYEAEPn+6liQqoDHZSO5iQ==
+morabaa-provider@^0.0.26:
+  version "0.0.26"
+  resolved "https://registry.yarnpkg.com/morabaa-provider/-/morabaa-provider-0.0.26.tgz#7d2b4c64945fd96572d031da3e2b41759c89874b"
+  integrity sha512-UlVYG252FyHUUWJLdMTGMDpVhsXNhye04Dvzt/eqtHCGUy204AApEJSlTXnUyhEGb6an8ixakdI162sn04K6kA==
 
 morabaa-services@^1.0.61:
   version "1.0.61"

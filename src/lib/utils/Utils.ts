@@ -70,4 +70,16 @@ export default class Utils {
     const currency: any = { 1: "د.ع", 2: "USD", 3: "EUR" };
     return currency[currencyId] || "-";
   };
+
+  static getStoredValue = (storageKey: string, value: any) => {
+    let _stored = localStorage.getItem(storageKey);
+    if (_stored) {
+      try {
+        return JSON.parse(_stored);
+      } catch (e) {
+        return _stored;
+      }
+    }
+    return value;
+  };
 }

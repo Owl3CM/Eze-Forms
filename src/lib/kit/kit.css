@@ -30,91 +30,26 @@
 }
 /*TOGGLE*/
 
-/* P O P U P S E L E C T O R  */
-.popup-selector-button-svg{
-    fill: var(--owl) !important;
-}
-/* .popup-selector-button{
-    display: flex;
-    flex-direction: row;
-    font-family: var(--font-bold);
-    font-weight: bold;
-    color: var(--owl);
-    padding: var(--s) var(--m) ;
-    cursor: pointer;
-    box-shadow: var(--shadow-m);
-    background-color: var(--prim);
-    border-radius: var(--m);
-    align-items: center;
-    gap: var(--m);
-    font-size: var(--font-s);
-} */
-.popup-selector-container{
-    position: fixed;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    backdrop-filter: blur(2px);
-    transition: all 0.2s ease-in-out;
-    animation:  bluer 0.2s;
-    z-index: 999;
-    justify-content: center;
-    padding: var(--m);
-    background-color:var(--popup);
-}
-.popup-selector-child{
-    display: flex;
-    flex-direction: column;
-    margin: auto;
-    color: var(--owl);
-    box-shadow: var(--shadow-m);
-    max-height: 80%;
-    overflow-y: auto;
-    text-align: center;
-    border-radius:var(--m);
-    gap: var(--m);
-    padding: var(--m);
-    width: calc(100% - 2 * var(--m)); 
-    animation: popup-fade 0.2s;
-    max-width: 400px;
-    background-color: var(--prim) ;
-    padding: var(--l);
-}
-.popup-selector-option{
-    font-family: var(--font-bold);
-    font-weight: bold;
-    color: var(--owl);
-    padding: 10px 20px;
-    border-radius:var(--m);
-    cursor: pointer;
-    transition: all 0.1s ease-in-out;
-    box-shadow: var(--shadow-m);
-    background-color: var(--prince);
-}
-/* POPUP SELECTOR */
-
 /* S E L E C T O R  */
 .selector-button-svg{
     fill: var(--owl) !important;
     transition: all 0.3s;
 }
-.selector-button{
-    display: flex;
-    flex-direction: row;
-    font-family: var(--font-bold);
-    font-weight: bold;
-    color: var(--owl);
-    padding: var(--s) var(--m) ;
-    cursor: pointer;
-    box-shadow: var(--shadow-m);
-    background-color: var(--prim);
-    border-radius: var(--m);
-    align-items: center;
+
+.form-selector{
     gap: var(--m);
-    font-size: var(--font-s);
-    position: relative;
-    overflow: visible;
+    cursor: pointer;
+    align-items: center;
+    display: inline-flex;
+    color: var(--form-owl);
+    padding: var(--m) var(--l);
+    font-family: var(--font-bold);
+    background-color: var(--form-prim);
+    border-radius: var(--round-m);
+    box-shadow: var(--shadow-m);
+    font-size: var(--font-m);
 }
+
 .selector-child{
     transition: all 0.2s ease-in-out;
     z-index: 999;

@@ -8,7 +8,7 @@ const SearchInput = ({
   placeholder,
   value: _defaultValue,
   storageKey,
-  containerClass = "bg-prim ",
+  containerClassName: containerClass = "bg-prim ",
   endIcon: Icon = _searchIcon,
   className = "search-input",
   dely = 700,

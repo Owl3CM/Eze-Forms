@@ -1,77 +1,85 @@
 import React from "react";
-import { IOptionBuilder, IPopupSelectorProps } from "../Types";
-import OptionsBuilder from "./OptionsBuilder";
-import { SelectorButton, DefaultIcon } from "../defaults";
-import { PopupMe } from "morabaa-provider";
+import { IOption, IOptionBuilder, IOptionsProps } from "../Types";
+import { Popup, PopupMe } from "morabaa-provider";
+import { Utils } from "../utils";
 
-const Selector = (props: IPopupSelectorProps) => {
-  return <OptionsBuilder {...props} builder={Children} />;
+const Selector = ({
+  onChange,
+  options,
+  title,
+  value = "",
+  storageKey = "",
+  getData,
+  onInit,
+  builder: Builder = DefaultBuilder,
+  id = "selecotr",
+  storage = storageKey ? sessionStorage : undefined,
+  placement = "list",
+  className,
+  containerClassName,
+  listBuilder: ListBuilder = DefaultListBuilder,
+}: IOptionsProps<any>) => {
+  const _value = React.useMemo(() => Utils.getStoredValue(storageKey, value), []);
+
+  const [prop, setProp] = React.useState(options ? { options, selected: options.findIndex((option) => option.id == _value) } : { options: [], selected: 0 });
+
+  const selected = React.useMemo(() => prop.options[prop.selected] || { title, className: containerClassName }, [prop]);
+
+  React.useMemo(() => {
+    const initData = {
+      clear: () => onOptionChanged(prop.options[0] || { id: 0 }),
+      title: selected.title,
+      value: selected?.id,
+      id,
+    };
+    if (getData) {
+      setTimeout(async () => {
+        let _options = await getData();
+        let selected = !options && !_value ? 0 : _options.findIndex((option) => option.id == _value);
+        console.log({ _options, selected, _value });
+
+        if (selected === 0 && _options.length > 0) onChange?.({ value: _options[0].id, title: _options[0].title, id, clear: () => onOptionChanged() });
+        setProp({ options: _options, selected });
+        onInit?.(initData);
+      }, 0);
+    } else onInit?.(initData);
+  }, []);
+
+  const onOptionChanged = (option = prop.options[0], i = 0) => {
+    if (option.id !== selected.id) {
+      onChange?.({ value: option.id, title: option.title, id, clear: () => onOptionChanged() });
+      if (storageKey && storage) storage.setItem(storageKey, option.id);
+      setProp((_prev) => ({ ..._prev, selected: i }));
+    }
+    Popup.remove(id);
+  };
+
+  return (
+    <div
+      onClick={({ currentTarget }) => {
+        if (prop.options?.length < 2) return;
+        PopupMe({
+          id,
+          placement,
+          removeOnOutClick: true,
+          Component: ListBuilder,
+          offset: { x: 0, y: 10 },
+          componentProps: { prop, selected, onOptionChanged, className: selected.className },
+          target: placement !== "center" ? currentTarget : undefined,
+        });
+      }}>
+      <Builder onOptionChanged={onOptionChanged} prop={prop} selected={selected} className={selected.className} />
+    </div>
+  );
 };
 
 export default React.memo(Selector);
 
-interface ChildrenProps extends IOptionBuilder {
-  button: any;
-  icon: any;
-}
-const Children: React.FC<ChildrenProps> = ({
-  prop,
-  selected,
-  _onOptionChanged,
-  className,
-  style,
-  activClass,
-  button: Button = SelectorButton,
-  icon: Icon = DefaultIcon,
-}: ChildrenProps) => {
-  const [popup, setPopup] = React.useState(false);
-
-  return prop.options.length ? (
-    <Button
-      onClick={({ currentTarget }: any) => {
-        //  setPopup(!popup);
-        if (prop.options?.length < 2) return;
-        PopupMe({
-          id: "selector",
-          Component: ListBuilder,
-          componentProps: {
-            prop,
-            selected,
-            _onOptionChanged,
-            activClass,
-          },
-          target: currentTarget,
-          placement: "auto",
-          offset: {
-            x: 0,
-            y: 10,
-          },
-        });
-      }}
-      // id={id}
-      style={style}
-      className={`${selected.className || className}`}
-      Icon={Icon}
-      options={prop.options}
-      active={popup}
-      // title={selected.displayTitle || selected.title}
-      title={selected.title}></Button>
-  ) : null;
-};
-
-interface ListBuilderProps extends IOptionBuilder {
-  activClass: string;
-}
-
-const ListBuilder = ({ prop, selected, _onOptionChanged, activClass }: ListBuilderProps) => {
+const DefaultListBuilder = ({ prop, selected, onOptionChanged, className }: IOptionBuilder) => {
   return (
-    <div
-      className="gap-l col"
-      style={{
-        minWidth: 150,
-      }}>
+    <div className="gap-l col" style={{ minWidth: 150 }}>
       {prop.options.map((option, i) => {
-        const _optionClass = option.className || activClass;
+        const _optionClass = option.className || className;
         const _notSelected = option.id !== selected.id;
         return (
           <p
@@ -83,13 +91,22 @@ const ListBuilder = ({ prop, selected, _onOptionChanged, activClass }: ListBuild
             }}
             key={option.id}
             onClick={() => {
-              _notSelected && _onOptionChanged(option, i);
+              onOptionChanged(option, i);
             }}
             className={`selector-option ${_notSelected ? "" : _optionClass}`}>
             {option.title}
           </p>
         );
       })}
+    </div>
+  );
+};
+
+const DefaultBuilder = ({ selected, onOptionChanged }: IOptionBuilder) => {
+  return (
+    <div className={`form-selector ${selected.className || ""}`}>
+      <p className="selector-title">{selected.title}</p>
+      <i className="icon-arrow-down"></i>
     </div>
   );
 };

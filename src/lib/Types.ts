@@ -1,3 +1,4 @@
+import { PopupPlacement } from "morabaa-provider/dist/lib/types";
 import React from "react";
 
 interface IChange {
@@ -17,7 +18,7 @@ export interface IKitProps<T = any> {
   storage?: any;
   children?: any;
   style?: any;
-  containerClass?: string;
+  containerClassName?: string;
   value?: T;
   onInit?: (props: IChange) => void;
 }
@@ -38,25 +39,28 @@ export interface ISearchInputProps extends IKitProps {
 }
 
 export interface IOption {
-  id: string;
-  title: string;
-  value: any;
+  id: string | number;
+  title?: string;
+  value?: any;
   className?: string;
 }
 
 export interface IOptionBuilder {
   prop: { options: IOption[]; selected: number };
   selected: IOption;
-  _onOptionChanged: (option: IOption, i: number) => void;
+  onOptionChanged: (option: IOption, i: number) => void;
   className?: string;
-  activClass?: string;
   style?: any;
 }
+
 export interface IOptionsProps<T = any> extends IKitProps {
   value?: T;
-  options?: any[];
-  getData?: () => any;
+  options?: IOption[];
+  getData?: () => Promise<IOption[]>;
   activClass?: string;
+  placement?: PopupPlacement;
+  builder?: React.FC<IOptionBuilder>;
+  listBuilder?: React.FC<IOptionBuilder>;
 }
 
 export interface IPopupSelectorProps extends IOptionsProps {
