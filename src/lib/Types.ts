@@ -1,3 +1,5 @@
+import React from "react";
+
 interface IChange {
   id: string;
   clear: (effect?: boolean) => void;
@@ -10,7 +12,7 @@ export interface IKitProps<T = any> {
   className?: string;
   storageKey?: string;
   title?: string;
-  showInClearBar?: boolean;
+  // showInClearBar?: boolean;
   onChange?: (props: IChange) => void;
   storage?: any;
   children?: any;
@@ -20,10 +22,17 @@ export interface IKitProps<T = any> {
   onInit?: (props: IChange) => void;
 }
 
+export interface IClearIconProps {
+  value: string;
+  clear: (effect?: boolean) => void;
+}
+
 export interface ISearchInputProps extends IKitProps {
   id: string;
   dely?: number;
-  icon?: any;
+  startIcon?: any;
+  endIcon?: any;
+  clearIcon?: React.FC<IClearIconProps>;
   placeholder?: string;
   onFocus?: (props: IChange) => void;
 }

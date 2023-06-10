@@ -196,17 +196,17 @@
 .search-input-container {
     position: relative;
     display: inline-flex;
+    align-items: center;
     max-width: fit-content;
     fill: var(--form-shark);
-    padding: var(--s) var(--m);
-    border-radius: var(--l);
-    box-shadow: var(--shadow-m);
     background-color: var(--form-prim);
+    padding: var(--xs) var(--m);
+    border-radius: var(--l);
     color: var(--form-owl);
-
+    box-shadow: var(--shadow-m);
 }
-.form-search-input {
-    background-color: transparent ;
+.search-input {
+    background-color: transparent !important;
     font-family: var(--font-bold);
     padding: var(--s);
     outline: none;
@@ -215,7 +215,7 @@
     box-shadow:unset;
 }
 .delete-mark {
-    /* position: absolute; */
+    position: absolute;
     background-color:inherit;
     z-index: 2;
     cursor: pointer;
@@ -231,16 +231,6 @@
     font-weight: bold;
     padding: 0 8px;
 }
-
-[data-input-has-value="false"] {
-    opacity:0 !important;
-    pointer-events: none !important;
-}
-[data-input-has-value="true"] {
-    opacity:1;
-    pointer-events: all;
-}
-
 .search-icon{
     position: relative;
     z-index: 1;

@@ -1,33 +1,35 @@
 import React from "react";
-import { ISearchInputProps } from "../Types";
+import { IClearIconProps, ISearchInputProps } from "../Types";
 import { TimedCallback } from "morabaa-utils";
 
-const SearchInput = ({
+const FormTextInput = ({
   id,
   onChange,
   placeholder,
   value: _defaultValue,
   storageKey,
-  containerClass = "bg-prim ",
-  icon: Icon = _searchIcon,
-  className = "search-input",
-  dely = 700,
+  containerClass = "",
+  endIcon: EndIcon = _searchIcon,
+  startIcon: StartIcon,
+  className = "",
+  dely = 0,
   onFocus,
   style,
   onInit,
   storage = storageKey ? sessionStorage : null,
-  children,
-}: ISearchInputProps) =>
+  clearIcon: ClearIcon = _clearIcon,
+}: // children,
+ISearchInputProps) =>
   React.useMemo(() => {
     let container: HTMLDivElement,
       value = storage?.getItem(storageKey) || _defaultValue;
 
     const setValue = (value: string, effect = false) => {
-      const target = container.querySelector(".search-input") as HTMLInputElement;
+      const target = container.querySelector("input") as HTMLInputElement;
       target.value = value;
       storage?.setItem(storageKey, value);
-      (target.nextSibling as any).className = value ? "delete-mark" : "";
-      effect && onChange({ clear, value, title: placeholder, id, setValue });
+      (target.nextSibling as any).setAttribute("data-input-has-value", (!!value).toString());
+      effect && onChange?.({ clear, value, title: placeholder, id, setValue });
     };
 
     const clear = (effect = false) => setValue("", effect);
@@ -37,16 +39,17 @@ const SearchInput = ({
       const callback = () => {
         value = target.value;
         storage?.setItem(storageKey, value);
-        target.nextSibling.className = value ? "delete-mark" : "";
-        onChange({ setValue, clear, value: value, title: placeholder, id });
+        target.nextSibling.setAttribute("data-input-has-value", (!!value).toString());
+        onChange?.({ setValue, clear, value: value, title: placeholder, id });
       };
-      TimedCallback.create({ id, callback, timeout: _dely, onRepated: () => {} });
+      _dely > 0 ? TimedCallback.create({ id, callback, timeout: _dely, onRepated: () => {} }) : callback();
     };
 
     return (
       <div ref={(_ref) => _ref && (container = _ref)} key={id} className={containerClass + " search-input-container"} style={style}>
-        {children}
+        {StartIcon && <StartIcon value={value} />}
         <input
+          id={id}
           onFocus={({ target }) => {
             onFocus?.({ clear, value: target.value, title: placeholder, id });
           }}
@@ -54,18 +57,20 @@ const SearchInput = ({
           tabIndex={-1}
           placeholder={placeholder}
           defaultValue={value}
-          className={className}
+          className={`${className} form-search-input`}
           onChange={onInputChange}
         />
-        <span onClick={() => clear(true)} className={`${value ? "delete-mark" : ""}`} />
+        <div data-input-has-value={(!!value).toString()}>
+          <ClearIcon value={value} clear={(effect = true) => clear(effect)} />
+        </div>
         <div className="search-icon">
-          <Icon value={value} />
+          <EndIcon value={value} />
         </div>
       </div>
     );
   }, []);
 
-export default SearchInput;
+export default FormTextInput;
 
 const _searchIcon = () => (
   <svg style={{ height: 18 }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 340">
@@ -75,6 +80,9 @@ const _searchIcon = () => (
     />
   </svg>
 );
+
+const _clearIcon = ({ clear, value }: IClearIconProps) => <span onClick={() => clear(true)} className="delete-mark" />;
+
 // function ClearIcon({ value, xId, clear }) {
 //   return (
 //     <svg

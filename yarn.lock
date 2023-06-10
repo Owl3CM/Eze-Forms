@@ -6684,20 +6684,20 @@ mkdirp@~0.5.1:
   dependencies:
     minimist "^1.2.6"
 
-morabaa-provider@^0.0.18:
-  version "0.0.18"
-  resolved "https://registry.yarnpkg.com/morabaa-provider/-/morabaa-provider-0.0.18.tgz#760e15394f580e77bac2769bad0c6ff3a1ae59e3"
-  integrity sha512-XuROTVIZL0GqF2UyhENzqmQDisUIqvhn87fW0cuFvfFCUKogrFxPDGQFiEdG2PXzS/5XQ/e0HsugGb4upq60eA==
+morabaa-provider@^0.0.25:
+  version "0.0.25"
+  resolved "https://registry.yarnpkg.com/morabaa-provider/-/morabaa-provider-0.0.25.tgz#0e6095ba44a26efa713f50f30a99eb91a22c778f"
+  integrity sha512-oVps6duAB22hoPTpBj0PhdVYMCx6OpU4HUCnPhfYDlKybc357vyqGBsH12fN2kCjmYEAEPn+6liQqoDHZSO5iQ==
 
-morabaa-services@^1.0.57:
-  version "1.0.57"
-  resolved "https://registry.yarnpkg.com/morabaa-services/-/morabaa-services-1.0.57.tgz#ae9016e10398ba595e1cfcb5f9638b0d6a9f3760"
-  integrity sha512-rOMtElc/uY5PQisyBr+FvZBgBKBTie2lBXxUXDTPHGtTjEbbExzWqVwWTeCvSsUWat39CEn74TstTDQhnzeBoA==
+morabaa-services@^1.0.61:
+  version "1.0.61"
+  resolved "https://registry.yarnpkg.com/morabaa-services/-/morabaa-services-1.0.61.tgz#f11129f3c9e5fd06705ab4c85ee3e134a6264598"
+  integrity sha512-DK/x7loSWa8Z5uUSOqUxR+PI+3mbPyeYn0JK/qCHcv51hPxc0u+StOfj9ysOG3c1T/S/Rylf+Zp+AJAsEg3Dig==
 
-morabaa-utils@^0.0.11:
-  version "0.0.11"
-  resolved "https://registry.yarnpkg.com/morabaa-utils/-/morabaa-utils-0.0.11.tgz#c299471a42738a388417674635a38b52a9a7f064"
-  integrity sha512-vVJdVqRM9ElaIlnZL17Grvx+aiMWKYc0nwf30ll9bpNeuGApIwDwapQyfOltVXPjbvl0qudTAxwZ4Ut2OZM3xA==
+morabaa-utils@^0.0.13:
+  version "0.0.13"
+  resolved "https://registry.yarnpkg.com/morabaa-utils/-/morabaa-utils-0.0.13.tgz#2e8d8e0710169823f45253431b77b6f662be90a7"
+  integrity sha512-sBO4p8+wdBDw9LLJ+ZaUUIhAuorVlkay0bwNmPHEREg+HXDxokcWTn9b0Y9si/yHKg/xI6Fqr0HmhcsmOoYS/w==
 
 ms@2.0.0:
   version "2.0.0"
