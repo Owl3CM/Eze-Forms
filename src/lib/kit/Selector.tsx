@@ -15,10 +15,10 @@ const Selector = ({
   builder: Builder = DefaultBuilder,
   id = "selecotr",
   storage = storageKey ? sessionStorage : undefined,
-  placement = "list",
+  placement = "center",
   activeClassName = "from-bg-frog",
   containerClassName,
-  optionsVisible = true,
+  optionsVisible = false,
   listBuilder: ListBuilder = optionsVisible ? ToggleOptions : DefaultListBuilder,
   style,
 }: IOptionsProps<any>) => {
@@ -69,7 +69,7 @@ const Selector = ({
           Component: ListBuilder,
           offset: { x: 0, y: 10 },
           componentProps: { prop, selected, onOptionChanged, className: selected.className },
-          target: placement !== "center" ? currentTarget : undefined,
+          // target: placement !== "center" ? currentTarget : undefined,
         });
       }}
       style={style}>
@@ -120,7 +120,6 @@ const DefaultBuilder = ({ selected, onOptionChanged }: IOptionBuilder) => {
   return (
     <div className={`form-selector ${selected.className || ""}`}>
       <p className="selector-title">{selected.title}</p>
-      <i className="icon-arrow-down"></i>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 {
   "name": "morabaa-forms",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "morabaa-services",
   "main": "dist/index.js",
   "source": "src/index.tsx",
@@ -16,6 +16,7 @@
     "start": "vite"
   },
   "peerDependencies": {
+    "morabaa-provider": "^0.0.26",
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
   },
@@ -60,7 +61,5 @@
   },
   "keywords": [],
   "tags": [],
-  "dependencies": {
-    "morabaa-provider": "^0.0.26"
-  }
+  "dependencies": {}
 }
