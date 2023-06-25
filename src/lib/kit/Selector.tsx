@@ -69,7 +69,8 @@ const Selector = ({
           Component: ListBuilder,
           offset: { x: 0, y: 10 },
           componentProps: { prop, selected, onOptionChanged, className: selected.className },
-          // target: placement !== "center" ? currentTarget : undefined,
+          target: placement !== "center" ? currentTarget : undefined,
+          childClass: containerClassName,
         });
       }}
       style={style}>

@@ -10,12 +10,72 @@ const FormExample = () => {
     };
     return _service;
   }, []);
+
   console.log({ service });
+
+  const optionsCurrencies = [{ id: -1, title: "بدون" }];
+
+  const MySelector = ({ icon, title }: any) => {};
 
   return (
     <div id="json-example" className="col gap-l p-l h-screen overflow-auto scroller items-start">
       <h1>Form</h1>
-      <AmFrom />
+      <FormTextInput
+        dely={700}
+        id="search-input"
+        placeholder="Search"
+        onChange={(prop) => {
+          Logger({ log: prop, clear: false });
+        }}
+      />
+
+      <Selector
+        id="currencyId"
+        title="Currency"
+        activeClassName="bg-cyan"
+        getData={async () => {
+          await new Promise((resolve) => setTimeout(resolve, 2000));
+          // return mockOptions();
+          return [
+            { id: -1, title: "بدون", className: "bg-cyan", value: -1, displayTitle: "العملة" },
+            { id: 1, title: "دينار", className: "bg-red", value: 1 },
+            { id: 2, title: "دولار", className: "bg-green", value: 2 },
+          ];
+        }}
+        placement="list"
+        options={optionsCurrencies}
+        builder={({ selected, prop, activeClassName }) => {
+          return (
+            <div className={" px-l py-s round-s row-center"}>
+              <p className=" button">{"العملة"}</p>
+              {"<Icon icon={icon} />"}
+              <p className="text-bold">{selected.title}</p>
+            </div>
+          );
+        }}
+        // listBuilder={({ selected, onOptionChanged, prop, activeClassName }) => {
+        //   return (
+        //     <div className="col gap-s">
+        //       {prop.options.map((option, i) => {
+        //         return (
+        //           <div className="bg-cyan text-black round-l p-l" key={option.id} onClick={() => onOptionChanged(option, i)}>
+        //             {option.title}
+        //           </div>
+        //         );
+        //       })}
+        //     </div>
+        //   );
+        // }}
+        onInit={(prop) => {
+          console.log(prop);
+        }}
+        onChange={(prop) => {
+          console.log(prop);
+        }}
+        value={1}
+      />
+
+      {/* <AmFrom /> */}
     </div>
   );
 };
@@ -36,13 +96,13 @@ const AmFrom = () => {
           id="currencyId"
           value={-1}
           storageKey="q-currencyId"
-          containerClassName="w-full"
+          containerClassName="w-full bg-green"
           // activeClassName="bg-green"
           title="Currency"
           // options={[{ id: -1, title: "الغاء", className: "bg-green", value: -1, displayTitle: "العملة" }]}
           getData={async () => {
             await new Promise((resolve) => setTimeout(resolve, 1000));
-            return mockOptions();
+            // return mockOptions();
             return [
               { id: -1, title: "بدون", className: "bg-prim", value: -1, displayTitle: "العملة" },
               { id: 1, title: "دينار", className: "bg-red", value: 1 },
@@ -50,12 +110,10 @@ const AmFrom = () => {
               { id: 3, title: "يورو", className: "bg-cyan", value: 3 },
             ];
           }}
-          placement="list"
+          placement="center"
           builder={({ selected, prop, activeClassName: className }) => {
-            console.log({ prop });
-
             return (
-              <div className={className + " px-l py-s round-s"}>
+              <div className={" px-l py-s round-s"}>
                 <p>{selected.title}</p>
               </div>
             );
@@ -63,9 +121,14 @@ const AmFrom = () => {
           onChange={(prop) => {
             console.log("option changed", prop.value, prop.title);
           }}
+          optionsVisible
+          // options={[
+          //   { id: -1, title: "بدون", className: "bg-prim", value: -1, displayTitle: "العملة" },
+          //   { id: 1, title: "دينار", className: "bg-red", value: 1 },
+          // ]}
         />
       </div>
-      <div className="row-center">
+      {/* <div className="row-center">
         <FormTextInput
           dely={700}
           id="search-input"
@@ -80,7 +143,7 @@ const AmFrom = () => {
           }}>
           change input to TEST
         </p>
-      </div>
+      </div> */}
     </div>
   );
 };
