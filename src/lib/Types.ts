@@ -11,14 +11,9 @@ interface IChange {
 export interface IKitProps<T = any> {
   id: string;
   className?: string;
-  storageKey?: string;
   title?: string;
-  // showInClearBar?: boolean;
   onChange?: (props: IChange) => void;
-  storage?: any;
-  children?: any;
   style?: any;
-  containerClassName?: string;
   value?: T;
   onInit?: (props: IChange) => void;
 }
@@ -28,18 +23,21 @@ export interface IClearIconProps {
   clear: (effect?: boolean) => void;
 }
 
-export interface ISearchInputProps extends IKitProps {
+export interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   id: string;
   dely?: number;
-  startIcon?: any;
-  endIcon?: any;
   clearIcon?: React.FC<IClearIconProps>;
   placeholder?: string;
   onFocus?: (props: IChange) => void;
+  className?: string;
+  title?: string;
+  onChange?: (props: IChange) => void;
+  style?: any;
+  value?: any;
+  onInit?: (props: IChange) => void;
 }
 
 export interface IOption {
-  id: string | number;
   title?: string;
   value?: any;
   className?: string;
@@ -58,12 +56,13 @@ export interface IOptionBuilder {
 export interface IOptionsProps<T = any> extends IKitProps {
   value?: T;
   options?: IOption[];
-  getData?: () => Promise<IOption[]>;
+  getOptions?: () => Promise<IOption[]>;
   activeClassName?: string;
   placement?: PopupPlacement;
   builder?: React.FC<IOptionBuilder>;
   listBuilder?: React.FC<IOptionBuilder>;
   optionsVisible?: boolean;
+  listClassName?: string;
 }
 
 export interface IPopupSelectorProps extends IOptionsProps {

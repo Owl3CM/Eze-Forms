@@ -2,12 +2,15 @@ import React from "react";
 import { IClearIconProps, IInputProps } from "../Types";
 import { TimedCallback } from "morabaa-utils";
 
-const FormTextInput = ({
+const FormTextInputWithIcons = ({
   id,
   onChange,
   placeholder,
   value: _defaultValue,
   storageKey,
+  containerClassName: containerClass = "",
+  endIcon: EndIcon = _searchIcon,
+  startIcon: StartIcon,
   className = "",
   dely = 0,
   onFocus,
@@ -15,7 +18,9 @@ const FormTextInput = ({
   onInit,
   storage = storageKey ? sessionStorage : null,
   clearIcon: ClearIcon = _clearIcon,
-}: IInputProps) =>
+}: // children,
+
+IInputProps) =>
   React.useMemo(() => {
     let container: HTMLDivElement,
       value = storage?.getItem(storageKey) || _defaultValue;
@@ -42,22 +47,31 @@ const FormTextInput = ({
     };
 
     return (
-      <input
-        id={id}
-        onFocus={({ target }) => {
-          onFocus?.({ clear, value: target.value, title: placeholder, id });
-        }}
-        type="text"
-        tabIndex={-1}
-        placeholder={placeholder}
-        defaultValue={value}
-        className={`${className} form-search-input`}
-        onChange={onInputChange}
-      />
+      <div ref={(_ref) => _ref && (container = _ref)} key={id} className={containerClass + " search-input-container"} style={style}>
+        {StartIcon && <StartIcon value={value} />}
+        <input
+          id={id}
+          onFocus={({ target }) => {
+            onFocus?.({ clear, value: target.value, title: placeholder, id });
+          }}
+          type="text"
+          tabIndex={-1}
+          placeholder={placeholder}
+          defaultValue={value}
+          className={`${className} form-search-input`}
+          onChange={onInputChange}
+        />
+        <div data-input-has-value={(!!value).toString()}>
+          <ClearIcon value={value} clear={(effect = true) => clear(effect)} />
+        </div>
+        <div className="search-icon">
+          <EndIcon value={value} />
+        </div>
+      </div>
     );
   }, []);
 
-export default FormTextInput;
+export default FormTextInputWithIcons;
 
 const _searchIcon = () => (
   <svg style={{ height: 18 }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 340">

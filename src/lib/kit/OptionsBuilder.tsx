@@ -7,7 +7,7 @@ const OptionsBuilder = ({
   title,
   value = "",
   storageKey = "",
-  getData,
+  getOptions: getData,
   onInit,
   builder: Builder,
   ...props

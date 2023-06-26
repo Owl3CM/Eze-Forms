@@ -32,40 +32,12 @@ const FormExample = () => {
       <Selector
         id="currencyId"
         title="Currency"
-        activeClassName="bg-cyan"
-        getData={async () => {
-          await new Promise((resolve) => setTimeout(resolve, 2000));
-          // return mockOptions();
-          return [
-            { id: -1, title: "بدون", className: "bg-cyan", value: -1, displayTitle: "العملة" },
-            { id: 1, title: "دينار", className: "bg-red", value: 1 },
-            { id: 2, title: "دولار", className: "bg-green", value: 2 },
-          ];
-        }}
+        // activeClassName="bg-cyan"
+        getOptions={getOptions}
         placement="list"
         options={optionsCurrencies}
-        builder={({ selected, prop, activeClassName }) => {
-          return (
-            <div className={" px-l py-s round-s row-center"}>
-              <p className=" button">{"العملة"}</p>
-              {"<Icon icon={icon} />"}
-              <p className="text-bold">{selected.title}</p>
-            </div>
-          );
-        }}
-        // listBuilder={({ selected, onOptionChanged, prop, activeClassName }) => {
-        //   return (
-        //     <div className="col gap-s">
-        //       {prop.options.map((option, i) => {
-        //         return (
-        //           <div className="bg-cyan text-black round-l p-l" key={option.id} onClick={() => onOptionChanged(option, i)}>
-        //             {option.title}
-        //           </div>
-        //         );
-        //       })}
-        //     </div>
-        //   );
-        // }}
+        // builder={builder}
+        // listBuilder={listBuilder}
         onInit={(prop) => {
           console.log(prop);
         }}
@@ -81,6 +53,47 @@ const FormExample = () => {
 };
 
 export default FormExample;
+
+const getOptions = async () => {
+  await new Promise((resolve) => setTimeout(resolve, 500));
+  // return mockOptions();
+  return true
+    ? [
+        { value: -1, title: "بدون", displayTitle: "العملة" },
+        { value: 1, title: "دينار" },
+        { value: 2, title: "دولار" },
+        { value: 2, title: "دولار" },
+      ]
+    : [
+        { value: -1, title: "بدون", className: "bg-cyan", displayTitle: "العملة" },
+        { value: 1, title: "دينار", className: "bg-red" },
+        { value: 2, title: "دولار", className: "bg-green" },
+        { value: 2, title: "دولار" },
+      ];
+};
+
+const builder = ({ selected, prop, activeClassName }) => {
+  return (
+    <div className={" px-l py-s round-s row-center"}>
+      <p className=" button">{"العملة"}</p>
+      <p className="text-bold">{selected.title}</p>
+    </div>
+  );
+};
+
+const listBuilder = ({ selected, onOptionChanged, prop, activeClassName }) => {
+  return (
+    <div className="col gap-s">
+      {prop.options.map((option, i) => {
+        return (
+          <div className="bg-cyan text-black round-l p-l" key={option.id} onClick={() => onOptionChanged(option, i)}>
+            {option.title}
+          </div>
+        );
+      })}
+    </div>
+  );
+};
 
 const mockOptions = () => {
   return Array.from({ length: 100 }).map((_, i) => {
@@ -100,7 +113,7 @@ const AmFrom = () => {
           // activeClassName="bg-green"
           title="Currency"
           // options={[{ id: -1, title: "الغاء", className: "bg-green", value: -1, displayTitle: "العملة" }]}
-          getData={async () => {
+          getOptions={async () => {
             await new Promise((resolve) => setTimeout(resolve, 1000));
             // return mockOptions();
             return [
