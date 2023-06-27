@@ -105,12 +105,12 @@
     border-radius: var(--l);
     box-shadow: var(--shadow-m);
     background-color: var(--form-prim);
-    color: var(--form-owl);
-
+    align-items: center;
 }
 .form-search-input {
     background-color: transparent ;
     font-family: var(--font-bold);
+    color: var(--form-owl);
     padding: var(--s);
     outline: none;
     border: none;

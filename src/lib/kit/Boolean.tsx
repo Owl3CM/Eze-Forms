@@ -1,7 +1,7 @@
 import React from "react";
 import { IKitProps } from "../Types";
 
-const Boolean = ({ className, id, storageKey, value: defaultValue, title, onChange }: IKitProps<boolean>) => {
+const Boolean = ({ className, id, value: defaultValue, title, onChange }: IKitProps<boolean>) => {
   let value = React.useMemo(() => defaultValue, []);
 
   return (
@@ -10,7 +10,6 @@ const Boolean = ({ className, id, storageKey, value: defaultValue, title, onChan
         onClick={({ currentTarget }) => {
           value = !value;
           currentTarget.classList.toggle("owl-toggled");
-          if (storageKey) localStorage.setItem(storageKey, value.toString());
 
           let clear = (effect = false) => {
             value = !value;

@@ -17,6 +17,8 @@
         --form-shark:#c4c4c7;
         --form-king:#3b3e4c;
         --form-crow:#ffffff;
+        --form-owl: #ffffff;   --form-shark:  #c4c4c7;   --form-dolphin: #6c6e78;     --form-goat:   #9e9fa6;     --form-whale: #767982;
+        --form-main:#1f1d2b;      --form-highlight:#2d303e22;
     }
     .light{
         --form-prim:#FFFFFF;  
@@ -24,6 +26,8 @@
         --form-prince:#f6f6f6;
         --form-shark:#c4c4c7;
         --form-crow:#1f1d2b;
+        --form-owl: #1f1d2b;  --form-shark:  #c4c4c7; --form-dolphin: #c3c3c6;  --form-goat:   #c4c4c7;  --form-whale: #bebec1;
+        --form-main:#fbfbfb;     --form-highlight:#FFFFFF22;
     }
     .from-bg-frog{background-color: var(--form-frog);}
     .form-bg-prim{background-color: var(--form-prim);}

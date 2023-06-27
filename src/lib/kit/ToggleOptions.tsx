@@ -17,7 +17,7 @@ const ToggleOptions: React.FC<IOptionBuilder> = ({ prop, selected, onOptionChang
         }}>
         {prop.options.map((option, i) => {
           const _optionClass = option.className || activeClassName;
-          const _notSelected = option.id !== selected.id;
+          const _notSelected = option.value !== selected.value;
           return (
             <p
               onMouseEnter={({ currentTarget }) => {
@@ -26,7 +26,7 @@ const ToggleOptions: React.FC<IOptionBuilder> = ({ prop, selected, onOptionChang
               onMouseLeave={({ currentTarget }) => {
                 if (_notSelected && _optionClass) currentTarget.classList.remove(_optionClass);
               }}
-              key={option.id}
+              key={option.value}
               onClick={() => {
                 _notSelected && onOptionChanged(option, i);
               }}

@@ -15,8 +15,6 @@ const FormExample = () => {
 
   const optionsCurrencies = [{ id: -1, title: "بدون" }];
 
-  const MySelector = ({ icon, title }: any) => {};
-
   return (
     <div id="json-example" className="col gap-l p-l h-screen overflow-auto scroller items-start">
       <h1>Form</h1>
@@ -32,12 +30,9 @@ const FormExample = () => {
       <Selector
         id="currencyId"
         title="Currency"
-        // activeClassName="bg-cyan"
         getOptions={getOptions}
         placement="list"
         options={optionsCurrencies}
-        // builder={builder}
-        // listBuilder={listBuilder}
         onInit={(prop) => {
           console.log(prop);
         }}
@@ -45,8 +40,10 @@ const FormExample = () => {
           console.log(prop);
         }}
         value={1}
+        // builder={builder}
+        // listBuilder={listBuilder}
+        // activeClassName="bg-cyan"
       />
-
       {/* <AmFrom /> */}
     </div>
   );
@@ -108,8 +105,6 @@ const AmFrom = () => {
         <Selector
           id="currencyId"
           value={-1}
-          storageKey="q-currencyId"
-          containerClassName="w-full bg-green"
           // activeClassName="bg-green"
           title="Currency"
           // options={[{ id: -1, title: "الغاء", className: "bg-green", value: -1, displayTitle: "العملة" }]}

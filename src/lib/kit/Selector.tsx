@@ -1,5 +1,5 @@
 import React from "react";
-import { IInputProps, IOption, IOptionBuilder, IOptionsProps } from "../Types";
+import { IOptionBuilder, IOptionsProps } from "../Types";
 import { Popup, PopupMe } from "morabaa-provider";
 import ToggleOptions from "./ToggleOptions";
 
@@ -18,6 +18,7 @@ const Selector = ({
   optionsVisible = false,
   listBuilder: ListBuilder = optionsVisible ? ToggleOptions : DefaultListBuilder,
   style,
+  offset = { x: 0, y: 10 },
 }: IOptionsProps<any>) => {
   const [prop, setProp] = React.useState(options ? { options, selected: options.findIndex((option) => option.value == value) } : { options: [], selected: 0 });
 
@@ -52,21 +53,22 @@ const Selector = ({
     Popup.remove(id);
   };
 
-  const onClick = React.useCallback(() => {
-    return ({ currentTarget }: any) => {
+  const onClick = React.useCallback(
+    ({ currentTarget }: any) => {
       if (prop.options?.length < 2) return;
       PopupMe({
         id,
+        offset,
         placement,
         removeOnOutClick: true,
         Component: ListBuilder,
-        offset: { x: 0, y: 10 },
         componentProps: { prop, selected, onOptionChanged, className: selected.className },
         target: placement !== "center" ? currentTarget : undefined,
         childClass: listClassName,
       });
-    };
-  }, []);
+    },
+    [prop]
+  );
 
   return !optionsVisible ? (
     <div onClick={onClick} style={style}>
@@ -110,7 +112,6 @@ const DefaultListBuilder = ({ prop, selected, onOptionChanged, activeClassName }
           </p>
         );
       })}
-      <Input label="test" />
     </div>
   );
 };

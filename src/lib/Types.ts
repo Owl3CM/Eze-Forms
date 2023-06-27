@@ -23,18 +23,21 @@ export interface IClearIconProps {
   clear: (effect?: boolean) => void;
 }
 
-export interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface IInputProps {
+  //extends React.InputHTMLAttributes<HTMLInputElement> {
   id: string;
   dely?: number;
-  clearIcon?: React.FC<IClearIconProps>;
+  clearIcon?: React.FC<IClearIconProps> | null;
   placeholder?: string;
-  onFocus?: (props: IChange) => void;
   className?: string;
   title?: string;
-  onChange?: (props: IChange) => void;
   style?: any;
   value?: any;
+  containerClassName?: string;
+  onFocus?: (props: IChange) => void;
+  onChange?: (props: IChange) => void;
   onInit?: (props: IChange) => void;
+  [key: string]: any;
 }
 
 export interface IOption {
@@ -42,6 +45,7 @@ export interface IOption {
   value?: any;
   className?: string;
   displayTitle?: string;
+  to?: string;
 }
 
 export interface IOptionBuilder {
@@ -63,6 +67,7 @@ export interface IOptionsProps<T = any> extends IKitProps {
   listBuilder?: React.FC<IOptionBuilder>;
   optionsVisible?: boolean;
   listClassName?: string;
+  offset?: { x: number; y: number };
 }
 
 export interface IPopupSelectorProps extends IOptionsProps {
