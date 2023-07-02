@@ -57,7 +57,7 @@ const FormTextInput = ({
   );
 };
 
-export default React.memo(FormTextInput);
+export default FormTextInput;
 
 const _clearIcon = ({ clear, value }: IClearIconProps) => <span onClick={() => clear(true)} className="delete-mark" />;
 
