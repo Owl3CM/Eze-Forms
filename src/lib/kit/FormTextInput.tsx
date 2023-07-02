@@ -15,50 +15,49 @@ const FormTextInput = ({
   clearIcon: ClearIcon = _clearIcon,
   containerClassName = "search-input-container",
   ...props
-}: IInputProps) =>
-  React.useMemo(() => {
-    let container: HTMLDivElement;
+}: IInputProps) => {
+  let container: HTMLDivElement;
 
-    const setValue = (value: string, effect = false) => {
-      const target = container.querySelector("input") as HTMLInputElement;
-      target.value = value;
-      (target.nextSibling as any).setAttribute("data-input-has-value", (!!value).toString());
-      effect && onChange?.({ clear, value, title: placeholder, id, setValue });
+  const setValue = (value: string, effect = false) => {
+    const target = container.querySelector("input") as HTMLInputElement;
+    target.value = value;
+    (target.nextSibling as any).setAttribute("data-input-has-value", (!!value).toString());
+    effect && onChange?.({ clear, value, title: placeholder, id, setValue });
+  };
+
+  const clear = (effect = false) => setValue("", effect);
+  onInit?.({ setValue, clear, value, title: placeholder, id });
+
+  const onInputChange = ({ target }: { target: HTMLElement | any }, _dely = dely) => {
+    const callback = () => {
+      value = target.value;
+      target.nextSibling.setAttribute("data-input-has-value", (!!value).toString());
+      onChange?.({ setValue, clear, value: value, title: placeholder, id });
     };
+    _dely > 0 ? TimedCallback.create({ id, callback, timeout: _dely, onRepated: () => {} }) : callback();
+  };
 
-    const clear = (effect = false) => setValue("", effect);
-    onInit?.({ setValue, clear, value, title: placeholder, id });
+  return (
+    <div className={containerClassName} ref={(_ref) => _ref && (container = _ref)}>
+      <input
+        id={id}
+        type="text"
+        tabIndex={-1}
+        defaultValue={value}
+        onChange={onInputChange}
+        placeholder={placeholder}
+        className={`${className} form-search-input`}
+        onFocus={({ target }) => {
+          onFocus?.({ clear, value: target.value, title: placeholder, id });
+        }}
+        {...props}
+      />
+      <div data-input-has-value={(!!value).toString()}>{ClearIcon && <ClearIcon value={value} clear={(effect = true) => clear(effect)} />}</div>
+    </div>
+  );
+};
 
-    const onInputChange = ({ target }: { target: HTMLElement | any }, _dely = dely) => {
-      const callback = () => {
-        value = target.value;
-        target.nextSibling.setAttribute("data-input-has-value", (!!value).toString());
-        onChange?.({ setValue, clear, value: value, title: placeholder, id });
-      };
-      _dely > 0 ? TimedCallback.create({ id, callback, timeout: _dely, onRepated: () => {} }) : callback();
-    };
-
-    return (
-      <div className={containerClassName} ref={(_ref) => _ref && (container = _ref)}>
-        <input
-          id={id}
-          type="text"
-          tabIndex={-1}
-          defaultValue={value}
-          onChange={onInputChange}
-          placeholder={placeholder}
-          className={`${className} form-search-input`}
-          onFocus={({ target }) => {
-            onFocus?.({ clear, value: target.value, title: placeholder, id });
-          }}
-          {...props}
-        />
-        <div data-input-has-value={(!!value).toString()}>{ClearIcon && <ClearIcon value={value} clear={(effect = true) => clear(effect)} />}</div>
-      </div>
-    );
-  }, []);
-
-export default FormTextInput;
+export default React.memo(FormTextInput);
 
 const _clearIcon = ({ clear, value }: IClearIconProps) => <span onClick={() => clear(true)} className="delete-mark" />;
 
