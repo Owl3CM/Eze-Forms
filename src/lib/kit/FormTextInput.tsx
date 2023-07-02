@@ -24,6 +24,9 @@ const FormTextInput = ({
     (target.nextSibling as any).setAttribute("data-input-has-value", (!!value).toString());
     effect && onChange?.({ clear, value, title: placeholder, id, setValue });
   };
+  React.useEffect(() => {
+    setValue(value, false);
+  }, [value]);
 
   const clear = (effect = false) => setValue("", effect);
   onInit?.({ setValue, clear, value, title: placeholder, id });

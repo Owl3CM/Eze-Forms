@@ -1,5 +1,5 @@
 import React from "react";
-import { IOptionBuilder, IOptionsProps } from "../Types";
+import { IOption, IOptionBuilder, IOptionsProps } from "../Types";
 import { Popup, PopupMe } from "morabaa-provider";
 import ToggleOptions from "./ToggleOptions";
 
@@ -23,17 +23,13 @@ const Selector = ({
   const [prop, setProp] = React.useState(options ? { options, selected: options.findIndex((option) => option.value == value) } : { options: [], selected: 0 });
 
   const selected = React.useMemo(() => {
-    const _selected = prop.options[prop.selected] ?? prop.options[0] ?? { value: "", displayTitle: title };
+    const _selected = prop.options[prop.options.findIndex((option: IOption) => option.value == value)] ?? prop.options[0] ?? { value: "", displayTitle: title };
+    console.log({ _selected, value, selected: prop.selected });
     return { className: activeClassName, ..._selected, title: _selected.displayTitle ?? _selected.title };
-  }, [prop]);
+  }, [prop, value]);
 
   React.useMemo(() => {
-    const initData = {
-      clear: () => onOptionChanged(prop.options[0] || { id: 0 }),
-      title: selected.title,
-      value: selected?.value,
-      id,
-    };
+    const initData = { clear: () => onOptionChanged(prop.options[0] || { id: 0 }), title: selected.title, value: selected?.value, id };
     if (getData) {
       setTimeout(async () => {
         let _options = await getData();
