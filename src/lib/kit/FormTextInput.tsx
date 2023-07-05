@@ -6,7 +6,7 @@ const FormTextInput = ({
   id,
   onChange,
   placeholder,
-  value,
+  value = "",
   className = "",
   dely = 0,
   onFocus,
