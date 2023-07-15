@@ -1,7 +1,8 @@
 import React from "react";
-import { IOption, IOptionBuilder, IOptionsProps } from "../Types";
+import { IOptionBuilder, IOptionsProps } from "../Types";
 import { Popup, PopupMe } from "morabaa-provider";
 import ToggleOptions from "./ToggleOptions";
+import { Utils } from "../utils";
 
 const Selector = ({
   onChange,
@@ -19,12 +20,22 @@ const Selector = ({
   listBuilder: ListBuilder = optionsVisible ? ToggleOptions : DefaultListBuilder,
   style,
   offset = { x: 0, y: 10 },
+  containerClassName = "",
+  service: __service = {},
+  stateName = "selectorOptions",
 }: IOptionsProps<any>) => {
-  const [prop, setProp] = React.useState(options ? { options, selected: options.findIndex((option) => option.value == value) } : { options: [], selected: 0 });
+  const service = React.useMemo(() => __service ?? {}, []);
+  const setStateName = React.useMemo(() => Utils.convertToCamelCase(`set-${stateName}`), []);
+
+  [service[stateName], service[setStateName]] = React.useState(
+    options ? { options, selected: options.findIndex((option) => option.value == value) } : { options: [], selected: 0 }
+  );
+  const prop = service[stateName];
+  const setProp = service[setStateName];
 
   const selected = React.useMemo(() => {
-    const _selected = prop.options[prop.options.findIndex((option: IOption) => option.value == value)] ?? prop.options[0] ?? { value: "", displayTitle: title };
-    console.log({ _selected, value, selected: prop.selected });
+    const index = prop.selected ?? 0;
+    const _selected = prop.options[index >= 0 ? index : 0] ?? { value: "", displayTitle: title };
     return { className: activeClassName, ..._selected, title: _selected.displayTitle ?? _selected.title };
   }, [prop, value]);
 
@@ -44,7 +55,7 @@ const Selector = ({
   const onOptionChanged = (option = prop.options[0], i = 0) => {
     if (option.value !== selected.value) {
       onChange?.({ value: option.value, title: option.title, id, clear: () => onOptionChanged() });
-      setProp((_prev) => ({ ..._prev, selected: i }));
+      setProp((_prev: any) => ({ ..._prev, selected: i }));
     }
     Popup.remove(id);
   };
@@ -58,7 +69,7 @@ const Selector = ({
         placement,
         removeOnOutClick: true,
         Component: ListBuilder,
-        componentProps: { prop, selected, onOptionChanged, className: selected.className },
+        componentProps: { prop: prop, selected, onOptionChanged, className: selected.className },
         target: placement !== "center" ? currentTarget : undefined,
         childClass: listClassName,
       });
@@ -67,7 +78,7 @@ const Selector = ({
   );
 
   return !optionsVisible ? (
-    <div onClick={onClick} style={style}>
+    <div onClick={onClick} style={style} className={containerClassName}>
       <Builder onOptionChanged={onOptionChanged} prop={prop} selected={selected} activeClassName={selected.className} />
     </div>
   ) : (

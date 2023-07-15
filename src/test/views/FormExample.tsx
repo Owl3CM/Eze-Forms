@@ -3,6 +3,22 @@ import { FieldsSample, FormBuilder, FormSecripts, FormTextInput, Selector } from
 import Button from "../components/Button";
 import { CustomEvents, Logger } from "morabaa-utils";
 
+const optionsCurrencies = [
+  //
+  // { id: -1, title: "بدون" },
+  { value: -1, title: "بدون", displayTitle: "العملة" },
+  { value: 1, title: "دينار" },
+  { value: 2, title: "دولار" },
+  { value: 3, title: "دولار" },
+];
+
+const newOptions = [
+  { value: -1, title: "جديد", displayTitle: "العملة الجديدة" },
+  { value: 1, title: " جديد دينار" },
+  { value: 2, title: " جديد دولار" },
+  { value: 3, title: " جديد دولار" },
+];
+
 const FormExample = () => {
   const service = React.useMemo(() => {
     const _service = {
@@ -11,13 +27,18 @@ const FormExample = () => {
     return _service;
   }, []);
 
-  console.log({ service });
-
-  const optionsCurrencies = [{ id: -1, title: "بدون" }];
-
   return (
     <div id="json-example" className="col gap-l p-l h-screen overflow-auto scroller items-start">
       <h1>Form</h1>
+      <p
+        onClick={() => {
+          service.setCurrencyId((prop) => ({
+            options: newOptions,
+            selected: prop.selected,
+          }));
+        }}>
+        get currencyId
+      </p>
       <FormTextInput
         dely={700}
         id="search-input"
@@ -30,16 +51,19 @@ const FormExample = () => {
       <Selector
         id="currencyId"
         title="Currency"
-        getOptions={getOptions}
+        // getOptions={getOptions}
         placement="list"
         options={optionsCurrencies}
-        onInit={(prop) => {
-          console.log(prop);
-        }}
-        onChange={(prop) => {
-          console.log(prop);
-        }}
-        value={1}
+        service={service}
+        stateName="currencyId"
+
+        // onInit={(prop) => {
+        //   console.log(prop);
+        // }}
+        // onChange={(prop) => {
+        //   console.log(prop);
+        // }}
+        // value={1}
         // builder={builder}
         // listBuilder={listBuilder}
         // activeClassName="bg-cyan"
@@ -59,13 +83,13 @@ const getOptions = async () => {
         { value: -1, title: "بدون", displayTitle: "العملة" },
         { value: 1, title: "دينار" },
         { value: 2, title: "دولار" },
-        { value: 2, title: "دولار" },
+        { value: 3, title: "دولار" },
       ]
     : [
         { value: -1, title: "بدون", className: "bg-cyan", displayTitle: "العملة" },
         { value: 1, title: "دينار", className: "bg-red" },
         { value: 2, title: "دولار", className: "bg-green" },
-        { value: 2, title: "دولار" },
+        { value: 3, title: "دولار" },
       ];
 };
 

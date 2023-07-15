@@ -12,9 +12,9 @@ export interface IKitProps<T = any> {
   id: string;
   className?: string;
   title?: string;
-  onChange?: (props: IChange) => void;
   style?: any;
   value?: T;
+  onChange?: (props: IChange) => void;
   onInit?: (props: IChange) => void;
 }
 
@@ -23,20 +23,13 @@ export interface IClearIconProps {
   clear: (effect?: boolean) => void;
 }
 
-export interface IInputProps {
+export interface IInputProps extends IKitProps {
   //extends React.InputHTMLAttributes<HTMLInputElement> {
-  id: string;
   dely?: number;
   clearIcon?: React.FC<IClearIconProps> | null;
   placeholder?: string;
-  className?: string;
-  title?: string;
-  style?: any;
-  value?: any;
   containerClassName?: string;
   onFocus?: (props: IChange) => void;
-  onChange?: (props: IChange) => void;
-  onInit?: (props: IChange) => void;
   [key: string]: any;
 }
 
@@ -68,6 +61,9 @@ export interface IOptionsProps<T = any> extends IKitProps {
   optionsVisible?: boolean;
   listClassName?: string;
   offset?: { x: number; y: number };
+  containerClassName?: string;
+  service?: any;
+  stateName?: string;
 }
 
 export interface IPopupSelectorProps extends IOptionsProps {
