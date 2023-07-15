@@ -1,6 +1,6 @@
 {
   "name": "morabaa-forms",
-  "version": "0.0.23",
+  "version": "0.0.24",
   "description": "morabaa-services",
   "main": "dist/index.js",
   "source": "src/index.tsx",
