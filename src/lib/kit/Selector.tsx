@@ -1,14 +1,13 @@
 import React from "react";
-import { IOptionBuilder, IOptionsProps } from "../Types";
+import { IOption, IOptionBuilder, IOptionsProps } from "../Types";
 import { Popup, PopupMe } from "morabaa-provider";
 import ToggleOptions from "./ToggleOptions";
-import { Utils } from "../utils";
 
 const Selector = ({
   onChange,
-  options: defaultOptions,
+  options,
   title,
-  value: defaultValue = "",
+  value = "",
   getOptions: getData,
   onInit,
   builder: Builder = DefaultBuilder,
@@ -21,72 +20,60 @@ const Selector = ({
   style,
   offset = { x: 0, y: 10 },
   containerClassName = "",
-  service: __service = {},
-  stateName = "selectorOptions",
 }: IOptionsProps<any>) => {
-  const service = React.useMemo(() => __service ?? {}, []);
-  const setStateName = React.useMemo(() => Utils.convertToCamelCase(`set-${stateName}`), []);
-  const [value, setValue] = React.useState(defaultValue);
-  [service[stateName], service[setStateName]] = React.useState(
-    defaultOptions ? { options: defaultOptions, selected: defaultOptions.findIndex((option) => option.value == value) } : { options: [], selected: 0 }
-  );
-
-  const options = service[stateName];
-  const setOptions = service[setStateName];
+  const [prop, setProp] = React.useState(options ? { options, selected: options?.findIndex((option) => option.value == value) } : { options: [], selected: 0 });
 
   const selected = React.useMemo(() => {
-    const index = options.options.findIndex((option: any) => option.value == value);
-    const _selected = options.options[index >= 0 ? index : 0] ?? { value: "", displayTitle: title };
+    const _selected = prop.options[prop.options?.findIndex((option: IOption) => option.value == value)] ??
+      prop.options[0] ?? { value: "", displayTitle: title };
+    console.log({ _selected, value, selected: prop.selected });
     return { className: activeClassName, ..._selected, title: _selected.displayTitle ?? _selected.title };
-  }, [options, value]);
+  }, [prop, value]);
 
   React.useMemo(() => {
-    const initData = { clear: () => onOptionChanged(options.options[0] || { id: 0 }), title: selected.title, value: selected?.value, id };
+    const initData = { clear: () => onOptionChanged(prop.options[0] || { id: 0 }), title: selected.title, value: selected?.value, id };
     if (getData) {
       setTimeout(async () => {
-        let optionsResponse = await getData();
-        let selected = !defaultOptions && !value ? 0 : optionsResponse.findIndex((option) => option.value == value);
-        const option = optionsResponse[selected >= 0 ? selected : 0] ?? { value: "", displayTitle: title };
-        if (selected === 0 && optionsResponse.length > 0)
-          onChange?.({ value: optionsResponse[0].value, title: optionsResponse[0].title, id, clear: () => onOptionChanged() });
-        setOptions(optionsResponse);
-        setValue(option.value);
+        let _options = await getData();
+        let selected = !options && !value ? 0 : _options?.findIndex((option) => option.value == value);
+        if (selected === 0 && _options.length > 0) onChange?.({ value: _options[0].value, title: _options[0].title, id, clear: () => onOptionChanged() });
+        setProp({ options: _options, selected });
         onInit?.(initData);
       }, 0);
     } else onInit?.(initData);
   }, []);
 
-  const onOptionChanged = (option = options.options[0], i = 0) => {
+  const onOptionChanged = (option = prop.options[0], i = 0) => {
     if (option.value !== selected.value) {
       onChange?.({ value: option.value, title: option.title, id, clear: () => onOptionChanged() });
-      setValue(option.value);
+      setProp((_prev) => ({ ..._prev, selected: i }));
     }
     Popup.remove(id);
   };
 
   const onClick = React.useCallback(
     ({ currentTarget }: any) => {
-      if (options.options?.length < 2) return;
+      if (prop.options?.length < 2) return;
       PopupMe({
         id,
         offset,
         placement,
         removeOnOutClick: true,
         Component: ListBuilder,
-        componentProps: { prop: options, selected, onOptionChanged, className: selected.className },
+        componentProps: { prop, selected, onOptionChanged, className: selected.className },
         target: placement !== "center" ? currentTarget : undefined,
         childClass: listClassName,
       });
     },
-    [options]
+    [prop]
   );
 
   return !optionsVisible ? (
     <div onClick={onClick} style={style} className={containerClassName}>
-      <Builder onOptionChanged={onOptionChanged} prop={options} selected={selected} activeClassName={selected.className} />
+      <Builder onOptionChanged={onOptionChanged} prop={prop} selected={selected} activeClassName={selected.className} />
     </div>
   ) : (
-    <ListBuilder style={style} prop={options} selected={selected} onOptionChanged={onOptionChanged} activeClassName={selected.className} />
+    <ListBuilder style={style} prop={prop} selected={selected} onOptionChanged={onOptionChanged} activeClassName={selected.className} />
   );
 };
 
