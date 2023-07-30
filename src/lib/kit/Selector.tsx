@@ -8,7 +8,7 @@ const Selector = ({
   options,
   title,
   value = "",
-  getOptions: getData,
+  getOptions,
   onInit,
   builder: Builder = DefaultBuilder,
   id = "selecotr",
@@ -32,9 +32,9 @@ const Selector = ({
 
   React.useMemo(() => {
     const initData = { clear: () => onOptionChanged(prop.options[0] || { id: 0 }), title: selected.title, value: selected?.value, id };
-    if (getData) {
+    if (getOptions) {
       setTimeout(async () => {
-        let _options = await getData();
+        let _options = await getOptions();
         let selected = !options && !value ? 0 : _options?.findIndex((option) => option.value == value);
         if (selected === 0 && _options.length > 0) onChange?.({ value: _options[0].value, title: _options[0].title, id, clear: () => onOptionChanged() });
         setProp({ options: _options, selected });
@@ -52,7 +52,8 @@ const Selector = ({
   };
 
   const onClick = React.useCallback(
-    ({ currentTarget }: any) => {
+    async ({ currentTarget }: any) => {
+      if (getOptions) prop.options = await getOptions();
       if (prop.options?.length < 2) return;
       PopupMe({
         id,
