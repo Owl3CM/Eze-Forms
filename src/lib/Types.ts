@@ -48,6 +48,7 @@ export interface IOptionBuilder {
   activeClassName?: string;
   style?: any;
   containerClassName?: string;
+  ref?: any;
 }
 
 export interface IOptionsProps<T = any> extends IKitProps {
@@ -62,7 +63,11 @@ export interface IOptionsProps<T = any> extends IKitProps {
   listClassName?: string;
   offset?: { x: number; y: number };
   containerClassName?: string;
-  service?: any;
+  service?: {
+    subscribe: (props: { id: string; onError: (error: string) => void; onSuccess: () => void; setValue: (value: string) => void }) => void;
+    get: (id: string) => string;
+    set: ({ id, value }: any) => void;
+  } | null;
   stateName?: string;
 }
 

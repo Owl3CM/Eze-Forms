@@ -1,0 +1,63 @@
+/* Input */
+.delete-mark {
+    padding-top: var(--s);
+}
+input {
+    flex-grow: 1;
+    font-family: var(--bold);
+    padding: var(--s) var(--m);
+    font-size: var(--font-l);
+    border-radius: unset ;
+    box-shadow: unset ;
+    background-color: transparent ;
+}
+
+input::placeholder {
+    color: var(--shark);
+    letter-spacing: 1px;
+    z-index: 2;
+    font-weight: bold;
+    position: relative;
+    font-family: var(--bold);
+}
+
+.default-icon-input {
+    display: flex;
+    align-items: center;
+    border-radius: var(--round-m);
+    padding: var(--m);
+    
+}
+
+/* .default-icon-input input {
+    border-radius: unset !important;
+    box-shadow: unset !important;
+    background-color: transparent !important;
+} */
+
+.input-icon {
+    height: 25px;
+    width: 25px;
+    padding: 3px;
+    fill: var(--goat);
+}
+
+.bordered {
+    border: 2px solid var(--lion);
+    border-radius: var(--round-m);
+    background-color: var(--lord);
+    box-shadow: unset;
+}
+.dark .bordered {
+    border: unset;
+}
+
+.prim {
+    background-color: var(--prim);
+}
+
+.card-m {
+    padding: var(--2x);
+}
+
+/* Input */
