@@ -1,6 +1,6 @@
 import React from "react";
 import { TimedCallback } from "morabaa-utils";
-import { IInputProps } from "../Types";
+import { IInputProps } from "./Types";
 
 export const Input = ({
   id,

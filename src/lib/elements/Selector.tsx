@@ -1,7 +1,7 @@
 import React from "react";
-import { IOption, IOptionBuilder, IOptionsProps } from "../Types";
+import { IOption, IOptionBuilder, IOptionsProps } from "./Types";
 import { Popup, PopupMe } from "morabaa-provider";
-import ToggleOptions from "../../../toHandle/kit/ToggleOptions";
+import ToggleOptions from "./ToggleOptions";
 
 export const Selector = ({
   service,
