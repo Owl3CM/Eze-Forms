@@ -1,17 +1,16 @@
 import React from "react";
 import { IOption, IOptionBuilder, IOptionsProps } from "../Types";
 import { Popup, PopupMe } from "morabaa-provider";
-import ToggleOptions from "./ToggleOptions";
+import ToggleOptions from "../../../toHandle/kit/ToggleOptions";
 
-const Selector = ({
+export const Selector = ({
   service,
   onChange = service?.set,
   options,
   title,
   id = "selecotr",
-  value = service?.get(id) ?? "",
+  value = service?.get?.(id) ?? "",
   getOptions,
-  onInit,
   builder: Builder = DefaultBuilder,
   placement = "center",
   activeClassName,
@@ -35,14 +34,16 @@ const Selector = ({
 
   React.useMemo(() => {
     // const initData = { clear: () => onOptionChanged(prop.options[0] || { id: 0 }), title: selected.title, value: selected?.value, id };
-    const parent = ref.current as HTMLDivElement;
     if (service?.subscribe) {
-      service.subscribe({
-        id,
-        setValue: (value: string) => setProp((_prev) => ({ ..._prev, selected: _prev.options?.findIndex((option) => option.value == value) })),
-        onError: (error: string) => parent.setAttribute("data-selector-error", error),
-        onSuccess: () => parent.removeAttribute("data-selector-error"),
-      });
+      setTimeout(() => {
+        const parent = ref.current as HTMLDivElement;
+        service.subscribe({
+          id,
+          setValue: (value: string) => setProp((_prev) => ({ ..._prev, selected: _prev.options?.findIndex((option) => option.value == value) })),
+          onError: (error: string) => parent.setAttribute("data-input-error", error),
+          onSuccess: () => parent.removeAttribute("data-input-error"),
+        });
+      }, 10);
     }
     if (getOptions) {
       setTimeout(async () => {
@@ -88,8 +89,6 @@ const Selector = ({
     <ListBuilder ref={ref} style={style} prop={prop} selected={selected} onOptionChanged={onOptionChanged} activeClassName={selected.className} />
   );
 };
-
-export default React.memo(Selector);
 
 const DefaultBuilder = ({ selected, onOptionChanged }: IOptionBuilder) => {
   return (

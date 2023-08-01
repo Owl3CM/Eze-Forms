@@ -31,7 +31,7 @@
     "@types/react-router-dom": "^5.3.3",
     "@vitejs/plugin-react": "^3.1.0",
     "babel-loader": "^8.2.5",
-    "morabaa-services": "^1.0.61",
+    "morabaa-services": "^1.0.67",
     "morabaa-utils": "^0.0.13",
     "postcss": "^8.4.16",
     "react": "^18.2.0",
@@ -46,7 +46,8 @@
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-typescript2": "^0.34.1",
     "typescript": "^4.8.4",
-    "vite": "^4.2.1"
+    "vite": "^4.2.1",
+    "yup": "^1.2.0"
   },
   "files": [
     "dist"
@@ -61,5 +62,7 @@
   },
   "keywords": [],
   "tags": [],
-  "dependencies": {}
+  "dependencies": {
+    "morabaa-provider": "^0.0.31"
+  }
 }

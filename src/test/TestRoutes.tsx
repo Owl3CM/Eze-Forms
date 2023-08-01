@@ -1,11 +1,11 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { Demo, FormExample } from "./views";
+import { Demo, FormSample } from "./views";
 
 const _TestRoutes = [
   { path: "/", Component: Demo, title: "Demo" },
-  { path: "/form", Component: FormExample, title: "Form" },
+  { path: "/form", Component: FormSample, title: "Form" },
 ];
 const TestRoutes = () => {
   return (

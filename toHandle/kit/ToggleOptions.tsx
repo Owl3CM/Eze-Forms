@@ -1,5 +1,5 @@
 import React from "react";
-import { IOptionBuilder } from "../Types";
+import { IOptionBuilder } from "../../src/lib/Types";
 
 const ToggleOptions: React.FC<IOptionBuilder> = ({ prop, selected, onOptionChanged, containerClassName, activeClassName, style }: IOptionBuilder) => {
   return prop.options.length ? (

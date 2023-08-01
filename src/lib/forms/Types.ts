@@ -12,6 +12,7 @@ export interface InputFormProps {
 export interface IFormChange {
   id: string;
   value: string;
+  effect?: boolean;
 }
 
 export interface SubscribeProps {
@@ -24,6 +25,10 @@ export interface SubscribeProps {
 export interface IFormProps<T> {
   defaultValues: T;
   validationSchema: any;
+  load?: () => Promise<T>;
+  reload?: () => Promise<T>;
+  upload?: (formData: T) => void;
+  valdiateOnLoad?: boolean;
 }
 
 export interface IKitProps<T = any> {

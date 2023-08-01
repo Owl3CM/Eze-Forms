@@ -1,5 +1,6 @@
 import { PopupPlacement } from "morabaa-provider/dist/lib/types";
 import React from "react";
+import { IFormChange } from "./forms/Types";
 
 interface IChange {
   id: string;
@@ -26,10 +27,14 @@ export interface IClearIconProps {
 export interface IInputProps extends IKitProps {
   //extends React.InputHTMLAttributes<HTMLInputElement> {
   dely?: number;
-  clearIcon?: React.FC<IClearIconProps> | null;
   placeholder?: string;
-  containerClassName?: string;
-  onFocus?: (props: IChange) => void;
+  service?: null | {
+    subscribe: (props: { id: string; onError: (error: string) => void; onSuccess: () => void; setValue: (value: string) => void }) => void;
+    get: (id: string) => string;
+    set: ({ id, value }: IFormChange) => void;
+  };
+  valdiateOn?: "onChange" | "onBlur" | "none";
+  type?: string;
   [key: string]: any;
 }
 
