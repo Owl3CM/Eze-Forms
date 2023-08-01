@@ -1,3 +1,5 @@
+import { IFormChange, IFormService } from "../forms";
+
 export interface IKitProps<T = any> {
   id?: string;
   className?: string;
@@ -14,4 +16,12 @@ export interface IChange {
   value: any;
   title?: string;
   setValue?: (value: string) => void;
+}
+
+export interface InputFormProps {
+  service: IFormService;
+  id: string;
+  onChange?: (props: IFormChange) => void;
+  children?: any;
+  valdiateOn?: "onChange" | "onBlur" | "none";
 }

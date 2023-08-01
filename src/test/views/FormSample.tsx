@@ -1,9 +1,7 @@
 import React from "react";
-import FormService from "../../lib/forms/FormService";
-import Form from "../../lib/forms/Form";
 import * as yup from "yup";
+import { Form, FormService } from "../../lib/forms";
 import { Input, Selector } from "../../lib/elements";
-// import InputSelector from "../elements/InputSelector";
 
 const optionsCurrencies = [
   //
