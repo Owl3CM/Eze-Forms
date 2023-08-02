@@ -9,8 +9,8 @@ export default class FormService<T> {
   private validationSchema: any;
   formData: T = {} as T;
   setFormData = (formData: T, valdiate = false) => {
-    this.formData = formData;
-    Object.entries(this.formData).map(([id, value]) => {
+    (this.formData as any) = formData;
+    Object.entries(this.formData as any).map(([id, value]: any) => {
       if (valdiate) this.valdiate(id, value);
       this.setValue(id, value);
     });
@@ -26,27 +26,27 @@ export default class FormService<T> {
   reload = (valdiate = true) => {};
   onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (Object.entries(this.formData).every(([key, value]) => this.valdiate(key, value as any))) {
-      this.upload(this.formData);
+    if (Object.entries(this.formData as any).every(([key, value]) => this.valdiate(key, value as any))) {
+      this.upload(this.formData as any);
     }
   };
   set = ({ id, value, effect = false }: IFormChange) => {
     this.valdiate(id, value);
-    this.formData[id] = value;
+    (this.formData as any)[id] = value;
     if (effect) this.setValue(id, value);
   };
-  get = (id: string) => this.formData[id] ?? "";
+  get = (id: string) => (this.formData as any)[id] ?? "";
   subscribe = ({ id, setValue, onError, onSuccess }: SubscribeProps) => {
-    this[`set${id}`] = setValue;
-    this[`on${id}Error`] = onError;
-    this[`on${id}Success`] = onSuccess;
+    (this as any)[`set${id}`] = setValue;
+    (this as any)[`on${id}Error`] = onError;
+    (this as any)[`on${id}Success`] = onSuccess;
   };
   private valdiate = (id: string, value: string) => {
     try {
       this.validationSchema.validateSyncAt(id, { [id]: value });
-    } catch ({ message }) {
-      if (!message.includes("The schema does not contain the path")) {
-        this.onError(id, message);
+    } catch ({ message }: any) {
+      if (!(message as any).includes("The schema does not contain the path")) {
+        this.onError(id, message as any);
         return false;
       }
     }
@@ -54,14 +54,14 @@ export default class FormService<T> {
     return true;
   };
   private setValue = (id: string, value: string) => {
-    this[`set${id}`]?.(value);
+    (this as any)[`set${id}`]?.(value);
   };
   private onError = (id: string, error: string) => {
-    const errorFunc = this[`on${id}Error`];
+    const errorFunc = (this as any)[`on${id}Error`];
     errorFunc ? errorFunc(error) : Toast.error({ title: error });
   };
   private onSuccess = (id: string) => {
-    this[`on${id}Success`]?.();
+    (this as any)[`on${id}Success`]?.();
   };
 
   onPriceChange = ({ id, value }: any) => {
@@ -71,7 +71,7 @@ export default class FormService<T> {
   };
 
   constructor({ defaultValues, validationSchema, upload, load, reload = load, valdiateOnLoad = true }: IFormProps<T>) {
-    this.formData = defaultValues;
+    (this.formData as any) = defaultValues;
     this.validationSchema = validationSchema;
     upload && (this.upload = upload);
     if (load) {
@@ -79,12 +79,12 @@ export default class FormService<T> {
         this.setFormData(await load(), valdiate);
       };
       this.reload = async (valdiate = valdiateOnLoad) => {
-        this.setFormData(await reload(), valdiate);
+        this.setFormData(await (reload as any)(), valdiate);
       };
       this.load(valdiateOnLoad);
     } else {
       this.load = () => this.setFormData(defaultValues, valdiateOnLoad);
-      this.reload = this.reload;
+      (this as any).reload = load;
     }
   }
 }

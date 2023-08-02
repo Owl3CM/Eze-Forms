@@ -5,7 +5,7 @@ import ToggleOptions from "./ToggleOptions";
 
 export const Selector = ({
   service,
-  onChange = service?.set,
+  onChange = service?.set as any,
   options,
   title,
   id = "selecotr",

@@ -11,7 +11,7 @@ const Controller = ({ Component, service, id }: Props) => {
   const [, render] = React.useState(0);
 
   const controller = React.useMemo(() => {
-    const onChange = service?.set;
+    const onChange = service?.set as any;
     let _controller = {
       id,
       value: service?.get(id) ?? "",
@@ -35,7 +35,7 @@ const Controller = ({ Component, service, id }: Props) => {
         onChange?.({ id, value });
       },
     };
-    service.subscribe(_controller);
+    service?.subscribe?.(_controller);
     return _controller;
   }, []);
 

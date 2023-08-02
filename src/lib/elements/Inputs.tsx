@@ -13,7 +13,7 @@ export const Input = ({
   type = "text",
   ...rest
 }: IInputProps) => {
-  let controller = React.useMemo(() => {
+  let controller: any = React.useMemo(() => {
     return {
       id,
       value,
