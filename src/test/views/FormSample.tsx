@@ -1,7 +1,8 @@
 import React from "react";
 import * as yup from "yup";
-import { Form, FormService } from "../../lib/forms";
+import { Controller, Form, FormService } from "../../lib/forms";
 import { Input, Selector } from "../../lib/elements";
+import { JsonBuilder } from "morabaa-utils";
 
 const optionsCurrencies = [
   //
@@ -23,21 +24,7 @@ const getOptions = async () => {
   ];
 };
 const FormSample = () => {
-  const formService = React.useMemo(
-    () =>
-      new FormService<IAccountForm>({
-        defaultValues,
-        validationSchema,
-        load: () => {
-          return new Promise((resolve) =>
-            setTimeout(() => {
-              resolve(defaultValues);
-            }, 3000)
-          );
-        },
-      }),
-    []
-  );
+  const formService = React.useMemo(() => new FormService<IAccountForm>({ defaultValues, validationSchema }), []);
   return (
     <div id="json-example" className="col gap-l p-l h-screen overflow-auto scroller items-start">
       <Form onSubmit={formService.onSubmit}>
@@ -47,12 +34,14 @@ const FormSample = () => {
         {/* <IconCard variant="card-m" icon="conclusion" iconClass="svg-active p-s svg-border-shark" label="NameOfAgent">
                     <MyInpuForm service={formService} id="name" />
         </IconCard> */}
-        <div>
+        <InputController id="name" service={formService} />
+        <InputController id="phoneNumber" service={formService} />
+        {/* <div>
           <Input service={formService} id="name" className="" />
-        </div>
+        </div> */}
         {/* <Input service={formService} id="openingbalance" /> */}
         {/* <Input service={formService} id="phoneNumber" /> */}
-        <Input service={formService} id="address" />
+        {/* <Input service={formService} id="address" />
         <Selector
           service={formService}
           id="address"
@@ -61,7 +50,7 @@ const FormSample = () => {
           placement="list"
           // options={optionsCurrencies}
           stateName="currencyId"
-        />
+        /> */}
         {/* <InputSelector
           options={[
             { title: "IQD", value: 1 },
@@ -84,6 +73,23 @@ const FormSample = () => {
 };
 
 export default FormSample;
+
+const InputController = ({ service, id }: any) => {
+  return (
+    <Controller
+      id={id}
+      service={service}
+      Component={({ value, onChange, error }) => {
+        return (
+          <div>
+            <input type="text" value={value} onChange={({ target: { value } }) => onChange(value)} />
+            <p className="text-red">{error}</p>
+          </div>
+        );
+      }}
+    />
+  );
+};
 
 interface IAccountForm {
   name: string;

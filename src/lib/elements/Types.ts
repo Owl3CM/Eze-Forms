@@ -1,7 +1,7 @@
 import { PopupPlacement } from "morabaa-provider/dist/lib/types";
 import { IFormChange } from "../forms";
 
-type FormServiceType = {
+export type FormServiceType = {
   subscribe: (props: { id: string; onError: (error: string) => void; onSuccess: () => void; setValue: (value: string) => void }) => void;
   get: (id: string) => string;
   set: ({ id, value }: IFormChange) => void;
@@ -26,10 +26,10 @@ export interface IChange {
 }
 
 export interface IInputProps extends IKitProps {
-  service?: FormServiceType;
+  // service?: FormServiceType;
   id: string;
   children?: any;
-  valdiateOn?: "onChange" | "onBlur" | "none";
+  // valdiateOn?: "onChange" | "onBlur" | "none";
   [key: string]: any;
 }
 
