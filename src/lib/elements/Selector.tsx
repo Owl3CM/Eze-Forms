@@ -1,17 +1,17 @@
 import React from "react";
-import { IOption, IOptionBuilder, IOptionsProps } from "../Types";
+import { IOption, IOptionBuilder, IOptionsProps } from "./Types";
 import { Popup, PopupMe } from "morabaa-provider";
 import ToggleOptions from "./ToggleOptions";
 
-const Selector = ({
-  onChange,
+export const Selector = ({
+  service,
+  onChange = service?.set as any,
   options,
   title,
-  value = "",
-  getOptions,
-  onInit,
-  builder: Builder = DefaultBuilder,
   id = "selecotr",
+  value = service?.get?.(id) ?? "",
+  getOptions,
+  builder: Builder = DefaultBuilder,
   placement = "center",
   activeClassName,
   listClassName,
@@ -30,17 +30,29 @@ const Selector = ({
     return { className: activeClassName, ..._selected, title: _selected.displayTitle ?? _selected.title };
   }, [prop, value]);
 
+  const ref = React.useRef<HTMLDivElement>(null);
+
   React.useMemo(() => {
-    const initData = { clear: () => onOptionChanged(prop.options[0] || { id: 0 }), title: selected.title, value: selected?.value, id };
+    // const initData = { clear: () => onOptionChanged(prop.options[0] || { id: 0 }), title: selected.title, value: selected?.value, id };
+    if (service?.subscribe) {
+      setTimeout(() => {
+        const parent = ref.current as HTMLDivElement;
+        service.subscribe({
+          id,
+          setValue: (value: string) => setProp((_prev) => ({ ..._prev, selected: _prev.options?.findIndex((option) => option.value == value) })),
+          onError: (error: string) => parent.setAttribute("data-input-error", error),
+          onSuccess: () => parent.removeAttribute("data-input-error"),
+        });
+      }, 10);
+    }
     if (getOptions) {
       setTimeout(async () => {
         let _options = await getOptions();
         let selected = !options && !value ? 0 : _options?.findIndex((option) => option.value == value);
         if (selected === 0 && _options.length > 0) onChange?.({ value: _options[0].value, title: _options[0].title, id, clear: () => onOptionChanged() });
         setProp({ options: _options, selected });
-        onInit?.(initData);
       }, 0);
-    } else onInit?.(initData);
+    }
   }, []);
 
   const onOptionChanged = (option = prop.options[0], i = 0) => {
@@ -70,15 +82,13 @@ const Selector = ({
   );
 
   return !optionsVisible ? (
-    <div onClick={onClick} style={style} className={containerClassName}>
+    <div ref={ref} onClick={onClick} style={style} className={containerClassName}>
       <Builder onOptionChanged={onOptionChanged} prop={prop} selected={selected} activeClassName={selected.className} />
     </div>
   ) : (
-    <ListBuilder style={style} prop={prop} selected={selected} onOptionChanged={onOptionChanged} activeClassName={selected.className} />
+    <ListBuilder ref={ref} style={style} prop={prop} selected={selected} onOptionChanged={onOptionChanged} activeClassName={selected.className} />
   );
 };
-
-export default React.memo(Selector);
 
 const DefaultBuilder = ({ selected, onOptionChanged }: IOptionBuilder) => {
   return (
@@ -88,9 +98,9 @@ const DefaultBuilder = ({ selected, onOptionChanged }: IOptionBuilder) => {
   );
 };
 
-const DefaultListBuilder = ({ prop, selected, onOptionChanged, activeClassName }: IOptionBuilder) => {
+const DefaultListBuilder = ({ prop, selected, onOptionChanged, activeClassName, ref }: IOptionBuilder) => {
   return (
-    <div className="gap-l col" style={{ minWidth: 150 }}>
+    <div className="gap-l col" style={{ minWidth: 150 }} ref={ref}>
       {prop.options.map((option, i) => {
         const _optionClass = option.className ?? activeClassName;
         const _notSelected = option.value !== selected.value;

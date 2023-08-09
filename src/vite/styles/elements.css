@@ -1,4 +1,4 @@
-.input[type="number"],.input[type="text"],.input[type="password"] {
+input[type="text"],input[type="number"],input[type="password"] {
     font-family: var(--font-bold);
     padding: var(--s) var(--m);
     outline: none;
@@ -10,7 +10,7 @@
     background-color: var(--prim);
 }
 
-.input::placeholder {
+input::placeholder {
     color: var(--goat);
     letter-spacing: 1px;
     font-size: 14px;
@@ -18,7 +18,20 @@
     font-weight: bold;
     position: relative;
 }
-.input[type="number"]:focus,.input[type="text"]:focus{box-shadow: var(--shadow-focus);}
+
+input[type="submit"]{
+    background-color: var(--dragon);
+    color: var(--white);
+    border-radius: var(--s);
+    padding: var(--s) var(--s);
+    font-weight: bold;
+    font-family: var(--font-bold);
+    border: none;
+    cursor: pointer;
+    letter-spacing: 1px;
+    box-shadow: var(--shadow-l);
+
+}
 
 .button{
     background-color: var(--dragon);

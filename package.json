@@ -46,7 +46,8 @@
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-typescript2": "^0.34.1",
     "typescript": "^4.8.4",
-    "vite": "^4.2.1"
+    "vite": "^4.2.1",
+    "yup": "^1.2.0"
   },
   "files": [
     "dist"
@@ -61,5 +62,7 @@
   },
   "keywords": [],
   "tags": [],
-  "dependencies": {}
+  "dependencies": {
+    "morabaa-provider": "^0.0.31"
+  }
 }
