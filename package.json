@@ -1,6 +1,6 @@
 {
   "name": "morabaa-forms",
-  "version": "0.0.27",
+  "version": "0.0.31",
   "description": "morabaa-services",
   "main": "dist/index.js",
   "source": "src/index.tsx",
@@ -31,7 +31,7 @@
     "@types/react-router-dom": "^5.3.3",
     "@vitejs/plugin-react": "^3.1.0",
     "babel-loader": "^8.2.5",
-    "morabaa-services": "^1.0.61",
+    "morabaa-services": "^1.0.67",
     "morabaa-utils": "^0.0.13",
     "postcss": "^8.4.16",
     "react": "^18.2.0",
