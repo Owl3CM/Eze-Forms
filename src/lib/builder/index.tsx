@@ -1,5 +1,5 @@
 import React from "react";
-import * as FormKit from "../../../toHandle/kit";
+import * as FormKit from "../kit";
 import "./form.css";
 
 export { default as FormBuilder } from "./FormBuilder";

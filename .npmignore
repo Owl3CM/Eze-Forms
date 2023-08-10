@@ -11,5 +11,3 @@ tsconfig.json
 rollup.*
 build-storybook.log
 vite.config.js
-toHandle
-toHandle/*

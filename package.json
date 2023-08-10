@@ -1,6 +1,6 @@
 {
   "name": "morabaa-forms",
-  "version": "0.0.33",
+  "version": "0.0.34",
   "description": "morabaa-services",
   "main": "dist/index.js",
   "source": "src/index.tsx",
@@ -16,7 +16,7 @@
     "start": "vite"
   },
   "peerDependencies": {
-    "morabaa-provider": "^0.0.26",
+    "morabaa-provider": "^0.0.32",
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
   },
@@ -31,6 +31,7 @@
     "@types/react-router-dom": "^5.3.3",
     "@vitejs/plugin-react": "^3.1.0",
     "babel-loader": "^8.2.5",
+    "morabaa-provider": "^0.0.32",
     "morabaa-services": "^1.0.67",
     "morabaa-utils": "^0.0.13",
     "postcss": "^8.4.16",
@@ -46,8 +47,7 @@
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-typescript2": "^0.34.1",
     "typescript": "^4.8.4",
-    "vite": "^4.2.1",
-    "yup": "^1.2.0"
+    "vite": "^4.2.1"
   },
   "files": [
     "dist"
@@ -62,7 +62,5 @@
   },
   "keywords": [],
   "tags": [],
-  "dependencies": {
-    "morabaa-provider": "^0.0.31"
-  }
+  "dependencies": {}
 }

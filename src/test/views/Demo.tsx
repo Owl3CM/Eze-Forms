@@ -2,8 +2,9 @@ import React from "react";
 import DemoService, { IDemoService } from "../services/DemoService";
 import DemoGrid from "../components/DemoGrid";
 import DemoHeader from "../components/DemoHeader";
-import { Grid, PagenatedContainer, RecyclerList, ServiceStateBuilder, setDefaultStateKit } from "morabaa-services";
+import { Grid, PaginatedContainer, RecyclerList, ServiceStateBuilder, setDefaultStateKit } from "morabaa-services";
 import { TimedCallback } from "morabaa-utils";
+import { FieldsSample, FormBuilder } from "../../lib";
 
 export interface DemoServiceProps {
   service: IDemoService;
@@ -20,13 +21,13 @@ const Demo = () => {
     <div>
       <h1>Demo</h1>
       <div id="state-holder" className="bg-white relative"></div>
-      {/* <FormBuilder
+      <FormBuilder
         fields={FieldsSample}
         service={demoService}
         // onChange={(prop) => {
         //   console.log({ prop });
         // }}
-      /> */}
+      />
       <Actions service={demoService} />
       <DemoHeader service={demoService} />
       {/* <DemoGrid service={demoService} /> */}
@@ -47,6 +48,34 @@ const Demo = () => {
       />
     </div>
   );
+
+  return (
+    <div>
+      <h1>Demo</h1>
+      <div id="state-holder" className="bg-white relative"></div>
+      <FormBuilder
+        fields={FieldsSample}
+        service={demoService}
+        // onChange={(prop) => {
+        //   console.log({ prop });
+        // }}
+      />
+      <Actions service={demoService} />
+      <DemoHeader service={demoService} />
+      {/* <DemoGrid service={demoService} /> */}
+      <PaginatedContainer service={demoService}>
+        <Grid service={demoService} itemBuilder={DemoBuilder} />
+      </PaginatedContainer>
+      <ServiceStateBuilder
+        service={demoService}
+        demo={({ title }: any) => (
+          <div className="bg-prim p-4x round-full ">
+            <h1>TEST {title}</h1>
+          </div>
+        )}
+      />
+    </div>
+  );
 };
 
 export default Demo;
@@ -57,20 +86,20 @@ export const Actions = ({ service }: DemoServiceProps) => {
       <p
         className="button bg-green"
         onClick={() => {
-          // service.setState({
-          //   state: "demo",
-          //   props: {
-          //     title: "demo title",
-          //   },
-          //   parent: document.getElementById("state-holder") || undefined,
-          // });
+          service.setState({
+            state: "demo",
+            props: {
+              title: "demo title",
+            },
+            parent: document.getElementById("state-holder") || undefined,
+          });
         }}>
         demo
       </p>
       <p
         className="button bg-green"
         onClick={() => {
-          // service.setState("loading");
+          service.setState("loading");
         }}>
         loading
       </p>
