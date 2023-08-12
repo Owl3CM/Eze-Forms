@@ -2,44 +2,48 @@ import React from "react";
 import { FormServiceType } from "../elements";
 
 type Props = {
-  Component: React.FC<any>;
-  service?: FormServiceType;
   id: string;
+  Component: React.FC<{
+    value: string;
+    error: string;
+    setValue: (value: string) => void;
+    setError: (error: string) => void;
+    onSuccess: () => void;
+  }>;
+  formService: FormServiceType;
 };
 
-const Controller = ({ Component, service, id }: Props) => {
+const Controller = ({ Component, formService, id }: Props) => {
   const [, render] = React.useState(0);
 
   const controller = React.useMemo(() => {
-    const onChange = service?.set as any;
+    const setToForm = formService?.set as any;
     let _controller = {
       id,
-      value: service?.get(id) ?? "",
+      value: formService?.get(id) ?? "",
       error: null as any,
       setValue: (value: string) => {
         _controller.value = value;
-        onChange({ id, value });
-        render((prev) => prev + 1);
+        setToForm({ id, value });
+        controller.render();
       },
-      onError: (error: string) => {
+      setError: (error: string) => {
+        if (_controller.error === error) return;
         _controller.error = error;
-        render((prev) => prev + 1);
+        controller.render();
       },
       onSuccess: () => {
         if (!_controller.error) return;
         _controller.error = null;
-        render((prev) => prev + 1);
+        controller.render();
       },
-      onChange: (value: string) => {
-        _controller.value = value;
-        onChange?.({ id, value });
-      },
+      render: () => render((prev) => prev + 1),
     };
-    service?.subscribe?.(_controller);
+    formService?.subscribe?.(_controller);
     return _controller;
   }, []);
 
-  return <Component value={controller.value} error={controller.error} onChange={controller.onChange} />;
+  return <Component {...controller} />;
 };
 
 export default Controller;

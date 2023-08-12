@@ -2,10 +2,12 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Demo, FormExample } from "./views";
+import FormSample from "./views/FormSample";
 
 const _TestRoutes = [
   { path: "/", Component: Demo, title: "Demo" },
-  { path: "/form", Component: FormExample, title: "Form" },
+  { path: "/form", Component: FormSample, title: "Form" },
+  // { path: "/form", Component: FormExample, title: "Form" },
 ];
 const TestRoutes = () => {
   return (

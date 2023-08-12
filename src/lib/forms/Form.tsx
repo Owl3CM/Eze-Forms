@@ -1,19 +1,19 @@
 import React from "react";
 
 type Props = {
-    children: React.ReactNode;
-    onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
-    className?: string;
-    submitButton?: React.ReactNode;
+  children: React.ReactNode;
+  onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
+  className?: string;
+  submitButton?: React.ReactNode;
 };
 
 const Form = ({ children, onSubmit, submitButton = defaultSubmit, className = "col gap-l" }: Props) => {
-    return (
-        <form className={className} onSubmit={onSubmit}>
-            {children}
-            {submitButton}
-        </form>
-    );
+  return (
+    <form className={className} onSubmit={onSubmit}>
+      {children}
+      {submitButton}
+    </form>
+  );
 };
 
 export default Form;

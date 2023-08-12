@@ -6,9 +6,9 @@ export interface IFormChange {
 }
 export interface SubscribeProps {
   id: string;
-  onSuccess: () => void;
-  onError: (error: string) => void;
   setValue: (value: string) => void;
+  setError: (error: string) => void;
+  onSuccess?: () => void;
 }
 
 export interface IFormProps<T> {
@@ -16,6 +16,7 @@ export interface IFormProps<T> {
   validationSchema: any;
   load?: () => Promise<T>;
   reload?: () => Promise<T>;
-  upload?: (formData: T) => void;
+  onSubmit?: (formData: T) => void;
   valdiateOnLoad?: boolean;
+  mode?: "onBlur" | "onChange" | "onSubmit";
 }

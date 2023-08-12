@@ -2,7 +2,7 @@ import { PopupPlacement } from "morabaa-provider/dist/lib/types";
 import { IFormChange } from "../forms";
 
 export type FormServiceType = {
-  subscribe: (props: { id: string; onError: (error: string) => void; onSuccess: () => void; setValue: (value: string) => void }) => void;
+  subscribe: (props: { id: string; setError: (error: string) => void; onSuccess: () => void; setValue: (value: string) => void }) => void;
   get: (id: string) => string;
   set: ({ id, value }: IFormChange) => void;
 } | null;

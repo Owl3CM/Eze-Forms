@@ -1,6 +1,7 @@
 import React from "react";
 import * as yup from "yup";
 import { Controller, Form, FormService } from "../../lib/forms";
+import "../../lib/elements/elements.css";
 import { Input, Selector } from "../../lib/elements";
 import { JsonBuilder } from "morabaa-utils";
 
@@ -13,6 +14,8 @@ const optionsCurrencies = [
   { value: 3, title: "دولار" },
 ];
 
+const test = [1];
+
 const getOptions = async () => {
   await new Promise((resolve) => setTimeout(resolve, 1000));
   return [
@@ -24,7 +27,39 @@ const getOptions = async () => {
   ];
 };
 const FormSample = () => {
-  const formService = React.useMemo(() => new FormService<IAccountForm>({ defaultValues, validationSchema }), []);
+  const formService = React.useMemo(() => new FormService<any>({ defaultValues, validationSchema }), []);
+
+  return (
+    <div id="json-example" className="col gap-l p-l h-screen overflow-auto scroller items-start">
+      <Form onSubmit={formService.onSubmit}>
+        <Controller
+          id="name"
+          formService={formService}
+          Component={({ value, error, setValue, setError }) => {
+            return (
+              <div data-input-error={error}>
+                <input type="text" value={value} onChange={({ target: { value } }) => setValue(value)} />
+                {/* <p className="text-red">{error}</p> */}
+              </div>
+            );
+          }}
+        />
+        <Controller
+          id="phoneNumber"
+          formService={formService}
+          Component={({ value, error, setValue, setError }) => {
+            return (
+              <div data-input-error={error}>
+                <input type="text" value={value} onChange={({ target: { value } }) => setValue(value)} />
+                {/* <p className="text-red">{error}</p> */}
+              </div>
+            );
+          }}
+        />
+      </Form>
+    </div>
+  );
+
   return (
     <div id="json-example" className="col gap-l p-l h-screen overflow-auto scroller items-start">
       <Form onSubmit={formService.onSubmit}>
@@ -63,7 +98,7 @@ const FormSample = () => {
         /> */}
         <div
           onClick={() => {
-            formService.setFormData(JSON.parse(JSON.stringify(defaultValues)));
+            formService.reset(JSON.parse(JSON.stringify(defaultValues)));
           }}>
           rest
         </div>
@@ -78,11 +113,11 @@ const InputController = ({ service, id }: any) => {
   return (
     <Controller
       id={id}
-      service={service}
-      Component={({ value, onChange, error }) => {
+      formService={service}
+      Component={({ value, setValue, error }) => {
         return (
           <div>
-            <input type="text" value={value} onChange={({ target: { value } }) => onChange(value)} />
+            <input type="text" value={value} onChange={({ target: { value } }) => setValue(value)} />
             <p className="text-red">{error}</p>
           </div>
         );

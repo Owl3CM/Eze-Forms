@@ -40,7 +40,7 @@ export const Selector = ({
         service.subscribe({
           id,
           setValue: (value: string) => setProp((_prev) => ({ ..._prev, selected: _prev.options?.findIndex((option) => option.value == value) })),
-          onError: (error: string) => parent.setAttribute("data-input-error", error),
+          setError: (error: string) => parent.setAttribute("data-input-error", error),
           onSuccess: () => parent.removeAttribute("data-input-error"),
         });
       }, 10);
