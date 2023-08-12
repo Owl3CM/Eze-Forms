@@ -9,6 +9,7 @@ export type IFormService<T = any, State = defaultFormState> = FormService<T, Sta
 export default class FormService<T, State = any> extends StateBuilder<State> {
   // private submitButtonRef: HTMLButtonElement | null = null;
   private validationSchema: any;
+  private dataChanged = false;
   defaultValues = {} as T;
   errors: { [key: string]: string } = {};
 
@@ -74,8 +75,11 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
     }
   };
   private checkDataChanged = () => {
-    if (Object.entries(this.defaultValues as any).some(([key, val]) => val !== (this.values as any)[key])) this.setIsDirty(true);
-    else this.setIsDirty(false);
+    const isChanged = Object.entries(this.defaultValues as any).some(([key, val]) => val !== (this.values as any)[key]);
+    if (this.dataChanged !== isChanged) {
+      this.dataChanged = isChanged;
+      this.setIsDirty(isChanged);
+    } else this.setIsDirty(false);
   };
 
   private privateSetValue = (id: string, value: string) => {
