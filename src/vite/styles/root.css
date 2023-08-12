@@ -24,6 +24,11 @@
     --auto:auto ;    
 }
 
+*:disabled{
+    opacity: 0.5;
+    background-color: var(--red);
+}
+
 .font-bold {
     font-family: var(--font-bold);
     font-weight: bold;

@@ -18,5 +18,8 @@ export interface IFormProps<T> {
   reload?: () => Promise<T>;
   onSubmit?: (formData: T) => void;
   valdiateOnLoad?: boolean;
+  // onDataChanged?: (data: T) => void;
+  onDataChanged?: (isChanged: boolean) => void;
+  onErrorChanged?: (errors: { [key: string]: string }) => void;
   mode?: "onBlur" | "onChange" | "onSubmit";
 }

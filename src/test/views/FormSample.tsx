@@ -4,6 +4,7 @@ import { Controller, Form, FormService } from "../../lib/forms";
 import "../../lib/elements/elements.css";
 import { Input, Selector } from "../../lib/elements";
 import { JsonBuilder } from "morabaa-utils";
+import { ReactStateBuilder } from "morabaa-services";
 
 const optionsCurrencies = [
   //
@@ -27,11 +28,28 @@ const getOptions = async () => {
   ];
 };
 const FormSample = () => {
-  const formService = React.useMemo(() => new FormService<any>({ defaultValues, validationSchema }), []);
+  const formService = React.useMemo(
+    () =>
+      new FormService<any>({
+        defaultValues,
+        validationSchema,
+
+        // onDataChanged: (changed: boolean) => {
+        //   formService.setIsDirty(changed);
+        // },
+      }),
+    []
+  );
 
   return (
     <div id="json-example" className="col gap-l p-l h-screen overflow-auto scroller items-start">
       <Form onSubmit={formService.onSubmit}>
+        <p
+          onClick={() => {
+            console.log({ isDirty: formService.isDirty, errors: formService.errors });
+          }}>
+          log
+        </p>
         <Controller
           id="name"
           formService={formService}
@@ -52,6 +70,17 @@ const FormSample = () => {
               <div data-input-error={error}>
                 <input type="text" value={value} onChange={({ target: { value } }) => setValue(value)} />
                 {/* <p className="text-red">{error}</p> */}
+              </div>
+            );
+          }}
+        />
+        <ReactStateBuilder
+          stateName="isDirty"
+          service={formService}
+          Component={() => {
+            return (
+              <div>
+                <button>isDirty: {formService.isDirty ? "true" : "false"}</button>
               </div>
             );
           }}
@@ -145,7 +174,7 @@ const defaultValues = {
 
 const validationSchema = yup.object().shape({
   name: yup.string().required("الرجاء ادخال الاسم").min(4, "الاسم على الاقل اربع احرف"),
-  address: yup.string().required("العنوان مطلوب"),
+  // address: yup.string().required("العنوان مطلوب"),
   phoneNumber: yup
     .string()
     .trim()
