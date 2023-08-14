@@ -10,6 +10,7 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
   // private submitButtonRef: HTMLButtonElement | null = null;
   private validationSchema: any;
   private dataChanged = false;
+  onDataChanged = (isChanged: boolean) => {};
   defaultValues = {} as T;
   errors: { [key: string]: string } = {};
 
@@ -79,7 +80,8 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
     if (this.dataChanged !== isChanged) {
       this.dataChanged = isChanged;
       this.setIsDirty(isChanged);
-    } else this.setIsDirty(isChanged);
+      this.onDataChanged(isChanged);
+    }
   };
 
   private privateSetValue = (id: string, value: string) => {
@@ -123,7 +125,7 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
     this.validationSchema = validationSchema;
     this.defaultValues = { ...defaultValues };
     this.values = { ...this.defaultValues };
-    if (onDataChanged) this.setIsDirty = onDataChanged;
+    if (onDataChanged) this.onDataChanged = onDataChanged;
     if (onErrorChanged) this.onErrorChanged = onErrorChanged;
     if (onSubmit) this.upload = onSubmit;
     if (load) {

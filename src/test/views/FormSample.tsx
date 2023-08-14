@@ -34,9 +34,10 @@ const FormSample = () => {
         defaultValues,
         validationSchema,
 
-        // onDataChanged: (changed: boolean) => {
-        //   formService.setIsDirty(changed);
-        // },
+        onDataChanged: (changed: boolean) => {
+          console.log({ changed });
+          // formService.setIsDirty(changed);
+        },
       }),
     []
   );
