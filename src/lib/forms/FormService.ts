@@ -79,7 +79,7 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
     if (this.dataChanged !== isChanged) {
       this.dataChanged = isChanged;
       this.setIsDirty(isChanged);
-    } else this.setIsDirty(false);
+    } else this.setIsDirty(isChanged);
   };
 
   private privateSetValue = (id: string, value: string) => {

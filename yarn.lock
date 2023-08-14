@@ -6689,10 +6689,10 @@ morabaa-provider@^0.0.32:
   resolved "https://registry.yarnpkg.com/morabaa-provider/-/morabaa-provider-0.0.32.tgz#794175d9de9a9b12ae2ff9a33019d4d32bdc9bb5"
   integrity sha512-fHcI5IMPYuYJY8uIAUI2e+vqYvrbLaV+PKct3MFiUBDSQd/zjN0N/iporvt7PrRth+tV8hm5Dk98zlWZLNzoEA==
 
-morabaa-services@^1.0.67:
-  version "1.0.67"
-  resolved "https://registry.yarnpkg.com/morabaa-services/-/morabaa-services-1.0.67.tgz#2f2b50ee7ac41962babfd0912828f7fc0c0ddf48"
-  integrity sha512-qXcw48O+VoOAxfwsn9FXUw93FC4PP4Ca3/F4Zh3O+AfbQbO2AlgkUBf8krmrQXM8iY7ytrlyN0wQZTZ91lY8ww==
+morabaa-services@^1.0.68:
+  version "1.0.68"
+  resolved "https://registry.yarnpkg.com/morabaa-services/-/morabaa-services-1.0.68.tgz#c1c0c1f46bf4921a66ec39f936c43976b7d17585"
+  integrity sha512-Y5fmdpluQTs4BeNQOLoQPJ76VRlI0g5BKjSMTOQyV9sJ9boh4NQB8nRMUyRrrSGVoZewPFmevLwOshgfKU8SGg==
 
 morabaa-utils@^0.0.13:
   version "0.0.13"
