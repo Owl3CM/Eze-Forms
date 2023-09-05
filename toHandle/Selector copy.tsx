@@ -31,9 +31,8 @@ const Builder: React.FC<ChildrenProps> = ({
       onClick={({ currentTarget }: any) => {
         //  setPopup(!popup);
         if (prop.options?.length < 2) return;
-        PopupMe({
+        PopupMe(ListBuilder, {
           id: "selector",
-          Component: ListBuilder,
           componentProps: { prop, selected, _onOptionChanged, activClass },
           target: currentTarget,
           placement: "auto",

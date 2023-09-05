@@ -55,12 +55,11 @@ const Selector = ({
     async ({ currentTarget }: any) => {
       if (getOptions) prop.options = await getOptions();
       if (prop.options?.length < 2) return;
-      PopupMe({
+      PopupMe(ListBuilder, {
         id,
         offset,
         placement,
         removeOnOutClick: true,
-        Component: ListBuilder,
         componentProps: { prop, selected, onOptionChanged, className: selected.className },
         target: placement !== "center" ? currentTarget : undefined,
         childClass: listClassName,

@@ -147,8 +147,7 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
 }
 function defaultUpload(formData: any) {
   Toast.warn({ title: "upload not implemented." });
-  PopupMe({
-    Component: JsonBuilder,
+  PopupMe(JsonBuilder, {
     componentProps: { json: formData },
   });
 }

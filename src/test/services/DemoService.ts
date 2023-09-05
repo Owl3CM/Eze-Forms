@@ -37,8 +37,7 @@ export default class DemoService extends PagenationService implements IDemoServi
   };
 
   popupSomthing = (target: any) => {
-    PopupMe({
-      Component: Actions,
+    PopupMe(Actions, {
       componentProps: {
         title: "test",
         service: this,
