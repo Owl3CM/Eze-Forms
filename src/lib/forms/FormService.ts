@@ -6,10 +6,17 @@ import { StateBuilder } from "morabaa-services";
 export type defaultFormState = "idle" | "loading" | "error" | "success" | "processing";
 export type IFormService<T = any, State = defaultFormState> = FormService<T, State>;
 
+type FormType = "edit" | "add";
+
 export default class FormService<T, State = any> extends StateBuilder<State> {
   // private submitButtonRef: HTMLButtonElement | null = null;
   private validationSchema: any;
   private dataChanged = false;
+  type: FormType = "add";
+  setType = (type: FormType) => {
+    this.type = type;
+  };
+
   onDataChanged = (isChanged: boolean) => {};
   defaultValues = {} as T;
   errors: { [key: string]: string } = {};
@@ -51,7 +58,9 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
     (this as any)[`on${id}Success`] = onSuccess ?? setError;
   };
   setError = (id: string, error: string) => {
-    (this as any)[`set${id}Error`](error);
+    const onError = (this as any)[`set${id}Error`];
+    if (onError) onError(error);
+    else Toast.error({ title: "Error", content: error, timeout: 5000 });
   };
 
   setValueToArray = (id: string, value: string, i: number) => {
@@ -119,7 +128,12 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
     // this.checkSubmitButton();
   };
   onErrorChanged = (value: { [key: string]: string }) => {};
-
+  render = (name = "") => {
+    if (!name) name = "Default";
+    const fn = (this as any)[`render${name}`];
+    if (fn) fn();
+    else throw new Error("You need to use useRender.");
+  };
   constructor({ defaultValues, validationSchema, onSubmit, load, mode = "onBlur", valdiateOnLoad, onDataChanged, onErrorChanged }: IFormProps<T>) {
     super();
     this.validationSchema = validationSchema;
@@ -144,6 +158,9 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
     Object.entries(this.values as any).map(([id, value]: any) => this.getError(id, value));
     // }, 5);
   }
+  static render = () => {
+    throw new Error("You need to use useRender.");
+  };
 }
 function defaultUpload(formData: any) {
   Toast.warn({ title: "upload not implemented." });
