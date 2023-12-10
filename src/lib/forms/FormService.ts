@@ -36,9 +36,11 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
 
   onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    Object.entries(this.values as any).map(([key, value]) => this.valdiateAndError(key, value as any));
-    if (!Object.keys(this.errors).length) this.upload(this.values);
+    Object.keys(this.values as any).map((key) => this.onSuccess(key));
+    setTimeout(() => {
+      Object.entries(this.values as any).map(([key, value]) => this.valdiateAndError(key, value as any));
+      if (!Object.keys(this.errors).length) this.upload(this.values);
+    }, 100);
     // if (Object.entries(this.values as any).every(([key, value]) => this.valdiateAndError(key, value as any))) {
     //   this.upload(this.values);
     // }
