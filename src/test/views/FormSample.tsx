@@ -56,7 +56,7 @@ const FormSample = () => {
           formService={formService}
           Component={({ value, error, setValue, setError }) => {
             return (
-              <div data-input-error={error}>
+              <div data-form-error={error}>
                 <input type="text" value={value} onChange={({ target: { value } }) => setValue(value)} />
                 {/* <p className="text-red">{error}</p> */}
               </div>
@@ -68,7 +68,7 @@ const FormSample = () => {
           formService={formService}
           Component={({ value, error, setValue, setError }) => {
             return (
-              <div data-input-error={error}>
+              <div data-form-error={error}>
                 <input type="text" value={value} onChange={({ target: { value } }) => setValue(value)} />
                 {/* <p className="text-red">{error}</p> */}
               </div>

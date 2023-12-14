@@ -1,9 +1,9 @@
 import React from "react";
 import { IOptionBuilder } from "../Types";
 
-const ToggleOptions: React.FC<IOptionBuilder> = ({ prop, selected, onOptionChanged, containerClassName, activeClassName, style }: IOptionBuilder) => {
+const ToggleOptions: React.FC<IOptionBuilder> = ({ prop, selected, onOptionChanged, containerClass, activeClassName, style }: IOptionBuilder) => {
   return prop.options.length ? (
-    <div style={style} className={`toggle-options-parent ${containerClassName || ""}`}>
+    <div style={style} className={`toggle-options-parent ${containerClass || ""}`}>
       <div
         className="toggle-options-container"
         onWheel={onWheel}

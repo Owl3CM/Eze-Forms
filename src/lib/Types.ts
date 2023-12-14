@@ -1,4 +1,4 @@
-import { PopupPlacement } from "morabaa-provider";
+import { Animation, PopupPlacement } from "morabaa-provider";
 import React from "react";
 
 interface IChange {
@@ -28,7 +28,7 @@ export interface IInputProps extends IKitProps {
   dely?: number;
   clearIcon?: React.FC<IClearIconProps> | null;
   placeholder?: string;
-  containerClassName?: string;
+  containerClass?: string;
   onFocus?: (props: IChange) => void;
   [key: string]: any;
 }
@@ -47,7 +47,8 @@ export interface IOptionBuilder {
   onOptionChanged: (option: IOption, i: number) => void;
   activeClassName?: string;
   style?: any;
-  containerClassName?: string;
+  containerClass?: string;
+  showList: (container: HTMLElement) => void;
 }
 
 export interface IOptionsProps<T = any> extends IKitProps {
@@ -61,9 +62,10 @@ export interface IOptionsProps<T = any> extends IKitProps {
   optionsVisible?: boolean;
   listClassName?: string;
   offset?: { x: number; y: number };
-  containerClassName?: string;
+  containerClass?: string;
   service?: any;
   stateName?: string;
+  animation?: Animation;
 }
 
 export interface IPopupSelectorProps extends IOptionsProps {

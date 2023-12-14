@@ -12,6 +12,13 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
   // private submitButtonRef: HTMLButtonElement | null = null;
   private validationSchema: any;
   private dataChanged = false;
+  private setToValues = (id: string, value: string) => {
+    (this.values as any)[id] = value;
+    (this as any)[`${id}Changed`]?.(value);
+    this.valuesChanged(id, value);
+  };
+  valuesChanged = (id: string, value: string) => {};
+
   type: FormType = "add";
   setType = (type: FormType) => {
     this.type = type;
@@ -27,7 +34,7 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
     Object.entries(this.values as any).map(([id, value]: any) => {
       if (valdiate) this.valdiateAndError(id, value);
       else this.getError(id, value);
-      this.privateSetValue(id, value);
+      (this.values as any)[id] = value;
     });
   };
   upload = defaultUpload;
@@ -45,33 +52,58 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
     //   this.upload(this.values);
     // }
   };
-  set = ({ id, value }: IFormChange) => {
-    this.valdiateAndError(id, value);
-    (this.values as any)[id] = value;
+
+  noValidateSet = ({ id, value }: IFormChange) => {
+    this.setToValues(id, value);
     this.checkDataChanged();
   };
-  setValue = ({ id, value }: IFormChange) => {
+
+  effectiveSet = ({ id, value }: IFormChange) => {
     this.valdiateAndError(id, value);
     this.privateSetValue(id, value);
     this.checkDataChanged();
   };
+
+  silentSet = ({ id, value }: IFormChange) => {
+    this.valdiateAndError(id, value);
+    this.setToValues(id, value);
+    this.checkDataChanged();
+  };
+
   get = (id: string) => (this.values as any)[id] ?? "";
   getValues = (ids: string[]) => ids.map((id) => this.get(id));
   subscribe = ({ id, setValue, setError, onSuccess }: SubscribeProps) => {
     (this as any)[`set${id}`] = setValue;
-    (this as any)[`set${id}Error`] = setError ?? ((error: string) => error && Toast.error({ title: error }));
-    (this as any)[`on${id}Success`] = onSuccess ?? setError;
+    (this as any)[`set${id}Error`] = setError;
+    (this as any)[`on${id}Success`] = onSuccess
+      ? () => {
+          onSuccess();
+          this.onError(id, "");
+        }
+      : setError;
   };
+
+  getErrors = () => this.errors;
+  onError = (id: string, error?: string) => {};
   setError = (id: string, error: string) => {
     const onError = (this as any)[`set${id}Error`];
     if (onError) onError(error);
     else Toast.error({ title: "Error", content: error, timeout: 5000 });
+    this.onError(id, error);
   };
 
+  // Array
   setValueToArray = (id: string, value: string, i: number) => {
     this.valdiateAndError(id, value);
     (this.values as any)[id][i] = value;
   };
+  addToArray = (id: string, value: string) => {
+    (this.values as any)[id].push(value);
+  };
+  removeFromArray = (id: string, i: number) => {
+    (this.values as any)[id].splice(i, 1);
+  };
+  // Array
 
   private valdiateAndError = (id: string, value: string) => {
     const message = this.getError(id, value);
@@ -100,7 +132,7 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
 
   private privateSetValue = (id: string, value: string) => {
     (this as any)[`set${id}`]?.(value);
-    (this.values as any)[id] = value;
+    this.setToValues(id, value);
   };
   private onSuccess = (id: string) => {
     (this as any)[`on${id}Success`]?.();

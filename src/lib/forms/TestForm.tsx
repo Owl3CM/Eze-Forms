@@ -5,7 +5,7 @@ type Props = {
   service: {
     subscribe: (props: { id: string; onError: (error: string) => void; onSuccess?: () => void; setValue: (value: string) => void }) => void;
     get: (id: string) => string;
-    set: ({ id, value }: { id: string; value: string }) => void;
+    silentSet: ({ id, value }: { id: string; value: string }) => void;
   } | null;
   onChange?: (props: { id: string; value: string }) => void;
   value?: string;
@@ -15,7 +15,7 @@ const TestForm = ({
   //
   id,
   service,
-  onChange = service?.set,
+  onChange = service?.silentSet,
   value: defaultValue = service?.get(id),
 }: Props) => {
   const [value, setValue] = React.useState(defaultValue);
@@ -26,7 +26,7 @@ const TestForm = ({
   }, []);
 
   return (
-    <div data-input-error={errorMsg} data-position="bottom" className="input bg-king round-m row-center">
+    <div data-form-error={errorMsg} data-position="bottom" className="input bg-king round-m row-center">
       <input
         className="bg-transparent flex-grow-1"
         value={value}

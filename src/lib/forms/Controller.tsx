@@ -9,15 +9,17 @@ type Props = {
     setValue: (value: string) => void;
     setError: (error: string) => void;
     onSuccess: () => void;
+    silentSet: (value: string) => void;
   }>;
   formService: FormServiceType;
 };
 
 const Controller = ({ Component, formService, id }: Props) => {
   const [, render] = React.useState(0);
+  // console.log("controller render [ " + id + " ]");
 
   const controller = React.useMemo(() => {
-    const setToForm = formService?.set as any;
+    const setToForm = formService?.silentSet as any;
     let _controller = {
       id,
       value: formService?.get(id) ?? "",
@@ -38,6 +40,10 @@ const Controller = ({ Component, formService, id }: Props) => {
         controller.render();
       },
       render: () => render((prev) => prev + 1),
+      silentSet: (value: string) => {
+        _controller.value = value;
+        setToForm({ id, value });
+      },
     };
     formService?.subscribe?.(_controller);
     return _controller;

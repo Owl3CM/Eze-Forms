@@ -13,7 +13,7 @@
 //   style,
 //   onInit,
 //   clearIcon: ClearIcon = _clearIcon,
-//   containerClassName = "search-input-container",
+//   containerClass = "search-input-container",
 //   ...props
 // }: IInputProps) => {
 //   let container: HTMLDivElement;
@@ -41,7 +41,7 @@
 //   };
 
 //   return (
-//     <div className={containerClassName} ref={(_ref) => _ref && (container = _ref)}>
+//     <div className={containerClass} ref={(_ref) => _ref && (container = _ref)}>
 //       <input
 //         id={id}
 //         type="text"
