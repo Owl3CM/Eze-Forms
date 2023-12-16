@@ -1,9 +1,17 @@
 import React from "react";
-import { IOptionBuilder } from "../Types";
+import { ISelectorListBuilder } from "./Types";
 
-const ToggleOptions: React.FC<IOptionBuilder> = ({ prop, selected, onOptionChanged, containerClass, activeClassName, style }: IOptionBuilder) => {
-  return prop.options.length ? (
-    <div style={style} className={`toggle-options-parent ${containerClass || ""}`}>
+const ToggleOptions: React.FC<ISelectorListBuilder> = ({
+  options,
+  selected,
+  onOptionChanged,
+  // containerClass,
+  activeClassName,
+}: // style,
+ISelectorListBuilder) => {
+  return options.length ? (
+    // <div style={style} className={`toggle-options-parent ${containerClass || ""}`}>
+    <div className={`toggle-options-parent`}>
       <div
         className="toggle-options-container"
         onWheel={onWheel}
@@ -15,7 +23,7 @@ const ToggleOptions: React.FC<IOptionBuilder> = ({ prop, selected, onOptionChang
           firstX = 0;
           draged = false;
         }}>
-        {prop.options.map((option, i) => {
+        {options.map((option, i) => {
           const _optionClass = option.className || activeClassName;
           const _notSelected = option.value !== selected.value;
           return (
@@ -28,10 +36,10 @@ const ToggleOptions: React.FC<IOptionBuilder> = ({ prop, selected, onOptionChang
               }}
               key={option.value}
               onClick={() => {
-                _notSelected && onOptionChanged(option, i);
+                _notSelected && onOptionChanged(option);
               }}
               className={`toggle-option ${_notSelected ? "" : _optionClass}`}>
-              {option.title}
+              {option.label}
             </p>
           );
         })}

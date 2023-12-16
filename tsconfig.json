@@ -28,8 +28,7 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["src"],
-  "exclude": ["src/vite", "src/test"]
+  "exclude": ["src/vite", "src/test", "DeleteMe"]
 }
 // {
 //   "compilerOptions": {

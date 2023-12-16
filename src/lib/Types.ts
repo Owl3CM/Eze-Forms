@@ -5,17 +5,14 @@ interface IChange {
   id: string;
   clear: (effect?: boolean) => void;
   value: any;
-  title?: string;
+  label?: string;
   setValue?: (value: string) => void;
 }
 export interface IKitProps<T = any> {
-  id: string;
-  className?: string;
-  title?: string;
+  id?: string;
   style?: any;
   value?: T;
   onChange?: (props: IChange) => void;
-  onInit?: (props: IChange) => void;
 }
 
 export interface IClearIconProps {
@@ -31,44 +28,4 @@ export interface IInputProps extends IKitProps {
   containerClass?: string;
   onFocus?: (props: IChange) => void;
   [key: string]: any;
-}
-
-export interface IOption {
-  title?: string;
-  value?: any;
-  className?: string;
-  displayTitle?: string;
-  to?: string;
-}
-
-export interface IOptionBuilder {
-  prop: { options: IOption[]; selected: number };
-  selected: IOption;
-  onOptionChanged: (option: IOption, i: number) => void;
-  activeClassName?: string;
-  style?: any;
-  containerClass?: string;
-  showList: (container: HTMLElement) => void;
-}
-
-export interface IOptionsProps<T = any> extends IKitProps {
-  value?: T;
-  options?: IOption[];
-  getOptions?: () => Promise<IOption[]>;
-  activeClassName?: string;
-  placement?: PopupPlacement;
-  builder?: React.FC<IOptionBuilder>;
-  listBuilder?: React.FC<IOptionBuilder>;
-  optionsVisible?: boolean;
-  listClassName?: string;
-  offset?: { x: number; y: number };
-  containerClass?: string;
-  service?: any;
-  stateName?: string;
-  animation?: Animation;
-}
-
-export interface IPopupSelectorProps extends IOptionsProps {
-  icon?: any;
-  button?: any;
 }

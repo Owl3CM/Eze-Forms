@@ -1,5 +1,5 @@
 import React from "react";
-import { GetFormField } from "../builder";
+import { GetFormField } from ".";
 
 interface IGroup {
   prop: {

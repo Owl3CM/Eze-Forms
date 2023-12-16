@@ -1,4 +1,4 @@
-@layer form{
+@layer form-lib{
     /* T O G G L E */
 .kit-toggled-container{
     display: inline-flex;
@@ -211,4 +211,10 @@
     overflow: hidden;
     white-space: nowrap;
 }
+}
+
+/* new 2024 */
+.multi-selector{
+    display:flex;
+    flex-wrap: wrap;
 }

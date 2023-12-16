@@ -1,2 +1,88 @@
-@layer form-lib {
+@layer form-lib{
+    :root{
+        --form-yellow:#f3d60b;
+        --form-green:#56e181;
+        --form-cyan:#63cfc9;
+        --form-frog:#bada55;
+        --form-orange:#ffa44e;
+        --form-fox:#f9c089;
+        --form-penguin:#1fd1ec;
+        --form-lion:#b59675;
+        --form-red:#f87171;
+        --form-light-red:#f87171aa;
+    }
+    .dark{
+        --form-prim:#2d303e;  
+        --form-prince:#393c4a;
+        --form-shark:#c4c4c7;
+        --form-king:#3b3e4c;
+        --form-crow:#ffffff;
+        --form-owl: #ffffff;   --form-shark:  #c4c4c7;   --form-dolphin: #6c6e78;     --form-goat:   #9e9fa6;     --form-whale: #767982;
+        --form-main:#1f1d2b;      --form-highlight:#2d303e22;
+    }
+    .light{
+        --form-prim:#FFFFFF;  
+        --form-king:  #f6f6f6;
+        --form-prince:#f6f6f6;
+        --form-shark:#c4c4c7;
+        --form-crow:#1f1d2b;
+        --form-owl: #1f1d2b;  --form-shark:  #c4c4c7; --form-dolphin: #c3c3c6;  --form-goat:   #c4c4c7;  --form-whale: #bebec1;
+        --form-main:#fbfbfb;     --form-highlight:#FFFFFF22;
+    }
+    .from-bg-frog{background-color: var(--form-frog);}
+    .form-bg-prim{background-color: var(--form-prim);}
+    .form-text-green{color: var(--form-green);}
+    
+    .form-container{
+        --active:#1fd1ec;
+        --light:#9ca3af;
+    
+        --rainbo: #f87171;
+        --grass:#bada55;
+    
+        --shadow-m: 0px 0px 10px rgb(45, 48, 62,0.15);
+        --shadow-x:0px 0px 6px rgba(95, 20, 20, 0.16);
+    
+        --shadow-focus: 0px 0px 6px rgba(32, 211, 238,0.5);
+        --shadow-active:0px 0px 5px rgba(32, 211, 238,0.5);
+    }
+    
+    /* Cleaner */
+    .form-cleaner{
+        flex-wrap:  wrap;
+        display:  flex;
+        gap: var(--m);
+        box-shadow: inset 0px 0px 8px var(--dragon);
+        padding: var(--m);
+        border-radius:var(--m);
+        animation: fade-in 400ms ease-in;
+        justify-self: baseline;
+        max-width: max-content;
+    }
+    
+    /* Container */
+    .form-container {
+        padding: var(--s);
+        gap: var(--m);
+        margin-block:5px;
+        background-color: var(--background);
+        max-width: 100%;
+        /* border-radius:var(--m); */
+        /* box-shadow:var(--shadow-m); */
+        /* border-bottom: var(--crow-2) solid 1px; */
+    }
+    
+    /* Section */
+    .form-section {
+        gap: var(--l);    
+        border-radius:var(--m);
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        max-width: 100%;
+        overflow: auto;
+        align-items: center;
+        padding: var(--xs);
+    }
+    
 }

@@ -1,4 +1,4 @@
-import { Utils } from "../utils";
+import { Utils } from "../src/lib/utils";
 
 export default class FormSecripts {
   constructor() {

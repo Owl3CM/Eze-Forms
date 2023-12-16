@@ -94,13 +94,16 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
 
   // Array
   setValueToArray = (id: string, value: string, i: number) => {
-    this.valdiateAndError(id, value);
-    (this.values as any)[id][i] = value;
+    if (!(this.values as any)[id]) (this.values as any)[id] = [];
+    if (!value) this.removeFromArray({ id, i });
+    else this.addToArray({ id, value });
   };
-  addToArray = (id: string, value: string) => {
+  addToArray = ({ id, value }: IFormChange) => {
+    // this.valdiateAndError(id, value);
     (this.values as any)[id].push(value);
   };
-  removeFromArray = (id: string, i: number) => {
+  removeFromArray = ({ id, i }: { id: string; i: number }) => {
+    // this.valdiateAndError(id, "");
     (this.values as any)[id].splice(i, 1);
   };
   // Array

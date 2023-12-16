@@ -23,3 +23,9 @@ export interface IFormProps<T> {
   onErrorChanged?: (errors: { [key: string]: string }) => void;
   mode?: "onBlur" | "onChange" | "onSubmit";
 }
+
+export interface FormServiceType {
+  silentSet: (props: IFormChange) => void;
+  get(id: string): string;
+  subscribe: (props: SubscribeProps) => void;
+}
