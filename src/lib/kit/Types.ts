@@ -49,6 +49,7 @@ export interface ISelectorProps<T = any> extends ISelect<T> {
   builder?: React.FC<ISelectorBuilder>;
   listBuilder?: React.FC<ISelectorListBuilder>;
   optionsVisible?: boolean;
+  emptyOption?: IListOption;
 }
 export interface IMultiSelectorProps<T = any> extends ISelect<T> {
   placeholder?: string;

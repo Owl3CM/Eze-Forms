@@ -20,6 +20,7 @@ const Selector = ({
   toggleOnSelect = true,
   builder: Builder = DefaultBuilder,
   listBuilder: ListBuilder = optionsVisible ? ToggleOptions : DefaultListBuilder,
+  emptyOption = { value: "", label } as IListOption,
 
   listProps = {
     //
@@ -30,15 +31,17 @@ const Selector = ({
     childClass: listClassName,
   },
 }: ISelectorProps<any>) => {
-  const [prop, setProp] = React.useState(options ? { options, selected: options?.findIndex((option) => option.value == value) } : { options: [], selected: 0 });
+  const [prop, setProp] = React.useState(
+    options ? { options, selected: options?.findIndex((option) => option.value == value) } : { options: [], selected: -1 }
+  );
 
   React.useEffect(() => {
     setProp((_prev) => ({ ..._prev, selected: _prev.options?.findIndex((option: IListOption) => option.value == value) }));
   }, [value]);
 
   const selected = React.useMemo(() => {
-    const _selected = prop.options[prop.selected ?? prop.options?.findIndex((option: IListOption) => option.value == value)] ??
-      prop.options[0] ?? { value: "", displayTitle: label };
+    const _selected = prop.options[prop.selected ?? prop.options?.findIndex((option: IListOption) => option.value == value)] ?? emptyOption ?? {}; // { displayTitle: label };
+    // ?? prop.options[0] ?? { value: "", displayTitle: label };
     return { className: activeClassName, ..._selected, label: _selected.displayTitle ?? _selected.label };
   }, [prop, value]);
 
@@ -65,11 +68,11 @@ const Selector = ({
 
   const toggleList = React.useCallback(
     async ({ container, show = true }: ToggleListProps) => {
-      if (show === false) {
+      if (show === false || Popup.getPopup(id)) {
         Popup.remove(id);
         return;
       }
-      if (Popup.getPopup(id)) return;
+      // if (Popup.getPopup(id)) return;
       if (getOptions) prop.options = await getOptions();
       if (prop.options?.length < 2) return;
       PopupMe(ListBuilder, {
