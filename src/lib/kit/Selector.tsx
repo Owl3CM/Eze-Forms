@@ -72,7 +72,6 @@ const Selector = ({
         Popup.remove(id);
         return;
       }
-      // if (Popup.getPopup(id)) return;
       if (getOptions) prop.options = await getOptions();
       if (prop.options?.length < 2) return;
       PopupMe(ListBuilder, {
