@@ -29,12 +29,14 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
   errors: { [key: string]: string } = {};
 
   values: T = {} as T;
-  reset = (values: T, valdiate = false) => {
+  reset = (values: T, valdiate = false, effective = false) => {
     (this.values as any) = values ?? this.defaultValues;
     Object.entries(this.values as any).map(([id, value]: any) => {
       if (valdiate) this.valdiateAndError(id, value);
       else this.getError(id, value);
-      (this.values as any)[id] = value;
+      if (effective) this.effectiveSetNoValidate({ id, value });
+      else this.effectiveSetNoValidate({ id, value });
+      // (this.values as any)[id] = value;
     });
   };
   upload = defaultUpload;
@@ -60,7 +62,11 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
 
   effectiveSet = ({ id, value }: IFormChange) => {
     this.valdiateAndError(id, value);
-    this.privateSetValue(id, value);
+    this.effectiveSetNoValidate({ id, value });
+  };
+
+  effectiveSetNoValidate = ({ id, value }: IFormChange) => {
+    this.privateEffectiveSetValue(id, value);
     this.checkDataChanged();
   };
 
@@ -108,8 +114,10 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
   };
   // Array
 
-  private valdiateAndError = (id: string, value: string) => {
-    const message = this.getError(id, value);
+  private valdiateAndError = (id: string, value: string | any) => {
+    let _value = value;
+    if (typeof value === "object") _value = value?.value;
+    const message = this.getError(id, _value);
     message ? this.setError(id, message as any) : this.onSuccess(id);
     return !message;
   };
@@ -133,7 +141,7 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
     }
   };
 
-  private privateSetValue = (id: string, value: string) => {
+  private privateEffectiveSetValue = (id: string, value: string) => {
     (this as any)[`set${id}`]?.(value);
     this.setToValues(id, value);
   };
@@ -187,11 +195,11 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
         this.setState("processing");
         const newValues = await load();
         this.defaultValues = newValues;
-        this.reset(this.defaultValues, valdiate);
+        this.reset(this.defaultValues, valdiate, true);
         this.setState("idle");
       };
       this.load = _load;
-    } else this.load = (valdiate = valdiateOnLoad) => this.reset(defaultValues, valdiate);
+    } else this.load = (valdiate = valdiateOnLoad) => this.reset(defaultValues, valdiate, false);
     this.reload = this.load;
     // setTimeout(() => {
     //   this.submitButtonRef = (document.querySelector("button[type=submit]") || document.querySelector("input[type=submit]")) as any;
