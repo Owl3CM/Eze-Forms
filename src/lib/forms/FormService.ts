@@ -34,7 +34,8 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
     Object.entries(this.values as any).map(([id, value]: any) => {
       if (valdiate) this.valdiateAndError(id, value);
       else this.getError(id, value);
-      (this.values as any)[id] = value;
+      this.effectiveSetNoValidate({ id, value });
+      // (this.values as any)[id] = value;
     });
   };
   upload = defaultUpload;
@@ -60,6 +61,10 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
 
   effectiveSet = ({ id, value }: IFormChange) => {
     this.valdiateAndError(id, value);
+    this.privateSetValue(id, value);
+    this.checkDataChanged();
+  };
+  effectiveSetNoValidate = ({ id, value }: IFormChange) => {
     this.privateSetValue(id, value);
     this.checkDataChanged();
   };
