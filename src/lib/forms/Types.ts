@@ -1,7 +1,7 @@
 export type { IFormService } from "./FormService";
 export interface IFormChange {
   id: string;
-  value: string;
+  value: any;
   // silent?: boolean;
 }
 export interface SubscribeProps {

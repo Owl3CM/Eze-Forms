@@ -81,21 +81,14 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
   subscribe = ({ id, setValue, setError, onSuccess }: SubscribeProps) => {
     (this as any)[`set${id}`] = setValue;
     (this as any)[`set${id}Error`] = setError;
-    (this as any)[`on${id}Success`] = onSuccess
-      ? () => {
-          onSuccess();
-          this.onError(id, "");
-        }
-      : setError;
+    (this as any)[`on${id}Success`] = onSuccess ?? setError;
   };
 
   getErrors = () => this.errors;
-  onError = (id: string, error?: string) => {};
   setError = (id: string, error: string) => {
     const onError = (this as any)[`set${id}Error`];
     if (onError) onError(error);
     else Toast.error({ title: "Error", content: error, timeout: 5000 });
-    this.onError(id, error);
   };
 
   // Array
