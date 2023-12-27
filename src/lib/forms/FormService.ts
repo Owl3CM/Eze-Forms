@@ -14,7 +14,7 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
   private dataChanged = false;
   private setToValues = (id: keyof T, value: any) => {
     (this.values as any)[id] = value;
-    (this as any)[`${id}Changed`]?.(value);
+    (this as any)[`${id as any}Changed`]?.(value);
     this.valuesChanged(id, value);
   };
   valuesChanged = (id: keyof T, value: any) => {};
@@ -26,7 +26,7 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
 
   onDataChanged = (isChanged: boolean) => {};
   defaultValues = {} as T;
-  errors: { [key: string]: string } = {};
+  errors: { [key: string]: string } = {} as any;
 
   values: T = {} as T;
   reset = (values: T, valdiate = false, effective = false) => {
@@ -47,7 +47,7 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
     e.preventDefault();
     Object.keys(this.values as any).map((key) => this.onSuccess(key));
     setTimeout(() => {
-      Object.entries(this.values as any).map(([key, value]) => this.startValdiateAndError(key, value as any));
+      Object.entries(this.values as any).map(([key, value]: any) => this.startValdiateAndError(key, value));
       if (!Object.keys(this.errors).length) this.upload(this.values);
       // else
       //   Toast.error({
@@ -86,7 +86,7 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
   };
 
   get = (id: keyof T) => (this.values as any)[id] ?? "";
-  getValues = (ids: string[]) => ids.map((id) => this.get(id));
+  getValues = (ids: string[]) => ids.map((id) => this.get(id as any));
   subscribe = ({ id, setValue, setError, onSuccess }: SubscribeProps) => {
     (this as any)[`set${id}`] = setValue;
     (this as any)[`set${id}Error`] = setError;
@@ -95,10 +95,10 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
 
   getErrors = () => this.errors;
   setError = (id: keyof T, error: string) => {
-    const onError = (this as any)[`set${id}Error`];
+    const onError = (this as any)[`set${id as any}Error`];
     console.log({ onError });
     if (onError) onError(error);
-    else Toast.error({ title: "Error", content: `${error}: ${id}`, timeout: 5000 });
+    else Toast.error({ title: "Error", content: `${error}: ${id as any}`, timeout: 5000 });
   };
 
   // Array
@@ -120,13 +120,13 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
   private startValdiateAndError = (id: keyof T, value: any) => {
     return this.valdiateAndError(id, value, id);
   };
-  private valdiateAndError = (id: keyof T, value: any, parentId: string) => {
+  private valdiateAndError = (id: keyof T, value: any, parentId: keyof T) => {
     // if (typeof value === "object") _value = value?.value;
     // console.log({ id, value, parentId });
     let errors: any;
     if (typeof value === "object") {
       Object.entries(value).map(([key, val]: any) => {
-        const _err = this.getError(`${id}_${key}`, val);
+        const _err = this.getError(`${id as any}_${key}` as any, val);
         if (_err) {
           if (!errors) errors = {};
           errors[key] = _err;
@@ -160,11 +160,11 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
     }
   };
 
-  private privateEffectiveSetValue = (id: keyof T, value: string) => {
+  private privateEffectiveSetValue = (id: any, value: string) => {
     (this as any)[`set${id}`]?.(value);
     this.setToValues(id, value);
   };
-  private onSuccess = (id: keyof T) => {
+  private onSuccess = (id: any) => {
     (this as any)[`on${id}Success`]?.();
   };
 
@@ -180,14 +180,14 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
   //   }
   // };
 
-  private removeError = (id: keyof T) => {
+  private removeError = (id: any) => {
     if (this.errors[id]) {
       delete this.errors[id];
       this.onErrorChanged(this.errors);
     }
     // this.checkSubmitButton();
   };
-  private addError = (id: keyof T, error: string) => {
+  private addError = (id: any, error: string) => {
     if (!this.errors[id] && error) {
       this.errors[id] = error;
       this.onErrorChanged(this.errors);
