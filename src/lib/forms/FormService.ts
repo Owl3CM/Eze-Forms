@@ -6,18 +6,18 @@ import { StateBuilder } from "morabaa-services";
 export type defaultFormState = "idle" | "loading" | "error" | "success" | "processing";
 export type IFormService<T = any, State = defaultFormState> = FormService<T, State>;
 
-type FormType = "edit" | "add";
+type FormType = "update" | "add";
 
 export default class FormService<T, State = any> extends StateBuilder<State> {
   // private submitButtonRef: HTMLButtonElement | null = null;
   private validationSchema: any;
   private dataChanged = false;
-  private setToValues = (id: string, value: string) => {
+  private setToValues = (id: keyof T, value: any) => {
     (this.values as any)[id] = value;
     (this as any)[`${id}Changed`]?.(value);
     this.valuesChanged(id, value);
   };
-  valuesChanged = (id: string, value: string) => {};
+  valuesChanged = (id: keyof T, value: any) => {};
 
   type: FormType = "add";
   setType = (type: FormType) => {
@@ -32,10 +32,10 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
   reset = (values: T, valdiate = false, effective = false) => {
     (this.values as any) = values ?? this.defaultValues;
     Object.entries(this.values as any).map(([id, value]: any) => {
-      if (valdiate) this.valdiateAndError(id, value);
+      if (valdiate) this.startValdiateAndError(id, value);
       else this.getError(id, value);
-      if (effective) this.effectiveSetNoValidate({ id, value });
-      else this.effectiveSetNoValidate({ id, value });
+      if (effective) this.effectiveSetNoValidate(id, value);
+      else this.effectiveSetNoValidate(id, value);
       // (this.values as any)[id] = value;
     });
   };
@@ -47,36 +47,45 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
     e.preventDefault();
     Object.keys(this.values as any).map((key) => this.onSuccess(key));
     setTimeout(() => {
-      Object.entries(this.values as any).map(([key, value]) => this.valdiateAndError(key, value as any));
+      Object.entries(this.values as any).map(([key, value]) => this.startValdiateAndError(key, value as any));
       if (!Object.keys(this.errors).length) this.upload(this.values);
+      // else
+      //   Toast.error({
+      //     title: "Error",
+      //     content: Object.entries(this.errors)
+      //       .map(([key, value]) => `${key}: ${value}`)
+      //       .join("\n"),
+      //     timeout: 5000,
+      //   });
+      console.error("Form has errors", this.errors);
     }, 100);
     // if (Object.entries(this.values as any).every(([key, value]) => this.valdiateAndError(key, value as any))) {
     //   this.upload(this.values);
     // }
   };
 
-  noValidateSet = ({ id, value }: IFormChange) => {
+  noValidateSet = (id: keyof T, value: any) => {
     this.setToValues(id, value);
     this.checkDataChanged();
   };
 
-  effectiveSet = ({ id, value }: IFormChange) => {
-    this.valdiateAndError(id, value);
-    this.effectiveSetNoValidate({ id, value });
+  effectiveSet = (id: keyof T, value: any) => {
+    this.startValdiateAndError(id, value);
+    this.effectiveSetNoValidate(id, value);
   };
 
-  effectiveSetNoValidate = ({ id, value }: IFormChange) => {
+  effectiveSetNoValidate = (id: keyof T, value: any) => {
     this.privateEffectiveSetValue(id, value);
     this.checkDataChanged();
   };
 
-  silentSet = ({ id, value }: IFormChange) => {
-    this.valdiateAndError(id, value);
+  silentSet = (id: keyof T, value: any) => {
+    this.startValdiateAndError(id, value);
     this.setToValues(id, value);
     this.checkDataChanged();
   };
 
-  get = (id: string) => (this.values as any)[id] ?? "";
+  get = (id: keyof T) => (this.values as any)[id] ?? "";
   getValues = (ids: string[]) => ids.map((id) => this.get(id));
   subscribe = ({ id, setValue, setError, onSuccess }: SubscribeProps) => {
     (this as any)[`set${id}`] = setValue;
@@ -85,36 +94,53 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
   };
 
   getErrors = () => this.errors;
-  setError = (id: string, error: string) => {
+  setError = (id: keyof T, error: string) => {
     const onError = (this as any)[`set${id}Error`];
+    console.log({ onError });
     if (onError) onError(error);
-    else Toast.error({ title: "Error", content: error, timeout: 5000 });
+    else Toast.error({ title: "Error", content: `${error}: ${id}`, timeout: 5000 });
   };
 
   // Array
-  setValueToArray = (id: string, value: string, i: number) => {
+  setValueToArray = (id: keyof T, value: string, i: number) => {
     if (!(this.values as any)[id]) (this.values as any)[id] = [];
     if (!value) this.removeFromArray({ id, i });
-    else this.addToArray({ id, value });
+    else this.addToArray(id, value);
   };
-  addToArray = ({ id, value }: IFormChange) => {
+  addToArray = (id: keyof T, value: any) => {
     // this.valdiateAndError(id, value);
     (this.values as any)[id].push(value);
   };
-  removeFromArray = ({ id, i }: { id: string; i: number }) => {
+  removeFromArray = ({ id, i }: { id: keyof T; i: number }) => {
     // this.valdiateAndError(id, "");
     (this.values as any)[id].splice(i, 1);
   };
   // Array
 
-  private valdiateAndError = (id: string, value: string | any) => {
-    let _value = value;
-    if (typeof value === "object") _value = value?.value;
-    const message = this.getError(id, _value);
-    message ? this.setError(id, message as any) : this.onSuccess(id);
-    return !message;
+  private startValdiateAndError = (id: keyof T, value: any) => {
+    return this.valdiateAndError(id, value, id);
   };
-  private getError = (id: string, value: string) => {
+  private valdiateAndError = (id: keyof T, value: any, parentId: string) => {
+    // if (typeof value === "object") _value = value?.value;
+    // console.log({ id, value, parentId });
+    let errors: any;
+    if (typeof value === "object") {
+      Object.entries(value).map(([key, val]: any) => {
+        const _err = this.getError(`${id}_${key}`, val);
+        if (_err) {
+          if (!errors) errors = {};
+          errors[key] = _err;
+        }
+      });
+    } else {
+      errors = this.getError(id, value);
+    }
+    console.log({ errors });
+
+    errors ? this.setError(parentId, errors as any) : this.onSuccess(parentId);
+    return !errors;
+  };
+  private getError = (id: keyof T, value: string) => {
     try {
       this.validationSchema.validateSyncAt(id, { [id]: value });
       this.removeError(id);
@@ -134,11 +160,11 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
     }
   };
 
-  private privateEffectiveSetValue = (id: string, value: string) => {
+  private privateEffectiveSetValue = (id: keyof T, value: string) => {
     (this as any)[`set${id}`]?.(value);
     this.setToValues(id, value);
   };
-  private onSuccess = (id: string) => {
+  private onSuccess = (id: keyof T) => {
     (this as any)[`on${id}Success`]?.();
   };
 
@@ -154,14 +180,14 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
   //   }
   // };
 
-  private removeError = (id: string) => {
+  private removeError = (id: keyof T) => {
     if (this.errors[id]) {
       delete this.errors[id];
       this.onErrorChanged(this.errors);
     }
     // this.checkSubmitButton();
   };
-  private addError = (id: string, error: string) => {
+  private addError = (id: keyof T, error: string) => {
     if (!this.errors[id] && error) {
       this.errors[id] = error;
       this.onErrorChanged(this.errors);
@@ -201,6 +227,24 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
   }
   static render = () => {
     throw new Error("You need to use useRender.");
+  };
+  static ExtractId = (taker: any, key: string) => {
+    if (taker[key]) {
+      taker[`${key}Id`] = taker[key].id;
+      delete taker[key];
+    }
+  };
+  static Format = (values: any) => {
+    const formatedPayment = {} as any;
+    console.log({ values });
+
+    Object.entries(values).map(([key, value]: any) => {
+      console.log({ key: value.key });
+
+      if (value.value) formatedPayment[value.key ?? key] = value.value;
+      else formatedPayment[key] = value;
+    });
+    return formatedPayment;
   };
 }
 function defaultUpload(formData: any) {

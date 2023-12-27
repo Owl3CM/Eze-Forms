@@ -5,7 +5,7 @@ export interface IListOption {
   label?: string;
   value?: any;
   className?: string;
-  displayTitle?: string;
+  displayLabel?: string;
   to?: string;
   visible?: boolean;
   selected?: boolean;
@@ -40,7 +40,7 @@ interface ISelect<T = any> extends IKitProps<T> {
   setValue?: (value: string) => void;
   noOptionsMessage?: string;
   toggleOnSelect?: boolean;
-  listProps: PopupOptions;
+  listProps?: PopupOptions;
   listClassName?: string;
   listContainerClass?: string;
 }

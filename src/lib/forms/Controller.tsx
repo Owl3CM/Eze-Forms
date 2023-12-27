@@ -26,7 +26,7 @@ const Controller = ({ Component, formService, id }: Props) => {
       error: null as any,
       setValue: (value: string) => {
         _controller.value = value;
-        setToForm({ id, value });
+        setToForm(id, value);
         controller.render();
       },
       setError: (error: string) => {
@@ -42,7 +42,7 @@ const Controller = ({ Component, formService, id }: Props) => {
       render: () => render((prev) => prev + 1),
       silentSet: (value: string) => {
         _controller.value = value;
-        setToForm({ id, value });
+        setToForm(id, value);
       },
     };
     formService?.subscribe?.(_controller);

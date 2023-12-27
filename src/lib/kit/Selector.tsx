@@ -42,7 +42,7 @@ const Selector = ({
   const selected = React.useMemo(() => {
     const _selected = prop.options[prop.selected ?? prop.options?.findIndex((option: IListOption) => option.value == value)] ?? emptyOption ?? {}; // { displayTitle: label };
     // ?? prop.options[0] ?? { value: "", displayTitle: label };
-    return { className: activeClassName, ..._selected, label: _selected.displayTitle ?? _selected.label };
+    return { className: activeClassName, ..._selected, label: _selected.displayLabel ?? _selected.label };
   }, [prop, value]);
 
   React.useMemo(() => {
@@ -73,7 +73,7 @@ const Selector = ({
         return;
       }
       if (getOptions) prop.options = await getOptions();
-      if (prop.options?.length < 2) return;
+      // if (prop.options?.length < 1) return;
       PopupMe(ListBuilder, {
         componentProps: {
           options: prop.options,

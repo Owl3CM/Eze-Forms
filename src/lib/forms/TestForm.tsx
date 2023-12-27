@@ -5,7 +5,7 @@ type Props = {
   service: {
     subscribe: (props: { id: string; onError: (error: string) => void; onSuccess?: () => void; setValue: (value: string) => void }) => void;
     get: (id: string) => string;
-    silentSet: ({ id, value }: { id: string; value: string }) => void;
+    silentSet: (id: string, value: string) => void;
   } | null;
   onChange?: (props: { id: string; value: string }) => void;
   value?: string;
@@ -31,7 +31,7 @@ const TestForm = ({
         className="bg-transparent flex-grow-1"
         value={value}
         onChange={({ target: { value } }) => {
-          onChange?.({ id: id, value });
+          onChange?.(id, value);
           setValue(value);
         }}
       />
