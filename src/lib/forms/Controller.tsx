@@ -16,7 +16,7 @@ type Props = {
 
 const Controller = ({ Component, formService, id }: Props) => {
   const [, render] = React.useState(0);
-  console.log("controller render [ " + id + " ]");
+  // console.log("controller render [ " + id + " ]");
 
   const controller = React.useMemo(() => {
     const setToForm = formService?.silentSet as any;

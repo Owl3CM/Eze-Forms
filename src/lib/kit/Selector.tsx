@@ -32,7 +32,7 @@ const Selector = ({
   },
 }: ISelectorProps<any>) => {
   const [prop, setProp] = React.useState(
-    options ? { options, selected: options?.findIndex((option) => option.value == value) } : { options: [], selected: -1 }
+    options ? { options, selected: options?.findIndex((option) => option.value === value) } : { options: [], selected: -1 }
   );
 
   React.useEffect(() => {

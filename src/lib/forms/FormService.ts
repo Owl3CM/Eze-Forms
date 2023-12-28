@@ -49,6 +49,7 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
     setTimeout(() => {
       Object.entries(this.values as any).map(([key, value]: any) => this.startValdiateAndError(key, value));
       if (!Object.keys(this.errors).length) this.upload(this.values);
+      else console.error("Form has errors", this.errors);
       // else
       //   Toast.error({
       //     title: "Error",
@@ -57,7 +58,6 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
       //       .join("\n"),
       //     timeout: 5000,
       //   });
-      console.error("Form has errors", this.errors);
     }, 100);
     // if (Object.entries(this.values as any).every(([key, value]) => this.valdiateAndError(key, value as any))) {
     //   this.upload(this.values);
@@ -121,10 +121,8 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
     return this.valdiateAndError(id, value, id);
   };
   private valdiateAndError = (id: keyof T, value: any, parentId: keyof T) => {
-    // if (typeof value === "object") _value = value?.value;
-    // console.log({ id, value, parentId });
     let errors: any;
-    if (typeof value === "object") {
+    if (value && typeof value === "object") {
       Object.entries(value).map(([key, val]: any) => {
         const _err = this.getError(`${id as any}_${key}` as any, val);
         if (_err) {
@@ -135,7 +133,7 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
     } else {
       errors = this.getError(id, value);
     }
-    console.log({ errors });
+    // console.log({ errors });
 
     errors ? this.setError(parentId, errors as any) : this.onSuccess(parentId);
     return !errors;
@@ -233,6 +231,16 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
       taker[`${key}Id`] = taker[key].id;
       delete taker[key];
     }
+  };
+  static PropFromParentToChild = (giver: any, taker: string | any) => {
+    if (!giver[taker]) giver[taker] = {};
+    if (typeof taker === "string") taker = giver[taker];
+    Object.entries(taker).map(([key, value]: any) => {
+      if (giver[key] !== undefined) {
+        taker[key] = giver[key];
+        delete giver[key];
+      }
+    });
   };
   static Format = (values: any) => {
     const formatedPayment = {} as any;
