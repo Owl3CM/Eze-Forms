@@ -1,9 +1,9 @@
 {
   "name": "morabaa-forms",
-  "version": "0.0.52",
+  "version": "0.0.53",
   "description": "morabaa-forms",
   "main": "dist/index.js",
-  "source": "src/index.tsx",
+  "source": "src/index.ts",
   "private": false,
   "engines": {
     "node": ">=14"
@@ -19,8 +19,7 @@
     "morabaa-provider": "^0.0.53",
     "morabaa-services": "^1.0.87",
     "morabaa-utils": "^0.0.13",
-    "react": ">=18.0.0",
-    "react-dom": ">=18.0.0"
+    "react": ">=18.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",

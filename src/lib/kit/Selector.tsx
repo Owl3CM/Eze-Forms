@@ -4,7 +4,7 @@ import { Popup, PopupMe } from "morabaa-provider"; // Todo: return to this;
 // import { Popup, PopupMe } from "../../../../Provider/src/lib/index";
 import ToggleOptions from "./ToggleOptions";
 
-const Selector = ({
+export const Selector = ({
   id = "selector",
   setValue,
   onChange = setValue ? ({ value }) => setValue(value) : undefined,
@@ -119,8 +119,6 @@ const Selector = ({
     />
   );
 };
-
-export default Selector;
 
 const DefaultBuilder = ({ selected, toggleList }: ISelectorBuilder) => {
   return (

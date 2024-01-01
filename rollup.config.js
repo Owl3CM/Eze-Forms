@@ -8,7 +8,7 @@ import { terser } from "rollup-plugin-terser";
 import packageJson from "./package.json";
 
 const config = {
-  input: "src/index.tsx",
+  input: "src/index.ts",
   plugins: [
     peerDepsExternal(),
     resolve(),

@@ -3,7 +3,7 @@ import { IListOption, IMultiSelectorBuilder, IMultiSelectorListBuilder, IMultiSe
 import { Popup, PopupMe } from "morabaa-provider"; // Todo: return to this;
 // import { Popup, PopupMe } from "../../../../Provider/src/lib/index";
 
-const MultiSelector = ({
+export const MultiSelector = ({
   setValue,
   onChange = setValue ? ({ value }) => setValue(value) : undefined,
   options: defaultOptions,
@@ -159,8 +159,6 @@ const MultiSelector = ({
     />
   );
 };
-
-export default MultiSelector;
 
 const DefaultBuilder = ({
   selected,

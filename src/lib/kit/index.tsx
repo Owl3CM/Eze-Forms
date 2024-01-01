@@ -1,8 +1,8 @@
 import "./kit.css";
 export * from "./Types";
 // export { default as FormTextInput } from "./FormTextInput";
-export { default as Selector } from "./Selector";
-export { default as MultiSelector } from "./MultiSelector";
+export * from "./Selector";
+export * from "./MultiSelector";
 export { default as ToggleOptions } from "./ToggleOptions";
 
 // export const keys = {

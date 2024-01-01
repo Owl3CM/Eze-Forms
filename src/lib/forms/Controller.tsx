@@ -14,7 +14,7 @@ type Props = {
   formService: FormServiceType;
 };
 
-const Controller = ({ Component, formService, id }: Props) => {
+export const Controller = ({ Component, formService, id }: Props) => {
   const [, render] = React.useState(0);
   // console.log("controller render [ " + id + " ]");
 
@@ -51,5 +51,3 @@ const Controller = ({ Component, formService, id }: Props) => {
 
   return <Component {...controller} />;
 };
-
-export default Controller;

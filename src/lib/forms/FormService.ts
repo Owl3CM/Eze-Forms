@@ -1,14 +1,12 @@
-import { JsonBuilder, Toast } from "morabaa-utils";
 import React from "react";
-import { IFormChange, IFormProps, SubscribeProps } from "./Types";
+import { JsonBuilder, Toast } from "morabaa-utils";
+import { FormType, IFormProps, SubscribeProps } from "./Types";
 import { PopupMe } from "morabaa-provider";
 import { StateBuilder } from "morabaa-services";
 export type defaultFormState = "idle" | "loading" | "error" | "success" | "processing";
 export type IFormService<T = any, State = defaultFormState> = FormService<T, State>;
 
-type FormType = "update" | "add";
-
-export default class FormService<T, State = any> extends StateBuilder<State> {
+export class FormService<T, State = any> extends StateBuilder<State> {
   // private submitButtonRef: HTMLButtonElement | null = null;
   private validationSchema: any;
   private dataChanged = false;
@@ -19,7 +17,7 @@ export default class FormService<T, State = any> extends StateBuilder<State> {
   };
   valuesChanged = (id: keyof T, value: any) => {};
 
-  type: FormType = "add";
+  type: FormType = "new";
   setType = (type: FormType) => {
     this.type = type;
   };

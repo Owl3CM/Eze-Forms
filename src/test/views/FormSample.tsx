@@ -1,10 +1,7 @@
 import React from "react";
 import * as yup from "yup";
 import { Controller, Form, FormService } from "../../lib/forms";
-import "../../lib/elements/elements.css";
-import { Input, Selector } from "../../lib/elements";
-import { JsonBuilder } from "morabaa-utils";
-import { ReactStateBuilder } from "morabaa-services";
+import { StateListener } from "morabaa-services";
 
 const optionsCurrencies = [
   //
@@ -75,8 +72,8 @@ const FormSample = () => {
             );
           }}
         />
-        <ReactStateBuilder
-          stateName="isDirty"
+        <StateListener
+          name="isDirty"
           service={formService}
           Component={() => {
             return (

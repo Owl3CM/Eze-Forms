@@ -1,13 +1,12 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { Demo, FormExample } from "./views";
+import { FormExample } from "./views";
 import FormSample from "./views/FormSample";
 import { FormService } from "../lib";
 
 const _TestRoutes = [
-  { path: "/", Component: Demo, title: "Demo" },
-  { path: "/form", Component: FormSample, title: "Form" },
+  { path: "/", Component: FormSample, title: "Form" },
   // { path: "/form", Component: FormExample, title: "Form" },
 ];
 const TestRoutes = () => {

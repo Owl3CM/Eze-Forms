@@ -1,4 +1,5 @@
-export type { IFormService } from "./FormService";
+export type FormType = "update" | "new";
+
 export interface IFormChange {
   id: string;
   value: any;
