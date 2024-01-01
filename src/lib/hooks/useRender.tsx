@@ -1,7 +1,3 @@
-// create a use render hook
-//
-// Path: src/lib/hooks/useRender.tsx
-
 import React from "react";
 
 export const useRender = (service: any, name: string = "") => {

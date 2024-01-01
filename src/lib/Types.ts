@@ -1,4 +1,3 @@
-import { Animation, PopupPlacement } from "morabaa-provider";
 import React from "react";
 
 interface IChange {
