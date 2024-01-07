@@ -28,7 +28,7 @@ export class FormService<T, State = any> extends StateBuilder<State> {
 
   values: T = {} as T;
   reset = (values: T, valdiate = false, effective = false) => {
-    (this.values as any) = values ?? this.defaultValues;
+    (this.values as any) = { ...(values ?? this.defaultValues) };
     Object.entries(this.values as any).map(([id, value]: any) => {
       if (valdiate) this.startValdiateAndError(id, value);
       else this.getError(id, value);
