@@ -27,7 +27,7 @@ export class FormService<T, State = any> extends StateBuilder<State> {
   errors: { [key: string]: string } = {} as any;
 
   values: T = {} as T;
-  reset = (values: T, valdiate = false, effective = false) => {
+  reset = ({ values, valdiate = false, effective = false }: { values?: T; valdiate?: boolean; effective?: boolean }) => {
     (this.values as any) = { ...(values ?? this.defaultValues) };
     Object.entries(this.values as any).map(([id, value]: any) => {
       if (valdiate) this.startValdiateAndError(id, value);
@@ -44,10 +44,12 @@ export class FormService<T, State = any> extends StateBuilder<State> {
   onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     Object.keys(this.values as any).map((key) => this.onSuccess(key));
-    setTimeout(() => {
+    setTimeout(async () => {
       Object.entries(this.values as any).map(([key, value]: any) => this.startValdiateAndError(key, value));
-      if (!Object.keys(this.errors).length) this.upload(this.values);
-      else console.error("Form has errors", this.errors);
+      if (!Object.keys(this.errors).length) {
+        await this.upload(this.values);
+        if (this.resetOnSumbit) this.reset({ valdiate: false, effective: true });
+      } else console.error("Form has errors", this.errors);
       // else
       //   Toast.error({
       //     title: "Error",
@@ -197,10 +199,22 @@ export class FormService<T, State = any> extends StateBuilder<State> {
     if (fn) fn();
     else throw new Error("You need to use useRender.");
   };
-  constructor({ defaultValues, validationSchema, onSubmit, load, mode = "onBlur", valdiateOnLoad, onDataChanged, onErrorChanged }: IFormProps<T>) {
+  resetOnSumbit = true;
+  constructor({
+    defaultValues,
+    validationSchema,
+    onSubmit,
+    load,
+    mode = "onBlur",
+    valdiateOnLoad,
+    onDataChanged,
+    onErrorChanged,
+    resetOnSumbit = true,
+  }: IFormProps<T>) {
     super();
     this.validationSchema = validationSchema;
     this.defaultValues = { ...defaultValues };
+    this.resetOnSumbit = resetOnSumbit;
     this.values = { ...this.defaultValues };
     if (onDataChanged) this.onDataChanged = onDataChanged;
     if (onErrorChanged) this.onErrorChanged = onErrorChanged;
@@ -210,11 +224,11 @@ export class FormService<T, State = any> extends StateBuilder<State> {
         this.setState("processing");
         const newValues = await load();
         this.defaultValues = newValues;
-        this.reset(this.defaultValues, valdiate, true);
+        this.reset({ values: this.defaultValues, valdiate, effective: true });
         this.setState("idle");
       };
       this.load = _load;
-    } else this.load = (valdiate = valdiateOnLoad) => this.reset(defaultValues, valdiate, false);
+    } else this.load = (valdiate = valdiateOnLoad) => this.reset({ values: defaultValues, valdiate, effective: false });
     this.reload = this.load;
     // setTimeout(() => {
     //   this.submitButtonRef = (document.querySelector("button[type=submit]") || document.querySelector("input[type=submit]")) as any;

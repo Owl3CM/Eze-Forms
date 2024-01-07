@@ -23,6 +23,7 @@ export interface IFormProps<T> {
   onDataChanged?: (isChanged: boolean) => void;
   onErrorChanged?: (errors: { [key: string]: string }) => void;
   mode?: "onBlur" | "onChange" | "onSubmit";
+  resetOnSumbit?: boolean;
 }
 
 export interface FormServiceType {

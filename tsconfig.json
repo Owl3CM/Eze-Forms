@@ -22,13 +22,10 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react",
-    "baseUrl": "./src",
-    "paths": {
-      "@/*": ["./*"]
-    }
+    "jsx": "react"
   },
-  "exclude": ["src/vite", "src/test", "DeleteMe"]
+  "include": ["src/lib"],
+  "exclude": ["src/vite", "src/test"]
 }
 // {
 //   "compilerOptions": {
