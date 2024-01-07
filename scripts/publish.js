@@ -48,8 +48,8 @@ function toggleProd(path, prod) {
 
 function addImportForCssInDist() {
   const dataToInsert = "import './index.css';";
-  insertToFile("./dist/cjs/index.tsx", dataToInsert);
-  insertToFile("./dist/esm/index.tsx", dataToInsert);
+  insertToFile("./dist/cjs/index.ts", dataToInsert);
+  insertToFile("./dist/esm/index.ts", dataToInsert);
 }
 
 function insertToFile(path, dataToInsert) {
