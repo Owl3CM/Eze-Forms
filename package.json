@@ -1,9 +1,9 @@
 {
   "name": "morabaa-forms",
-  "version": "0.0.54",
+  "version": "0.0.55",
   "description": "morabaa-forms",
   "main": "dist/index.js",
-  "source": "src/index.ts",
+  "source": "src/index.tsx",
   "private": false,
   "engines": {
     "node": ">=14"
