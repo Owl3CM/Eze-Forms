@@ -17,7 +17,7 @@ export class FormService<T, State = any> extends StateBuilder<State> {
   };
   valuesChanged = (id: keyof T, value: any) => {};
 
-  type: FormType = "new";
+  type: FormType = "add";
   setType = (type: FormType) => {
     this.type = type;
   };
@@ -31,7 +31,7 @@ export class FormService<T, State = any> extends StateBuilder<State> {
     (this.values as any) = { ...(values ?? this.defaultValues) };
     Object.entries(this.values as any).map(([id, value]: any) => {
       if (valdiate) this.startValdiateAndError(id, value);
-      else this.getError(id, value);
+      // else this.getError(id, value);
       if (effective) this.effectiveSetNoValidate(id, value);
       else this.effectiveSetNoValidate(id, value);
       // (this.values as any)[id] = value;
@@ -256,8 +256,6 @@ export class FormService<T, State = any> extends StateBuilder<State> {
   };
   static Format = (values: any) => {
     const formatedPayment = {} as any;
-    console.log({ values });
-
     Object.entries(values).map(([key, value]: any) => {
       console.log({ key: value.key });
 

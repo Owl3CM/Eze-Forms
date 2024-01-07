@@ -1,4 +1,4 @@
-export type FormType = "update" | "new";
+export type FormType = "update" | "add";
 
 export interface IFormChange {
   id: string;
