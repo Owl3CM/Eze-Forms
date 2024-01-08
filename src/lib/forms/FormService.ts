@@ -31,9 +31,10 @@ export class FormService<T, State = any> extends StateBuilder<State> {
     (this.values as any) = { ...(values ?? this.defaultValues) };
     Object.entries(this.values as any).map(([id, value]: any) => {
       if (valdiate) this.startValdiateAndError(id, value);
+      this.effectiveSetNoValidate(id, value);
       // else this.getError(id, value);
-      if (effective) this.effectiveSetNoValidate(id, value);
-      else this.effectiveSetNoValidate(id, value);
+      // if (effective) this.effectiveSetNoValidate(id, value);
+      // else this.effectiveSetNoValidate(id, value);
       // (this.values as any)[id] = value;
     });
   };
@@ -47,8 +48,10 @@ export class FormService<T, State = any> extends StateBuilder<State> {
     setTimeout(async () => {
       Object.entries(this.values as any).map(([key, value]: any) => this.startValdiateAndError(key, value));
       if (!Object.keys(this.errors).length) {
-        await this.upload(this.values);
-        if (this.resetOnSumbit) this.reset({ valdiate: false, effective: true });
+        try {
+          await this.upload(this.values);
+          if (this.resetOnSumbit) this.reset({ valdiate: false, effective: true });
+        } catch {}
       } else console.error("Form has errors", this.errors);
       // else
       //   Toast.error({
@@ -96,7 +99,6 @@ export class FormService<T, State = any> extends StateBuilder<State> {
   getErrors = () => this.errors;
   setError = (id: keyof T, error: string) => {
     const onError = (this as any)[`set${id as any}Error`];
-    console.log({ onError });
     if (onError) onError(error);
     else Toast.error({ title: "Error", content: `${error}: ${id as any}`, timeout: 5000 });
   };
@@ -133,7 +135,6 @@ export class FormService<T, State = any> extends StateBuilder<State> {
     } else {
       errors = this.getError(id, value);
     }
-    // console.log({ errors });
 
     errors ? this.setError(parentId, errors as any) : this.onSuccess(parentId);
     return !errors;
@@ -199,7 +200,10 @@ export class FormService<T, State = any> extends StateBuilder<State> {
     if (fn) fn();
     else throw new Error("You need to use useRender.");
   };
-  resetOnSumbit = true;
+  resetOnSumbit = false;
+  startOver = (values?: T) => {
+    this.reset({ values, valdiate: false, effective: true });
+  };
   constructor({
     defaultValues,
     validationSchema,
@@ -209,7 +213,7 @@ export class FormService<T, State = any> extends StateBuilder<State> {
     valdiateOnLoad,
     onDataChanged,
     onErrorChanged,
-    resetOnSumbit = true,
+    resetOnSumbit = false,
   }: IFormProps<T>) {
     super();
     this.validationSchema = validationSchema;
@@ -228,7 +232,7 @@ export class FormService<T, State = any> extends StateBuilder<State> {
         this.setState("idle");
       };
       this.load = _load;
-    } else this.load = (valdiate = valdiateOnLoad) => this.reset({ values: defaultValues, valdiate, effective: false });
+    } else this.load = (valdiate = valdiateOnLoad, effective = false) => this.reset({ values: defaultValues, valdiate, effective });
     this.reload = this.load;
     // setTimeout(() => {
     //   this.submitButtonRef = (document.querySelector("button[type=submit]") || document.querySelector("input[type=submit]")) as any;
@@ -254,11 +258,13 @@ export class FormService<T, State = any> extends StateBuilder<State> {
       }
     });
   };
+  static ExtractValueFromArray = (obj: any[], key: string) => {
+    obj.map((o) => o[key]);
+  };
+
   static Format = (values: any) => {
     const formatedPayment = {} as any;
     Object.entries(values).map(([key, value]: any) => {
-      console.log({ key: value.key });
-
       if (value.value) formatedPayment[value.key ?? key] = value.value;
       else formatedPayment[key] = value;
     });
