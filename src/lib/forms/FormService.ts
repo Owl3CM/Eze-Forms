@@ -202,7 +202,12 @@ export class FormService<T, State = any> extends StateBuilder<State> {
   };
   resetOnSumbit = false;
   startOver = (values?: T) => {
-    this.reset({ values, valdiate: false, effective: true });
+    (this.values as any) = { ...(values ?? this.defaultValues) };
+    this.errors = {} as any;
+    Object.entries(this.values as any).map(([id, value]: any) => {
+      this.effectiveSetNoValidate(id, value);
+      this.onSuccess(id);
+    });
   };
   constructor({
     defaultValues,
