@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { IListOption, IMultiSelectorBuilder, IMultiSelectorListBuilder, IMultiSelectorProps, ToggleListProps } from "./Types";
-import { Popup, PopupMe } from "morabaa-provider"; // Todo: return to this;
+import { Popup, PopupMe } from "eze-spark"; // Todo: return to this;
 // import { Popup, PopupMe } from "../../../../Provider/src/lib/index";
 
 export const MultiSelector = ({

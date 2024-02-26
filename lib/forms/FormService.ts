@@ -1,8 +1,8 @@
 import React from "react";
-import { JsonBuilder, Toast } from "morabaa-utils";
+import { JsonBuilder, Toast } from "eze-utils";
 import { FormType, IFormProps, SubscribeProps } from "./Types";
-import { PopupMe } from "morabaa-provider";
-import { StateBuilder } from "morabaa-services";
+import { PopupMe } from "eze-spark";
+import { StateBuilder } from "eze-services";
 export type defaultFormState = "idle" | "loading" | "error" | "success" | "processing";
 export type IFormService<T = any, State = defaultFormState> = FormService<T, State>;
 

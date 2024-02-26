@@ -1,6 +1,6 @@
 import React from "react";
 import { IListOption, ISelectorBuilder, ISelectorListBuilder, ISelectorProps, ToggleListProps } from "./Types";
-import { Popup, PopupMe } from "morabaa-provider"; // Todo: return to this;
+import { Popup, PopupMe } from "eze-spark"; // Todo: return to this;
 // import { Popup, PopupMe } from "../../../../Provider/src/lib/index";
 import ToggleOptions from "./ToggleOptions";
 

@@ -1,4 +1,4 @@
-import { PopupOptions } from "morabaa-provider";
+import { PopupOptions } from "eze-spark";
 import { IKitProps } from "../Types";
 
 export interface IListOption {
